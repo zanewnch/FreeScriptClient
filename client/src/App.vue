@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
@@ -11,7 +10,6 @@
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
-    crossorigin
   >
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
@@ -29,5 +27,5 @@
   margin: 0;
   padding: 0;
   font-family: 'Playfair Display', serif;
-
-}</style>
+}
+</style>

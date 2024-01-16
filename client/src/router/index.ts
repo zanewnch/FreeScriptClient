@@ -21,25 +21,25 @@ const router = createRouter({
           path: 'supermarket',
           name: 'supermarket',
           // @ts-ignore
-          component: () => import('../components/Dataview/SupermarketTable.vue') // 子路由组件
+          component: () => import('../components/DataView/SupermarketTable.vue') // 子路由组件
         },
         {
           path: 'user',
           name: 'user',
           // @ts-ignore
-          component: () => import('../components/Dataview/UserTable.vue') // 子路由组件
+          component: () => import('../components/DataView/UserTable.vue') // 子路由组件
         },
         {
           path: 'bulletin',
           name: 'bulletin',
           // @ts-ignore
-          component: () => import('../components/Dataview/BulletinData.vue')
+          component: () => import('../components/DataView/BulletinData.vue')
         },
         {
           path: 'barChart',
           name: 'barChart',
           // @ts-ignore
-          component: () => import('../components/Dataview/BarChart.vue')
+          component: () => import('../components/DataView/BarChart.vue')
         },
         {
           path: 'lineChart',
