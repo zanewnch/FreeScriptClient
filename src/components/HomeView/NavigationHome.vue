@@ -40,6 +40,7 @@ const handleClose = (done: () => void) => {
 <template>
   <div class="container">
     
+
     <el-menu
       class="el-menu-demo"
       mode="horizontal"
@@ -133,6 +134,12 @@ const handleClose = (done: () => void) => {
 .container {
   height: 100%;
   width: 100%;
+
+  background-color: blue;
+
+  margin: 0px;
+  padding: 0px;
+  
 
 
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.15);

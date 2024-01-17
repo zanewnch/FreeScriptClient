@@ -24,8 +24,8 @@
 
 <style scoped lang="scss">:deep(*) {
   // border: solid 1px black;
-  margin: 0;
-  padding: 0;
-  font-family: 'Playfair Display', serif;
+  //margin: 0;
+  //padding: 0;
+  //font-family: 'Playfair Display', serif;
 }
 </style>
