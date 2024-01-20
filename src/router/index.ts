@@ -39,13 +39,13 @@ const router = createRouter({
           path: 'barChart',
           name: 'barChart',
           // @ts-ignore
-          component: () => import('../components/DataView/barChart.vue')
+          component: () => import('../components/DataView/BarChart.vue')
         },
         {
           path: 'lineChart',
           name: 'lineChart',
           // @ts-ignore
-          component:()=>import('../components/DataView/lineChart.vue')
+          component:()=>import('../components/DataView/LineChart.vue')
         }
       ]
     },

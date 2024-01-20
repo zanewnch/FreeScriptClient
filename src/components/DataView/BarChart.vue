@@ -3,6 +3,7 @@ import { ref, onMounted, watchEffect, watch } from 'vue';
 import * as echarts from 'echarts';
 import { useSuperMarketSaleStore } from '@/stores/SupermarketSaleStore';
 // 每月營業額
+const msg = "hello world"
 const supermarketSaleStore = useSuperMarketSaleStore();
 const chartInstance = ref<echarts.ECharts | null>(null);
 /*
@@ -154,6 +155,7 @@ watch(() => supermarketSaleStore.barChartData, (newData) => {
 
 
 
+
         .elCol {
             display: flex;
             justify-content: center;
@@ -177,6 +179,7 @@ watch(() => supermarketSaleStore.barChartData, (newData) => {
             justify-content: center;
             align-items: start;
             //background-color: red;
+            
 
             margin-top: -5%;
         }

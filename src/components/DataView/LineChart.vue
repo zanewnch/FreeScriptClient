@@ -172,6 +172,8 @@ watch(() => supermarketSaleStore.lineChartData, (newData) => {
             justify-content: center;
             align-items: start;
             //background-color: red;
+            
+
 
             margin-top: -5%;
 
