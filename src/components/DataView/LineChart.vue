@@ -88,21 +88,24 @@ watch(() => supermarketSaleStore.lineChartData, (newData) => {
 </script>
 
 <template>
-    <div class='container'>
-        <el-row class='elRow'>
+    <div class='container flex justify-center items-center'>
+        <el-row class='elRow w-full h-full'>
             <el-col
                 :span='24'
-                class='elCol'
+                class='elCol flex items-end justify-center  w-full'
+                style='height:80%'
             >
                 <div
                     id="main"
                     style='width: 100%; 
-                    height: 600px;'
+                    height: 600px;margin-top: 0%;
+                    box-shadow: 3px 0px 15px rgba(0, 0, 0, 0.15)' 
                 ></div>
             </el-col>
             <el-col
                 :span='24'
-                class='elColDown'
+                class='elColDown flex justify-center items-start'
+                style='margin-top: 2rem;'
             >
                 <span>This chart displays the total sales amount for each month from January 2019 to March 2019.
                     <br>
@@ -138,56 +141,5 @@ watch(() => supermarketSaleStore.lineChartData, (newData) => {
 </template>
 
 <style scoped lang="scss">
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    .elRow {
-        height: 100%;
-        width: 100%;
-
-
-
-        .elCol {
-            display: flex;
-            justify-content: center;
-            align-items: end;
-
-            height: 80%;
-            width: 100%;
-
-            //background-color: blue;
-
-            #main {
-                margin-top: -3%;
-                box-shadow: 3px 0px 15px rgba(0, 0, 0, 0.15);
-
-
-            }
-        }
-
-        .elColDown {
-            display: flex;
-            justify-content: center;
-            align-items: start;
-            //background-color: red;
-            
-
-
-            margin-top: -5%;
-
-            //.description {
-                //display: inline-block;
-
-                //.animate-text {
-                  //  display: inline-block;
-                    //opacity: 0;
-                //}
-            //}
-        }
-    }
-
-
-}
 </style>

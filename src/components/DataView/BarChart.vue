@@ -116,22 +116,24 @@ watch(() => supermarketSaleStore.barChartData, (newData) => {
 </script>
 
 <template>
-    <div class='container'>
-        <el-row class='elRow'>
+    <div class='container flex justify-center items-center'>
+        <el-row class='elRow w-full h-full'>
             <el-col
                 :span='24'
-                class='elCol'
+                class='elCol flex items-end justify-center h-80 w-full'
+                style='height: 80%;'
             >
                 <div
                     id="main"
                     style='width: 100%; 
-                    height: 600px;'
-                    
+                    height: 600px;margin-top: -3%;
+                    box-shadow: 3px 0px 15px rgba(0, 0, 0, 0.15)'                
                 ></div>
             </el-col>
             <el-col
                 :span='24'
-                class='elColDown'
+                class='flex justify-center items-start '
+                style='margin-top: 2rem;'
             >
                 <span>This chart display the total sale amount and gross income for the different product line.
                     <br>
@@ -174,15 +176,7 @@ watch(() => supermarketSaleStore.barChartData, (newData) => {
             }
         }
 
-        .elColDown {
-            display: flex;
-            justify-content: center;
-            align-items: start;
-            //background-color: red;
-            
-
-            margin-top: -5%;
-        }
+        
     }
 
 

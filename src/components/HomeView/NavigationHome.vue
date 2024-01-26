@@ -135,11 +135,12 @@ const handleClose = (done: () => void) => {
   height: 100%;
   width: 100%;
 
-  background-color: blue;
-
   margin: 0px;
   padding: 0px;
+
+  flex-grow: 1;
   
+  border: solid blue 2px;
 
 
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.15);
