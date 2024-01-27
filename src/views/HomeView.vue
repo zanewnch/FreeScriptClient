@@ -12,78 +12,14 @@ import ConHomeVue from '@/components/HomeView/ConHomeNew.vue'
 
 import { ref } from 'vue';
 
-
-const setVH = () => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-window.addEventListener('resize', setVH);
-setVH(); // Call the function initially
-
-
-const currentScroll = ref(0);
-const scrollStep = ref(200);
-
-const scrollStatus = (direction:any)=>{
-  const containerWidth = this.$refs.statusContainer.offsetWidth;
-      const maxScroll = this.$refs.statusContainer.scrollWidth - containerWidth;
-      this.currentScroll += direction * this.scrollStep;
-
-      if (this.currentScroll < 0) {
-        this.currentScroll = 0;
-      } else if (this.currentScroll > maxScroll) {
-        this.currentScroll = maxScroll;
-      }
-
-      this.$refs.statusContainer.scrollTo({
-        left: this.currentScroll,
-        behavior: "smooth",
-      });
-}
-
-
-
 </script>
 
 <template>
-  <!-- <div class="common-layout">
-    <el-container>
-      <el-header class='header'>
-        <Navigation />
-
-      </el-header>
-
-      <el-main class='main'>
-        <Content />
-      </el-main>
-
-      <el-footer class='footer'>
-        <Footer />
-      </el-footer>
-    </el-container>
-  </div> -->
-
-  <!-- <div>
-    <div class='header'>
-       <Navigation></Navigation> 
-      <NavOriginal></NavOriginal>
-    </div>
-    <div class='main'>
-      <Content></Content>
-    </div>
-
-    <div class='footer'>
-      <footer></footer>
-    </div>
-
-
-  </div> -->
-
-  <div class=' w-sceen h-screen bg-red-400'>
+  <div class='xl:w-full  h-full bg-red-400'
+  >
     <el-row>
       <el-col :span='24'>
-        <div class='w-screen h-20'>
+        <div class='w-full h-20'>
           <nav class="bg-blue-500 p-4 w-full h-full">
             <div class="container mx-auto h-full">
               <div class="flex justify-between items-center h-full">
@@ -146,42 +82,6 @@ const scrollStatus = (direction:any)=>{
 </template>
 
 <style scoped lang="scss">
-//.header {
-//height: 10vh;
-//background-color: red;
-//display: flex;
-//justify-content: center;
-//align-items: center;
-
-//margin: 0px;
-//padding: 0px;
-
-//box-sizing: border-box;
-//}
-
-//.main {
-//height: 80vh;
-/* Fallback for browsers that do not support Custom Properties */
-//height: calc(var(--vh, 1vh) * 80);
-/*
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  */
-
-
-
-//}
-
-//.footer {
-/*
-  height: 10vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  */
-//}</style>
+</style>
 
 
