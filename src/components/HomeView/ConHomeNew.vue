@@ -1,28 +1,50 @@
 <script setup lang="ts">
-import { ref, onMounted, type Ref, computed } from 'vue'
+import { ref, onMounted, type Ref, computed, type ComputedRef } from 'vue'
+import Text from './Text.vue'
+import Highlight from './Highlight.vue';
 
 const data: {
   data: string
   status: boolean
 }[] = [
-  {
-    data: 'For you',
-    status: true
-  },
-  { data: 'Following', status: true },
-  { data: 'UX', status: false }
-]
+    {
+      data: 'For you',
+      status: true
+    },
+    { data: 'Following', status: true },
+    { data: 'UX', status: false }
+  ]
 
-const refData = ref(data);
+const refData: Ref<{
+  data: string;
+  status: boolean;
+}[]> = ref(data);
 
-const showLeft = () => {
-  // 選單到底有沒有到底  if array[1] status is true
+const selectedItem = ref(refData.value[0]['data']);
+
+const selectItem = (item: any) => {
+  selectedItem.value = item;
+};
+
+const isLeft: ComputedRef<boolean> = computed(() => {
+  return refData.value.length > 0 && refData.value[0]['status'] === false;
+})
+
+const isRight: ComputedRef<boolean> = computed(() => {
+  // if successful find false value, return true
+
+  return refData.value[refData.value.length - 1]['status'] !== true
+})
+
+const showLeft = (): void => {
+  // find first false value, and turn it into false
   const indexFalse = refData.value.findIndex((element) => !element['status']);
   console.log(indexFalse);
 
+  // find last true value, and turn it into true
   const indexArray = refData.value.slice().reverse();
   const indexTrue = indexArray.findIndex((element) => element['status']);
-  const indexResult = refData.value.length -indexTrue-1;
+  const indexResult = refData.value.length - indexTrue - 1;
 
 
   refData.value[indexFalse]['status'] = true;
@@ -31,87 +53,131 @@ const showLeft = () => {
   console.log(refData.value);
   refData.value[indexResult]['status'] = false;
 }
-const showRight = () => {
+const showRight = (): void => {
   const indexTrue = refData.value.findIndex((element) => element['status']);
-  refData.value[indexTrue]['status'] = false;
 
   const indexFalse = refData.value.findIndex((element) => !element['status']);
+
+
+  refData.value[indexTrue]['status'] = false;
   refData.value[indexFalse]['status'] = true;
 
-  
+
 }
 
 
 
-  const filterData = computed(() => {
+const filterData: ComputedRef<{
+  data: string;
+  status: boolean;
+}[]> = computed(() => {
   return refData.value.filter((element) => element['status']);
 });
- 
 
 
-const test = (): void => {
-  console.log(filterData)
-}
+
+
 
 onMounted(() => {
-  test()
+
 })
 
-const testData = ref(0);
-const testFunction = ()=>{
-  refData.value[2]['status'] = true;
-}
+
 
 </script>
 <template>
-  <el-row class="w-screen">
-    <el-col :span="16" class="h-screen w-full flex flex-col justify-start items-start" style="">
-      <!-- <div class=' w-full  h-2/6 border-gray-500  border-solid border-r-2 '>
-            <div class='states-bar flex justify-around items-center overflow-x-hidden whitespace-nowrap'>
-                <button class="prev-button" onclick="scrollStatus(-1)">←</button>
-                <div class="status-container flex justify-around items-center gap-4">
-                    <div class="status border-2">状态 1</div>
-                    <div class="status">状态 2</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    <div class="status">状态 3</div>
-                    
-                  </div>
-                <button class="next-button" onclick="scrollStatus(1)">→</button>
-            </div>
-            <div>content</div>
-          </div> -->
+  <el-row
+    class='md:w-full  md:'
+    id='test'
+  >
+    <el-col
+      :span="16"
+      class="md:h-screen w-full md:flex md:flex-col md:justify-start md:items-center h-5/6"
+      style="border-right:0.5px solid #E0E0E0;"
+    >
+      <section class='section-up md:w-full flex justify-center'>
+        <div
+          class="status-bar md:flex md:justify-around md:items-center  "
+          style='width: 80%;'
+        >
+          <button
+            @click="showLeft"
+            v-if='isLeft'
+            class='md:w-6'
+          >
+            <el-icon>
+              <ArrowLeft />
+            </el-icon>
+          </button>
+          <button
+            class='md:w-6'
+            v-else
+          >
+            <el-icon color='#E0E0E0'>
+              <ArrowLeft />
+            </el-icon>
+          </button>
+          <div
+            v-for="(item, index) in filterData"
+            :key="index"
+            class='md:w-20 md:whitespace-nowrap  md:text-center'
+            :class="{ 'border-b-2': selectedItem === item.data }"
+            @click="selectItem(item.data)"
+          >{{ item['data'] }}</div>
+          <button
+            @click="showRight"
+            v-if='isRight'
+            class='md:w-6'
+          >
+            <el-icon>
+              <ArrowRight />
+            </el-icon>
+          </button>
+          <button
+            class='md:w-6'
+            v-else
+          >
+            <el-icon color='#E0E0E0'>
+              <ArrowRight />
+            </el-icon>
+          </button>
+        </div>
+      </section>
+      <section class='section-below md:w-full md:flex md:flex-col md:justify-center md:items-center'>
+        <Text></Text>
+      </section>
 
-          <div>{{refData}}</div>
-          <div>{{filterData}}</div>
 
-      <div class="flex justify-around items-center">
-        <button @click="showLeft">showLeft</button>
-        <div v-for="(item, index) in filterData" :key="index">{{ item['data'] }}</div>
-        <button @click="showRight">showRight</button>
-      </div>
 
-      <div class="w-full h-4/6 border-gray-500 border-solid border-r-2">
-        <div>bbb</div>
-        <div>{{testData}}</div>
-        <button @click="testFunction">test</button>
-      </div>
     </el-col>
-    <el-col :span="8" class="">ccc</el-col>
+    <el-col
+      :span="8"
+      class="sticky-container"
+    >
+      <Highlight></Highlight>
+    </el-col>
   </el-row>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@media (min-width: 768px) {
+  #test {
+    // background-color: red;
+  }
+
+  .section-up {
+    margin-top: 30px;
+  }
+
+  .section-below {
+    margin-top: 30px;
+  }
+
+  .sticky-right {
+    position: sticky;
+    top: 0; /* 或者根据需要设置适当的距离 */
+  }
+
+  
+  
+}
+</style>

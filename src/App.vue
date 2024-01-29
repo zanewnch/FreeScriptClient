@@ -24,10 +24,10 @@
 <style scoped lang="scss">
 
 :deep(*) {
-   //border: solid 1px black;
+  // border: solid 1px black;
   margin: 0;
   padding: 0;
-  // font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', serif;
   box-sizing: border-box;
 }
 

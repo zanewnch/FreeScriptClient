@@ -1,0 +1,1 @@
+pbulic 裡面的file 都可以透過 /fileNmae (url)去獲取
