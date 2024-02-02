@@ -14,6 +14,13 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@material-tailwind/html": "^2.2.2",
+    "@tiptap/extension-heading": "^2.2.1",
+    "@tiptap/extension-highlight": "^2.2.1",
+    "@tiptap/extension-typography": "^2.2.1",
+    "@tiptap/pm": "^2.2.1",
+    "@tiptap/starter-kit": "^2.2.1",
+    "@tiptap/vue-3": "^2.2.1",
     "axios": "^1.6.2",
     "echarts": "^5.4.3",
     "element-plus": "^2.4.2",
@@ -22,6 +29,7 @@
     "pinia": "^2.1.7",
     "sass": "^1.69.5",
     "scss": "^0.2.4",
+    "vite-node": "^1.2.2",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },

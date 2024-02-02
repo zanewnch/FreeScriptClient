@@ -4,11 +4,15 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // import './style/reset.scss'
-import './style.css'
+
 // import 'normalize.css'
 // @ts-ignore
 import App from './App.vue'
 import router from './router'
+
+// tailwindcss
+// !!! NECESSARY
+import './style.css'
 
 const app = createApp(App)
 

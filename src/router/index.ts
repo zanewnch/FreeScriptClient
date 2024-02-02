@@ -68,10 +68,10 @@ const router = createRouter({
       component: () => import('../views/RegisterView.vue')
     },
     {
-      path: '/register',
-      name: 'register',
+      path:'/new-article',
+      name:'new-article',
       // @ts-ignore
-      component: () => import('../views/RegisterView.vue')
+      component: ()=>import('../components/HomeView/Write.vue')
     }
   ]
 })

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, type Ref, computed, type ComputedRef } from 'vue'
-import Text from './Text.vue'
-import Highlight from './Highlight.vue';
+import HomeLeft from './HomeLeft.vue'
+import HomeRight from './HomeRight.vue';
 
 const data: {
   data: string
@@ -144,7 +144,7 @@ onMounted(() => {
         </div>
       </section>
       <section class='section-below md:w-full md:flex md:flex-col md:justify-center md:items-center'>
-        <Text></Text>
+        <HomeLeft></HomeLeft>
       </section>
 
 
@@ -152,9 +152,9 @@ onMounted(() => {
     </el-col>
     <el-col
       :span="8"
-      class="sticky-container"
+      class="sticky-container md:flex md:flex-col md:justify-start md:items-center"
     >
-      <Highlight></Highlight>
+      <HomeRight></HomeRight>
     </el-col>
   </el-row>
 </template>
