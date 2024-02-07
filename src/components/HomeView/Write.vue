@@ -11,49 +11,61 @@ import type { AxiosResponse } from 'axios'
 import type Result from '@/utils/Result'
 import request from '@/utils/Request'
 import { BubbleMenu, Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
+import { useRouter } from 'vue-router'
 
-const editor: Ref<any> = ref(null)
+const router = useRouter()
+const title: Ref<Editor | null> = ref(null)
+const content: Ref<Editor | null> = ref(null)
 
-onMounted(() => {
-  editor.value = new Editor({
+onMounted((): void => {
+  content.value = new Editor({
     extensions: [StarterKit, Highlight, Typography, Heading],
     content: `
       <p>
-        Try to select <em>this text</em> to see what we call the bubble menu.
+        Input content...
       </p>
+      
+    `
+  })
+  title.value = new Editor({
+    extensions: [StarterKit, Highlight, Typography, Heading],
+    content: `
       <p>
-        Neat, isn’t it? Add an empty paragraph to see the floating menu.
+        <em>Title...</em> 
       </p>
     `
   })
 })
 
-onBeforeUnmount(() => {
-  if (editor.value) {
-    editor.value.destroy()
+onBeforeUnmount((): void => {
+  if (content.value) {
+    content.value.destroy()
+  }
+
+  if (title.value) {
+    title.value.destroy()
   }
 })
 
-const test = () => {
-  const result = editor.value.getJSON()
-  console.log(result)
-
-  const content = editor.value.getHTML()
-  console.log(content)
-}
-
-const sendData = async () => {
+const sendData = async (): Promise<void> => {
   try {
-    if (editor.value) {
-      const res: AxiosResponse<Result<string>> = await request.post(
-        '/content',
-        editor.value.getHTML(),
+    if (content.value && title.value) {
+      const res: AxiosResponse<any> = await request.post(
+        '/article/publish',
+        {
+          title: title.value.getHTML(),
+          content: content.value.getHTML()
+        },
         {
           headers: {
-            'Content-Type': 'text/html'
+            'Content-Type': 'application/json'
           }
         }
       )
+
+      console.log(res.data)
+
+      router.push('/')
     }
   } catch (e) {
     console.log(e)
@@ -81,51 +93,97 @@ const sendData = async () => {
       </Nav>
     </div>
 
-    <div v-if="editor" class="bg-red-400 md:w-4/5">
-      <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="editor">
+    <div v-if="title" class="bg-red-400 md:w-4/5">
+      <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="title">
         <button
-          @click="editor.chain().focus().toggleBold().run()"
-          :class="{ 'is-active': editor.isActive('bold') }"
+          @click="title.chain().focus().toggleBold().run()"
+          :class="{ 'is-active': title.isActive('bold') }"
         >
           Bold
         </button>
         <button
-          @click="editor.chain().focus().toggleItalic().run()"
-          :class="{ 'is-active': editor.isActive('italic') }"
+          @click="title.chain().focus().toggleItalic().run()"
+          :class="{ 'is-active': title.isActive('italic') }"
         >
           Italic
         </button>
         <button
-          @click="editor.chain().focus().toggleStrike().run()"
-          :class="{ 'is-active': editor.isActive('strike') }"
+          @click="title.chain().focus().toggleStrike().run()"
+          :class="{ 'is-active': title.isActive('strike') }"
         >
           Strike
         </button>
       </bubble-menu>
 
-      <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="editor">
+      <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="title">
         <button
-          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+          @click="title.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ 'is-active': title.isActive('heading', { level: 1 }) }"
         >
           H1
         </button>
         <button
-          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+          @click="title.chain().focus().toggleHeading({ level: 2 }).run()"
+          :class="{ 'is-active': title.isActive('heading', { level: 2 }) }"
         >
           H2
         </button>
         <button
-          @click="editor.chain().focus().toggleBulletList().run()"
-          :class="{ 'is-active': editor.isActive('bulletList') }"
+          @click="title.chain().focus().toggleBulletList().run()"
+          :class="{ 'is-active': title.isActive('bulletList') }"
         >
           Bullet List
         </button>
       </floating-menu>
     </div>
 
-    <editor-content :editor="editor" class="editor md:w-4/5" />
+    <editor-content v-if="title" :editor="title" class="editor md:appearance-none focus:outline-none md:w-4/5" />
+
+    <div v-if="content" class="bg-red-400 md:w-4/5">
+      <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="content">
+        <button
+          @click="content.chain().focus().toggleBold().run()"
+          :class="{ 'is-active': content.isActive('bold') }"
+        >
+          Bold
+        </button>
+        <button
+          @click="content.chain().focus().toggleItalic().run()"
+          :class="{ 'is-active': content.isActive('italic') }"
+        >
+          Italic
+        </button>
+        <button
+          @click="content.chain().focus().toggleStrike().run()"
+          :class="{ 'is-active': content.isActive('strike') }"
+        >
+          Strike
+        </button>
+      </bubble-menu>
+
+      <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="content">
+        <button
+          @click="content.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ 'is-active': content.isActive('heading', { level: 1 }) }"
+        >
+          H1
+        </button>
+        <button
+          @click="content.chain().focus().toggleHeading({ level: 2 }).run()"
+          :class="{ 'is-active': content.isActive('heading', { level: 2 }) }"
+        >
+          H2
+        </button>
+        <button
+          @click="content.chain().focus().toggleBulletList().run()"
+          :class="{ 'is-active': content.isActive('bulletList') }"
+        >
+          Bullet List
+        </button>
+      </floating-menu>
+    </div>
+
+    <editor-content v-if="content" :editor="content" class="editor md:w-4/5" />
   </div>
 </template>
 <style scoped lang="scss">

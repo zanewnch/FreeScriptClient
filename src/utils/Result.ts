@@ -1,4 +1,4 @@
-class Result<T> {
+export class Result<T> {
   code: number
   msg: string | null
   data: T | null
@@ -22,4 +22,4 @@ class Result<T> {
   }
 }
 
-export default Result
+

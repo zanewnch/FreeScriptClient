@@ -2,6 +2,28 @@
 import ConHomeVue from '@/components/HomeView/ConHomeNew.vue'
 import Nav from '@/components/HomeView/Nav.vue'
 import { ref } from 'vue'
+import {
+  Edit,
+  Search,
+} from "@element-plus/icons-vue";
+import { useRouter } from 'vue-router';
+
+
+let hospitalNameRef = ref<string>('');
+    let $router = useRouter();
+// const getApi = new GetApi();
+// function fetchData(keyword: string, callBack: any) {
+//   //   When using finish typing search content, this function will be triggered, so we can request data in this function.
+//   //   The keyword is user typing content, which is equal to hospitalNameRef(v-model).
+//   //   and the callback function, callback: 一个回调函数，用于将匹配的选项返回给 el-autocomplete 组件，从而在下拉列表中展示供用户选择。
+//   getApi.getHospitalName(keyword, callBack);
+
+// }
+// When click one of recommend option in search bar, trigger this function
+function goDetail(item: any) {
+  console.log(item);
+  $router.push({ path: '/hospital/reservation', query: { hoscode: item.hoscode } });
+}
 
 let isService = ref(false)
 const changeService = (event: any) => {
@@ -36,6 +58,23 @@ const closeService = () => {
     <el-row class="md:w-full" style="border-bottom: 0.5px solid #e0e0e0">
       <el-col :span="24" class="md:w-full">
         <Nav>
+          <template #search>
+            <div class="search">
+              <el-autocomplete
+                v-model="hospitalNameRef"
+                :fetch-suggestions="fetchData"
+                :trigger-on-focus="false"
+                clearable
+                class="el-input_wrapper"
+                placeholder="Input Data to Search"
+                @select="goDetail"
+              />
+              <el-button type="info" :icon="Search" class="search-button border-2" plain
+                >Search</el-button
+              >
+            </div>
+          </template>
+           <!-- write button -->
           <template #write>
             <li class="flex justify-center items-center">
               <el-icon>
@@ -45,11 +84,13 @@ const closeService = () => {
             </li>
           </template>
 
+          <!-- login button -->
           <template #about>
-            <li><a href="#" class="text-black hover:underline">About</a></li>
+            <li><a href="login" class="text-black hover:underline">login</a></li>
             <li></li
           ></template>
 
+          <!-- services -->
           <template #services>
             <li>
               <!-- 下拉式菜单 -->
@@ -84,13 +125,14 @@ const closeService = () => {
             </li>
           </template>
 
+          <!-- contact button -->
           <template #contact>
             <li><a href="#" class="text-black hover:underline">Contact</a></li>
           </template>
         </Nav>
       </el-col>
     </el-row>
-    <!-- bottom part -->
+    <!-- main content -->
     <ConHomeVue></ConHomeVue>
   </div>
 </template>

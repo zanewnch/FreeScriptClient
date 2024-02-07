@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { useGlobalStore } from '@/stores/GlobalStore';
+
+const globalStore = useGlobalStore();
 
 // Create a custom instance of Axios
 const request = axios.create({
@@ -10,6 +13,11 @@ const request = axios.create({
 
 // Request interceptor
 request.interceptors.request.use((config) => {
+  // add authorization token to request header
+  if(globalStore.isLogin && globalStore.loginToken !== null){
+    config.headers['Authorization'] = `Bearer ${globalStore.loginToken}`;
+  }
+
   return config;
 });
 

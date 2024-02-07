@@ -1,247 +1,126 @@
 <script lang="ts" setup>
+import { ref, type Ref, watchEffect } from 'vue';
+import request from '@/utils/Request'
+import { useGlobalStore } from '../stores/GlobalStore'
+import { Result } from '../utils/Result'
 
-// @ts-ignore
-import { useLoginStore } from "@/stores/LoginStore";
-import { Edit } from '@element-plus/icons-vue';
-import { useRouter } from "vue-router";
-import { useUserStore } from '@/stores/UserStore';
+const globalStore = useGlobalStore()
+const username: Ref<string> = ref('')
+const password: Ref<string> = ref('')
+const isUsernameError: Ref<boolean> = ref(false)
+const isPasswordError: Ref<boolean> = ref(false)
 
-const loginStore = useLoginStore();
-const userStore = useUserStore();
-let $router = useRouter();
+const signIn = async (): Promise<void> => {
+  // check username format
+  if (username.value.length === 0) {
+    isUsernameError.value = true
+  }
+  // check password format
+  if (password.value.length === 0) {
+    isPasswordError.value = true
+  }
 
-
-
-const login = async () => {
+  // request for checking account
   try {
+    // send request
+    const result: Result<string> = await request.post(
+      '/user/login',
+      {
+        username: username.value,
+        password: password.value
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
 
-    await loginStore.login(loginStore.username, loginStore.password);
-
-
-    if (!loginStore.submitIsWrong) {
-      // make isLogin states is true
-      userStore.isLogin = true;
-      $router.push({ path: '/data/user' });
-    } else {
-      console.log(loginStore.submitIsWrong);
-      console.log("The login manipulation is wrong");
+    // set isLogin state is true for making interceptor request with token
+    if (result.code === 200) {
+      // set isLogin for interceptor send request with token
+      globalStore.username = username.value
+      globalStore.isLogin = true
+      if (result.data) globalStore.loginToken = result.data;
     }
-  } catch (error) {
-
-    console.error('Error:', error);
+  } catch (e) {
+    console.log(e)
   }
 }
 
-
+// for testing, when ref change then print out the data
+watchEffect(()=>{
+  console.log('username:',username.value);
+  console.log('password:',password.value);
+})
 
 </script>
 
 <template>
-  <!-- <div class="container">
-    <div class="content">
-      <el-row class="elRow">
-        <el-col
-          :span="24"
-          class="elCol"
-        >
-
-
-          <div class='columnUp'>
-            <p style='margin-bottom: 5px;'>Username</p>
-            <el-input
-              v-model="loginStore.username"
-              class="input"
-              size="large"
-              clearable
-              @blur="loginStore.usernameValidate"
-            />
-
-            <span
-              class='errorMessage'
-              v-if='loginStore.usernameIsError === 1'
-            >Please input the username</span>
-
-          </div>
-
-          <div class='columnDown'>
-            <p style='margin-bottom: 5px;'>password</p>
-            <el-input
-              v-model="loginStore.password"
-              class="input"
-              size="large"
-              clearable
-              @blur="loginStore.passwordValidate"
-              @keyup.enter="login"
-            />
-
-            <span
-              class='errorMessage'
-              v-if='loginStore.passwordIsError === 1'
-            >Please input the password</span>
-          </div>
-
-          <div class='submit'>
-            <el-button
-              @click='login'
-              type="info"
-              text
-              bg
-              class='submitButton'
-            >Submit</el-button>
-
-          </div>
-
-
-
-        </el-col>
-      </el-row>
-    </div>
-  </div> -->
-
-  <head>
-    <meta charset="UTF-8">
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    >
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    >
-    <title>Login Page - Tailwind CSS</title>
-  </head>
+  <!-- Outer container with flexbox for centering content -->
   <div class="flex items-center justify-center h-screen">
+    <!-- Inner container with width restrictions -->
     <div class="w-full max-w-xs">
+      <!-- Form container with styling for background, shadow, padding, and margin -->
       <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <!-- Username input field container -->
         <div class="mb-4">
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="username"
-          >
+          <!-- Label for username input field -->
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
             Username
           </label>
+          <!-- Username input field -->
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
             placeholder="Username"
-          >
+            v-model='username'
+          />
         </div>
+        <!-- Password input field container -->
         <div class="mb-6">
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="password"
-          >
+          <!-- Label for password input field -->
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
             Password
           </label>
+          <!-- Password input field -->
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
             placeholder="******************"
-          >
+            v-model='password'
+          />
+          <!-- Password hint text -->
           <p class="text-xs italic">Please choose a password.</p>
         </div>
+        <!-- Container for sign in button and forgot password link -->
         <div class="flex items-center justify-between">
+          <!-- Sign in button -->
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
+            @click="signIn"
           >
             Sign In
           </button>
-          <a
-            class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
-          >
-            Forgot Password?
-          </a>
+          <!-- Forgot password link -->
+          <div class="md:flex md:flex-col md:justify-start md:items-start">
+            <p class="md:text-sm">Already have an account?</p>
+            <a
+              class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              href="/register"
+            >
+              Sign up
+            </a>
+          </div>
         </div>
       </form>
-      <p class="text-center text-gray-500 text-xs">
-        &copy;2024 Tailwind Login. All rights reserved.
-      </p>
+      <!-- Copyright text -->
+      <p class="text-center text-gray-500 text-xs">&copy;Zane</p>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100vh;
-
-
-
-  .content {
-    width: 80%;
-    height: 90%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .elRow {
-      width: 40%;
-      height: 80%;
-
-      border: solid 1px #D0D0D0;
-      border-radius: 10px;
-      box-shadow: 0px 5px 10px rgb(0, 0, 0, 0.1);
-
-
-      .elCol {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-
-
-
-
-
-
-        .columnUp {
-          width: 60%;
-          height: 25%;
-
-          margin-top: 10%;
-
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-        }
-
-        .columnDown {
-          width: 60%;
-          height: 25%;
-
-          margin-top: 3%;
-
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-
-        .submit {
-          width: 30%;
-          margin-top: 10%;
-
-          :deep(.submitButton) {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
-}
-
-.errorMessage {
-  color: red;
-  margin-top: 5px;
-}</style>
+<style scoped lang="scss"></style>
