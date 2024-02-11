@@ -49,6 +49,7 @@ onBeforeUnmount((): void => {
 
 const sendData = async (): Promise<void> => {
   try {
+    // check if the title and content are not empty
     if (content.value && title.value) {
       const res: AxiosResponse<any> = await request.post(
         '/article/publish',

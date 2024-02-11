@@ -54,7 +54,7 @@ const closeService = () => {
 
 <template>
   <div class="xl:w-full md:h-screen">
-    <!-- up part -->
+    <!-- NAV -->
     <el-row class="md:w-full" style="border-bottom: 0.5px solid #e0e0e0">
       <el-col :span="24" class="md:w-full">
         <Nav>
