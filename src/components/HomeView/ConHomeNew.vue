@@ -95,6 +95,7 @@ onMounted(() => {
       class="md:h-screen w-full md:flex md:flex-col md:justify-start md:items-center h-5/6"
       style="border-right:0.5px solid #E0E0E0;"
     >
+    <!-- status bar -->
       <section class='section-up md:w-full flex justify-center'>
         <div
           class="status-bar md:flex md:justify-around md:items-center  "

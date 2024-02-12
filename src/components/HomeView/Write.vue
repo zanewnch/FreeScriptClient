@@ -24,14 +24,14 @@ onMounted((): void => {
       <p>
         Input content...
       </p>
-      
+
     `
   })
   title.value = new Editor({
     extensions: [StarterKit, Highlight, Typography, Heading],
     content: `
       <p>
-        <em>Title...</em> 
+        <em>Title...</em>
       </p>
     `
   })
@@ -54,8 +54,26 @@ const sendData = async (): Promise<void> => {
       const res: AxiosResponse<any> = await request.post(
         '/article/publish',
         {
-          title: title.value.getHTML(),
-          content: content.value.getHTML()
+          data: {
+            title: title.value.getHTML(),
+            content: content.value.getHTML(),
+            author: 'admin',
+            createdDate: new Date(),
+            publishedDate: new Date(),
+            updatedDate: new Date(),
+            tag: 'test',
+            like: 0,
+            view: 0,
+            summary: 'test',
+            status: 'test',
+            comment: [
+              {
+                username: 'Commenter',
+                content: 'This is a comment.',
+                createdDate: new Date()
+              }
+            ]
+          }
         },
         {
           headers: {
@@ -138,7 +156,11 @@ const sendData = async (): Promise<void> => {
       </floating-menu>
     </div>
 
-    <editor-content v-if="title" :editor="title" class="editor md:appearance-none focus:outline-none md:w-4/5" />
+    <editor-content
+      v-if="title"
+      :editor="title"
+      class="editor md:appearance-none focus:outline-none md:w-4/5"
+    />
 
     <div v-if="content" class="bg-red-400 md:w-4/5">
       <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="content">
