@@ -2,9 +2,8 @@
 import { ref, computed, onMounted, onUnmounted, type Ref } from 'vue'
 import request from '@/utils/Request'
 
-// !v-html 裡面的tag 要如何做css render
-// 1. 不要用html傳給後端  直接傳給後端的是純文字
-// 2. 目前想到的解法是 使用 deep selector 來強制render 但問題是 原本的html tag 沒有class, 就只能用 tagName 來render, 但問題是 這樣會讓同個tag都一樣的css
+// 1. insert data to db for test
+// 2. change the original articles data to request data
 
 // Sample data for articles
 const articles: {
