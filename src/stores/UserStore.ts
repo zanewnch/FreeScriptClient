@@ -20,8 +20,8 @@ export const useUserStore = defineStore('userStore', {
     totalDataAmount: any
     requestData: any
     pageNum: number | null
-    pageSize: number | null,
-    isLogin: boolean,
+    pageSize: number | null
+    isLogin: boolean
     showSignOutAlarm: boolean
   } => {
     return {
@@ -33,8 +33,8 @@ export const useUserStore = defineStore('userStore', {
       requestData: null,
       pageNum: null,
       pageSize: null,
-      isLogin:false,
-      showSignOutAlarm:false
+      isLogin: false,
+      showSignOutAlarm: false
     }
   },
   getters: {
@@ -80,9 +80,12 @@ export const useUserStore = defineStore('userStore', {
 
     async getByPage(): Promise<void> {
       try {
-        const res: AxiosResponse<Result<any>> = await request.get(
-          `/user/${this.pageNum}/${this.pageSize}`
-        )
+        const res: AxiosResponse<Result<any>> = await request.get(`/user`, {
+          params: {
+            pageNum: this.pageNum,
+            pageSize: this.pageSize
+          }
+        })
 
         this.requestData = res.data
 
@@ -206,15 +209,14 @@ export const useUserStore = defineStore('userStore', {
         console.log(e)
       }
     },
-    deleteCookie(cookieName:string){
-      document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    deleteCookie(cookieName: string) {
+      document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
     },
-    checkCookie(cookieName:string):void{
-      // if with authToken, which mean the user had logined. 
-      if(document.cookie.includes(cookieName)){
-        this.isLogin = true;
-       }
+    checkCookie(cookieName: string): void {
+      // if with authToken, which mean the user had logined.
+      if (document.cookie.includes(cookieName)) {
+        this.isLogin = true
+      }
     }
-
   }
 })
