@@ -1,32 +1,62 @@
 <script lang="ts" setup>
 import ConHomeVue from '@/components/HomeView/ConHomeNew.vue'
 import Nav from '@/components/HomeView/Nav.vue'
-import { ref } from 'vue'
-import {
-  Edit,
-  Search,
-} from "@element-plus/icons-vue";
-import { useRouter } from 'vue-router';
+import { ref, onMounted, type Ref } from 'vue'
+import { Edit, Search } from '@element-plus/icons-vue'
 
+import request from '@/utils/Request'
+import type { Article } from '../interface/ArticleInterface'
 
-let hospitalNameRef = ref<string>('');
-    let $router = useRouter();
-// const getApi = new GetApi();
-// function fetchData(keyword: string, callBack: any) {
-//   //   When using finish typing search content, this function will be triggered, so we can request data in this function.
-//   //   The keyword is user typing content, which is equal to hospitalNameRef(v-model).
-//   //   and the callback function, callback: 一个回调函数，用于将匹配的选项返回给 el-autocomplete 组件，从而在下拉列表中展示供用户选择。
-//   getApi.getHospitalName(keyword, callBack);
+// for user input data in search bar
+const searchText: Ref<string> = ref('')
 
-// }
-// When click one of recommend option in search bar, trigger this function
-function goDetail(item: any) {
-  console.log(item);
-  $router.push({ path: '/hospital/reservation', query: { hoscode: item.hoscode } });
+// the interface of data to show in search bar recommended list
+interface searchRecommend {
+  value: string
+  link: string
+}
+// the array to store the data to show in search bar recommended list
+const showData: Ref<searchRecommend[]> = ref([])
+
+let timeout: ReturnType<typeof setTimeout>
+const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => {
+  const res = await request.get('/search', {
+    params: {
+      keyword: queryString
+    }
+  })
+
+  // worse case
+  // res.data.data.forEach((item: Article) => {
+  //   showData.value.push({
+  //     value: item['title'],
+  //     link: item['author']
+  //   })
+  // })
+
+  // better case
+  showData.value = res.data.data.map((item: Article) => {
+    return {
+      value: item['title'],
+      link: item['author']
+    }
+  })
+
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    cb(showData.value)
+  }, 3000 * Math.random())
 }
 
-let isService = ref(false)
-const changeService = (event: any) => {
+const handleSelect = (item: searchRecommend) => {
+  console.log(item)
+  // window.open(item.link)
+}
+onMounted(() => {})
+
+//
+const isService = ref(false)
+const toggleServiceDropDown = (event: MouseEvent) => {
   /* 
   const changeService = ()=>{
   isService.value = true;
@@ -42,13 +72,17 @@ ChatGPT
   在你的代码中，使用 event.stopPropagation() 是为了防止在点击 "Services" 按钮时立即触发 document 上的点击事件监听器，从而确保点击按钮时只执行打开服务列表的逻辑，而不会立即关闭它。这样你可以点击按钮以外的地方来关闭服务列表。
  */
   event.stopPropagation()
-  isService.value = true
-  document.addEventListener('click', closeService, false)
+  isService.value = !isService.value
+  // listen whether has click event, if has, then invoke the corresponding function
+  if (isService.value) {
+    document.addEventListener('click', closeService, { once: true })
+  } else {
+    document.removeEventListener('click', closeService, false)
+  }
 }
 
 const closeService = () => {
   isService.value = false
-  document.removeEventListener('click', closeService, false)
 }
 </script>
 
@@ -61,20 +95,20 @@ const closeService = () => {
           <template #search>
             <div class="search">
               <el-autocomplete
-                v-model="hospitalNameRef"
-                :fetch-suggestions="fetchData"
-                :trigger-on-focus="false"
+                v-model="searchText"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="Please input"
                 clearable
                 class="el-input_wrapper"
-                placeholder="Input Data to Search"
-                @select="goDetail"
+                @select="handleSelect"
               />
+
               <el-button type="info" :icon="Search" class="search-button border-2" plain
                 >Search</el-button
               >
             </div>
           </template>
-           <!-- write button -->
+          <!-- write button -->
           <template #write>
             <li class="flex justify-center items-center">
               <el-icon>
@@ -87,8 +121,8 @@ const closeService = () => {
           <!-- login button -->
           <template #about>
             <li><a href="login" class="text-black hover:underline">login</a></li>
-            <li></li
-          ></template>
+            <li></li>
+          </template>
 
           <!-- services -->
           <template #services>
@@ -97,7 +131,7 @@ const closeService = () => {
               <div class="relative group">
                 <button
                   class="text-black hover:underline focus:outline-none"
-                  @click="changeService"
+                  @click="toggleServiceDropDown"
                 >
                   Services
                 </button>
