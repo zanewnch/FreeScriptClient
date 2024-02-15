@@ -52,7 +52,7 @@ const handleSelect = (item: searchRecommend) => {
   console.log(item)
   // window.open(item.link)
 }
-onMounted(() => {})
+onMounted(() => { })
 
 //
 const isService = ref(false)
@@ -89,23 +89,38 @@ const closeService = () => {
 <template>
   <div class="xl:w-full md:h-screen">
     <!-- NAV -->
-    <el-row class="md:w-full" style="border-bottom: 0.5px solid #e0e0e0">
-      <el-col :span="24" class="md:w-full">
+    <el-row
+      class="md:w-full"
+      style="border-bottom: 0.5px solid #e0e0e0"
+    >
+      <el-col
+        :span="24"
+        class="md:w-full"
+      >
         <Nav>
           <template #search>
-            <div class="search">
+            <div class="bg-green-400">
               <el-autocomplete
                 v-model="searchText"
                 :fetch-suggestions="querySearchAsync"
-                placeholder="Please input"
+                placeholder=""
                 clearable
-                class="el-input_wrapper"
+                class="el-input_wrapper md:ml-4 md:w-80 md:rounded-md"
                 @select="handleSelect"
               />
+              <!-- <button class="border-2 md:w-12 md:ml-4 md:h-8 md:text-sm md:flex md:justify-center md:items-center">
+                <el-icon>
+                  <Search />
+                </el-icon>
+                Search
+              </button> -->
 
-              <el-button type="info" :icon="Search" class="search-button border-2" plain
-                >Search</el-button
-              >
+              <el-button
+                type="info"
+                :icon="Search"
+                class="search-button border-2 md:w-12 md:ml-4"
+                plain
+              ></el-button>
             </div>
           </template>
           <!-- write button -->
@@ -114,13 +129,19 @@ const closeService = () => {
               <el-icon>
                 <Edit />
               </el-icon>
-              <a href="#" class="text-black hover:underline">Write</a>
+              <a
+                href="#"
+                class="text-black hover:underline"
+              >Write</a>
             </li>
           </template>
 
           <!-- login button -->
           <template #about>
-            <li><a href="login" class="text-black hover:underline">login</a></li>
+            <li><a
+                href="login"
+                class="text-black hover:underline"
+              >login</a></li>
             <li></li>
           </template>
 
@@ -140,19 +161,22 @@ const closeService = () => {
                   v-if="isService"
                 >
                   <li class="flex justify-center items-center">
-                    <a href="/data" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      >Service 1</a
-                    >
+                    <a
+                      href="/data"
+                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >Service 1</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      >Service 2</a
-                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >Service 2</a>
                   </li>
                   <li>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                      >Service 3</a
-                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >Service 3</a>
                   </li>
                 </ul>
               </div>
@@ -161,7 +185,10 @@ const closeService = () => {
 
           <!-- contact button -->
           <template #contact>
-            <li><a href="#" class="text-black hover:underline">Contact</a></li>
+            <li><a
+                href="#"
+                class="text-black hover:underline"
+              >Contact</a></li>
           </template>
         </Nav>
       </el-col>
