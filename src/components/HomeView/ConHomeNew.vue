@@ -86,13 +86,12 @@ onMounted(() => {
 
 </script>
 <template>
-  <el-row
-    class='md:w-full  md:'
-    id='test'
+  <div
+    class='md:w-full  md:flex md:justify-center md:items-center md:h-screen  '
+    
   >
-    <el-col
-      :span="16"
-      class="md:h-screen w-full md:flex md:flex-col md:justify-start md:items-center h-5/6"
+    <div
+      class="md:h-screen w-full md:flex md:flex-col md:justify-start md:items-center h-5/6 md:w-2/3 "
       style="border-right:0.5px solid #E0E0E0;"
     >
     <!-- status bar -->
@@ -150,21 +149,17 @@ onMounted(() => {
 
 
 
-    </el-col>
-    <el-col
-      :span="8"
-      class="sticky-container md:flex md:flex-col md:justify-start md:items-center"
+    </div>
+    <div
+      class=" md:flex md:flex-col md:justify-start md:items-center md:w-1/3  md:h-screen"
+      
     >
       <HomeRight></HomeRight>
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 <style scoped lang="scss">
 @media (min-width: 768px) {
-  #test {
-    // background-color: red;
-  }
-
   .section-up {
     margin-top: 30px;
   }

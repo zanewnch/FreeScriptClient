@@ -52,7 +52,7 @@ const handleSelect = (item: searchRecommend) => {
   console.log(item)
   // window.open(item.link)
 }
-onMounted(() => { })
+onMounted(() => {})
 
 //
 const isService = ref(false)
@@ -89,17 +89,11 @@ const closeService = () => {
 <template>
   <div class="xl:w-full md:h-screen">
     <!-- NAV -->
-    <el-row
-      class="md:w-full"
-      style="border-bottom: 0.5px solid #e0e0e0"
-    >
-      <el-col
-        :span="24"
-        class="md:w-full"
-      >
+    <div class="md:w-full md:flex md:justify-center md:h-20 bg-green-300"  style="border-bottom: 0.5px solid #e0e0e0">
+      <div  class="md:w-full">
         <Nav>
           <template #search>
-            <div class="bg-green-400">
+            <div class="">
               <el-autocomplete
                 v-model="searchText"
                 :fetch-suggestions="querySearchAsync"
@@ -129,19 +123,13 @@ const closeService = () => {
               <el-icon>
                 <Edit />
               </el-icon>
-              <a
-                href="#"
-                class="text-black hover:underline"
-              >Write</a>
+              <a href="#" class="text-black hover:underline">Write</a>
             </li>
           </template>
 
           <!-- login button -->
           <template #about>
-            <li><a
-                href="login"
-                class="text-black hover:underline"
-              >login</a></li>
+            <li><a href="login" class="text-black hover:underline">login</a></li>
             <li></li>
           </template>
 
@@ -161,22 +149,19 @@ const closeService = () => {
                   v-if="isService"
                 >
                   <li class="flex justify-center items-center">
-                    <a
-                      href="/data"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 1</a>
+                    <a href="/data" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >Service 1</a
+                    >
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 2</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >Service 2</a
+                    >
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 3</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >Service 3</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -185,16 +170,18 @@ const closeService = () => {
 
           <!-- contact button -->
           <template #contact>
-            <li><a
-                href="#"
-                class="text-black hover:underline"
-              >Contact</a></li>
+            <li><a href="#" class="text-black hover:underline">Contact</a></li>
           </template>
         </Nav>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
     <!-- main content -->
-    <ConHomeVue></ConHomeVue>
+    <div class="md:w-full md:flex md:justify-center">
+    <div class=" md:w-4/5 md:flex md:justify-center ">
+      <ConHomeVue></ConHomeVue>
+      
+    </div>
+  </div>
   </div>
 </template>
 
