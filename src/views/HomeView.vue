@@ -89,7 +89,7 @@ const closeService = () => {
 <template>
   <div class="xl:w-full md:h-screen">
     <!-- NAV -->
-    <div class="md:w-full md:flex md:justify-center md:h-20 bg-green-300"  style="border-bottom: 0.5px solid #e0e0e0">
+    <div class="md:w-full md:flex md:justify-center md:h-20 "  style="border-bottom: 0.5px solid #e0e0e0">
       <div  class="md:w-full">
         <Nav>
           <template #search>
