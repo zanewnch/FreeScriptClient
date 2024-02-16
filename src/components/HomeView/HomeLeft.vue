@@ -24,6 +24,9 @@ const requestData = async (pageNum: number, pageSize: number) => {
   }
 }
 
+const urlFriendly =(title:string)=>{ title.replace(/<\/?p>/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+}
+
 // Flag to track if new data needs to be loaded
 let needToLoad = false
 
@@ -95,15 +98,17 @@ onUnmounted(() => {
     v-for="(item, index) in showData"
     :key="index"
   >
-     <div class="author" v-if="item['author']">
-      <div v-html="item['author']"></div>
-    </div>
-    <div class="title">
-      <div v-html="item['title']"></div>
-    </div>
-    <div class="content">
-      <div v-html="item['content']"></div>
-    </div>
+    <a :href="urlFriendly(item['title'])">
+      <div class="author" v-if="item['author']">
+        <div v-html="item['author']"></div>
+      </div>
+      <div class="title">
+        <div v-html="item['title']"></div>
+      </div>
+      <div class="content">
+        <div v-html="item['content']"></div>
+      </div>
+    </a>
   </div>
 </template>
 <style scoped lang="scss">
@@ -131,8 +136,6 @@ onUnmounted(() => {
     white-space: wrap;
     text-overflow: ellipsis;
     line-height: 20px;
-
-    
   }
 }
 </style>

@@ -89,8 +89,11 @@ const closeService = () => {
 <template>
   <div class="xl:w-full md:h-screen">
     <!-- NAV -->
-    <div class="md:w-full md:flex md:justify-center md:h-20 "  style="border-bottom: 0.5px solid #e0e0e0">
-      <div  class="md:w-full">
+    <div
+      class="md:w-full md:flex md:justify-center md:h-20"
+      style="border-bottom: 0.5px solid #e0e0e0"
+    >
+      <div class="md:w-full">
         <Nav>
           <template #search>
             <div class="">
@@ -177,11 +180,10 @@ const closeService = () => {
     </div>
     <!-- main content -->
     <div class="md:w-full md:flex md:justify-center">
-    <div class=" md:w-4/5 md:flex md:justify-center ">
-      <ConHomeVue></ConHomeVue>
-      
+      <div class="md:w-4/5 md:flex md:justify-center">
+        <ConHomeVue></ConHomeVue>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 

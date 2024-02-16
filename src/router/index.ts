@@ -45,7 +45,7 @@ const router = createRouter({
           path: 'lineChart',
           name: 'lineChart',
           // @ts-ignore
-          component:()=>import('../components/DataView/LineChart.vue')
+          component: () => import('../components/DataView/LineChart.vue')
         }
       ]
     },
@@ -68,10 +68,16 @@ const router = createRouter({
       component: () => import('../views/RegisterView.vue')
     },
     {
-      path:'/new-article',
-      name:'new-article',
+      path: '/new-article',
+      name: 'new-article',
       // @ts-ignore
-      component: ()=>import('../components/HomeView/Write.vue')
+      component: () => import('../components/HomeView/Write.vue')
+    },
+    {
+      path: '/article/:title',
+      name: 'article',
+      // @ts-ignore
+      component: () => import('../views/ArticleView.vue')
     }
   ]
 })
