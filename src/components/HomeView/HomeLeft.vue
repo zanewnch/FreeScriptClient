@@ -24,7 +24,19 @@ const requestData = async (pageNum: number, pageSize: number) => {
   }
 }
 
-const urlFriendly =(title:string)=>{ title.replace(/<\/?p>/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+const urlFriendly = (author:string,title: string) => {
+  return (
+    author
+      .replace(/<\/?p>/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-')+'/' +
+    title
+      .replace(/<\/?p>/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+  )
 }
 
 // Flag to track if new data needs to be loaded
@@ -98,7 +110,7 @@ onUnmounted(() => {
     v-for="(item, index) in showData"
     :key="index"
   >
-    <a :href="urlFriendly(item['title'])">
+    <a :href="urlFriendly(item['author'] || '',item['title'] || '')">
       <div class="author" v-if="item['author']">
         <div v-html="item['author']"></div>
       </div>

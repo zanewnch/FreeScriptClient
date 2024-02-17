@@ -74,7 +74,7 @@ const router = createRouter({
       component: () => import('../components/HomeView/Write.vue')
     },
     {
-      path: '/article/:title',
+      path: '/:author/:title',
       name: 'article',
       // @ts-ignore
       component: () => import('../views/ArticleView.vue')
