@@ -113,7 +113,7 @@ const closeService = () => {
               </button> -->
 
               <el-button
-                type="info"
+                type="primary"
                 :icon="Search"
                 class="search-button border-2 md:w-12 md:ml-4"
                 plain

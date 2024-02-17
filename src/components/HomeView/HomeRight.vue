@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// !the data in HomeRight.vue is still static, need to be dynamic
 const data: {
   name: string
   articleTitle: string
@@ -66,6 +67,7 @@ const writerList: {
     <div class="highlight-top md:w-full md:h-8 md:flex md:justify-center">
       <p
         class="highlight-top-content md:text-start md:text-lg md:text-wrap md:text-black md:text md:font-bold"
+        style="color: #0080ff"
       >
         Staff Picks
       </p>
@@ -90,7 +92,7 @@ const writerList: {
     <div class="p-5 flex flex-col space-y-4 md:w-4/5">
       <div class="flex flex-col space-y-2">
         <div>Basic badges</div>
-        <div class="flex justify-center space-x-4  flex-wrap">
+        <div class="flex justify-center space-x-4 flex-wrap">
           <div
             style="padding-top: 0.1em; padding-bottom: 0.1rem"
             class="text-xs px-3 bg-gray-200 text-gray-800 rounded-full md:text-wrap md:text-center md:mt-2"
@@ -99,10 +101,8 @@ const writerList: {
           >
             {{ item['topic'] }}
           </div>
-
-         
+        </div>
       </div>
-    </div>
     </div>
   </section>
 
@@ -112,6 +112,7 @@ const writerList: {
     <div class="highlight-top md:w-full md:h-8 md:flex md:justify-center">
       <p
         class="highlight-top-content md:text-start md:text-lg md:text-wrap md:text-black md:text md:font-bold"
+        style="color: #0080ff"
       >
         Who To Follow
       </p>

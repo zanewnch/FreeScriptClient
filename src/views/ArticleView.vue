@@ -6,10 +6,11 @@ import { Edit, Search } from '@element-plus/icons-vue'
 import Nav from '@/components/HomeView/Nav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 
-const route: RouteLocationNormalizedLoaded = useRoute()
-const articleAuthor: string | string[] = route.params.author
-const articleTitle: string | string[] = route.params.title
-const articleData: any = ref('a')
+const route: RouteLocationNormalizedLoaded = useRoute();
+const articleAuthor: string | string[] = route.params.author;
+const articleTitle: string | string[] = route.params.title;
+const articleData: any = ref('a');
+const avatarPath: string = `../../public/userAvatar/${articleAuthor}.png`;
 
 const requestData = async () => {
   try {
@@ -107,7 +108,7 @@ const closeService = () => {
     <!-- NAV -->
     <div
       class="md:w-full md:flex md:justify-center md:h-20"
-      style="border-bottom: 0.5px solid #e0e0e0"
+      style="border-bottom: 0.5px solid #e0e0e0;"
     >
       <div class="md:w-full">
         <Nav>
@@ -129,7 +130,7 @@ const closeService = () => {
                 </button> -->
 
               <el-button
-                type="info"
+                type="primary"
                 :icon="Search"
                 class="search-button border-2 md:w-12 md:ml-4"
                 plain
@@ -214,7 +215,11 @@ const closeService = () => {
           <div v-html="articleData[0]['title']"></div>
         </div>
 
-        <div class="author">
+        <div
+          class="author md:flex md:justify-start md:items-center md:h-16"
+          style="border-bottom: 0.5px solid #e0e0e0;"
+        >
+          <el-avatar :src="avatarPath" />
           <div v-html="articleData[0]['author']"></div>
         </div>
         <div class="content">
@@ -227,15 +232,14 @@ const closeService = () => {
 <style scoped lang="scss">
 @media (min-width: 768px) {
   .title {
+    margin-top: 2rem;
+
     p {
       text-align: left;
 
       white-space: normal;
       word-break: break-word;
       text-wrap: normal;
-
-      margin-top: 0.75rem;
-
 
       font-size: 32px;
       font-weight: bolder;
@@ -247,8 +251,6 @@ const closeService = () => {
       white-space: normal;
       word-break: break-word;
       text-wrap: normal;
-
-      margin-top: 0.75rem;
 
       font-size: 32px;
       font-weight: bolder;
@@ -256,36 +258,27 @@ const closeService = () => {
   }
 
   .author {
+
+
     p {
-      text-align: left;
-
-      white-space: normal;
-      word-break: break-word;
-      text-wrap: normal;
-
-      margin-top: 0.75rem;
+      text-align: center;
     }
 
     div {
-      text-align: left;
-
-      white-space: normal;
-      word-break: break-word;
-      text-wrap: normal;
-
-      margin-top: 0.75rem;
+      text-align: center;
+      margin-left: 1rem;
     }
   }
 
   .content {
+    margin-top: 2rem;
+
     p {
       text-align: left;
 
       white-space: normal;
       word-break: break-word;
       text-wrap: normal;
-
-      margin-top: 0.75rem;
     }
 
     div {
@@ -294,8 +287,6 @@ const closeService = () => {
       white-space: normal;
       word-break: break-word;
       text-wrap: normal;
-
-      margin-top: 0.75rem;
     }
   }
 }

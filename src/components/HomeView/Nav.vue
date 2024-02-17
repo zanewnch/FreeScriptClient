@@ -8,7 +8,11 @@
         <div class="md:w-full flex justify-between items-center h-full ">
           <!-- 左侧 Logo 或标题 -->
           <div class="website-title text-black text-2xl font-bold h-full  flex justify-center items-center ">
-            <a href='/'>Free Script</a>
+            <a
+              href='/'
+              class=''
+              style='color:#4F4F4F;'
+            >Free Script</a>
 
             <slot name='search'></slot>
           </div>
@@ -53,5 +57,4 @@
       margin-left: 10px;
     }
   }
-}
-</style>
+}</style>

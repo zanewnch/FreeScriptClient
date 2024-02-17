@@ -24,13 +24,14 @@ const requestData = async (pageNum: number, pageSize: number) => {
   }
 }
 
-const urlFriendly = (author:string,title: string) => {
+const urlFriendly = (author: string, title: string) => {
   return (
     author
       .replace(/<\/?p>/g, '')
       .trim()
       .toLowerCase()
-      .replace(/\s+/g, '-')+'/' +
+      .replace(/\s+/g, '-') +
+    '/' +
     title
       .replace(/<\/?p>/g, '')
       .trim()
@@ -110,8 +111,13 @@ onUnmounted(() => {
     v-for="(item, index) in showData"
     :key="index"
   >
-    <a :href="urlFriendly(item['author'] || '',item['title'] || '')">
-      <div class="author" v-if="item['author']">
+    <a :href="urlFriendly(item['author'] || '', item['title'] || '')">
+      <div class="author md:flex md:justify-start md:items-center">
+        <el-avatar :src="`../../../userAvatar/${item['author']
+          .replace(/<\/?p>/g, '')
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, '-')}.png`" />
         <div v-html="item['author']"></div>
       </div>
       <div class="title">
@@ -130,24 +136,54 @@ onUnmounted(() => {
     border-bottom: 0.5px solid #e0e0e0;
   }
 
-  :deep(.author p) {
-    text-align: left;
+  .author {
+    p {
+      text-align: left;
+      margin-left: 1rem;
+    }
+
+    div {
+      text-align: left;
+      margin-left: 1rem;
+    }
   }
 
-  :deep(.tittle p) {
-    text-align: left;
-    margin-top: 5px;
-    font-size: 20px;
-    font-weight: bolder;
+  .title {
+    p {
+      text-align: left;
+      margin-top: 5px;
+      font-size: 20px;
+      font-weight: bolder;
+      margin-right: 2rem;
+    }
+
+    div {
+      text-align: left;
+      margin-top: 5px;
+      font-size: 20px;
+      font-weight: bolder;
+      margin-right: 2rem;
+    }
   }
 
-  :deep(.content p) {
-    margin-top: 10px;
-    text-align: left;
-    overflow: hidden;
-    white-space: wrap;
-    text-overflow: ellipsis;
-    line-height: 20px;
+  .content {
+    p {
+      margin-top: 10px;
+      text-align: left;
+      overflow: hidden;
+      white-space: wrap;
+      text-overflow: ellipsis;
+      line-height: 20px;
+    }
+
+    div {
+      margin-top: 10px;
+      text-align: left;
+      overflow: hidden;
+      white-space: wrap;
+      text-overflow: ellipsis;
+      line-height: 20px;
+    }
   }
 }
 </style>
