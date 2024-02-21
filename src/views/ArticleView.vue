@@ -6,16 +6,20 @@ import { Edit, Search } from '@element-plus/icons-vue'
 import Nav from '@/components/HomeView/Nav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 
-const route: RouteLocationNormalizedLoaded = useRoute();
-const articleAuthor: string | string[] = route.params.author;
-const articleTitle: string | string[] = route.params.title;
-const articleData: any = ref('a');
-const avatarPath: string = `../../public/userAvatar/${articleAuthor}.png`;
+const route: RouteLocationNormalizedLoaded = useRoute()
+const articleAuthor: string | string[] = route.params.author
+const articleTitle: string | string[] = route.params.title
+const articleData: any = ref('a')
+const avatarPath: string = `../../public/userAvatar/${articleAuthor}.png`
+const commentData: Ref<any> = ref(null)
 
 const requestData = async () => {
   try {
     const res = await request.get(`/article/${articleAuthor}/${articleTitle}`)
     articleData.value = res.data.data
+    commentData.value = res.data.data[0]['comments']
+
+
   } catch (e) {
     console.error(e)
   }
@@ -25,6 +29,8 @@ onMounted(async () => {
   console.log(articleData.value)
   await requestData()
   console.log(articleData.value[0]['content'])
+  console.log("comment")
+  console.log(commentData.value)
 })
 
 // for user input data in search bar
@@ -45,14 +51,6 @@ const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => 
       keyword: queryString
     }
   })
-
-  // worse case
-  // res.data.data.forEach((item: Article) => {
-  //   showData.value.push({
-  //     value: item['title'],
-  //     link: item['author']
-  //   })
-  // })
 
   // better case
   showData.value = res.data.data.map((item: Article) => {
@@ -106,9 +104,10 @@ const closeService = () => {
 <template>
   <div class="xl:w-full md:h-screen">
     <!-- NAV -->
+
     <div
       class="md:w-full md:flex md:justify-center md:h-20"
-      style="border-bottom: 0.5px solid #e0e0e0;"
+      style="border-bottom: 0.5px solid #e0e0e0"
     >
       <div class="md:w-full">
         <Nav>
@@ -144,7 +143,7 @@ const closeService = () => {
                 <Edit />
               </el-icon>
               <a
-                href="#"
+                href="/new-article"
                 class="text-black hover:underline"
               >Write</a>
             </li>
@@ -204,12 +203,20 @@ const closeService = () => {
                 class="text-black hover:underline"
               >Contact</a></li>
           </template>
+
+          <template #setting>
+            <li><a
+                href="/account-management"
+                class="text-black hover:underline"
+              >Setting</a></li>
+          </template>
         </Nav>
       </div>
     </div>
 
     <!-- Main content -->
-    <div class="md:w-full md:flex md:justify-center">
+    <div class="md:w-full md:flex md:flex-col md:justify-center md:items-center ">
+      <!-- article content -->
       <div class="md:w-2/5 md:flex md:flex-col">
         <div class="title">
           <div v-html="articleData[0]['title']"></div>
@@ -217,13 +224,45 @@ const closeService = () => {
 
         <div
           class="author md:flex md:justify-start md:items-center md:h-16"
-          style="border-bottom: 0.5px solid #e0e0e0;"
+          style="border-bottom: 0.5px solid #e0e0e0"
         >
           <el-avatar :src="avatarPath" />
           <div v-html="articleData[0]['author']"></div>
         </div>
-        <div class="content">
+        <div
+          class="content pb-4"
+          style=''
+        >
           <div v-html="articleData[0]['content']"></div>
+        </div>
+      </div>
+      <div class="md:w-2/5 md:flex    md:flex-col   md:justify-center ">
+        <!-- card content for comment-->
+        <div
+          class="card md:w-full md:h-44 md:flex md:flex-col md:justify-center md:overflow-hidden md:mt-6"
+          style='border-bottom: #e0e0e0 0.5px solid;
+          box-shadow:1px 1px 3px #e0e0e0;'
+          v-for="(item, index) in commentData"
+          :key="index"
+        >
+          <a
+            href="/"
+            class=' md:flex md:flex-col md:items-start 
+            '
+          >
+            <div class="md:flex md:justify-start md:items-center  ">
+              <!-- <el-avatar :src="`../../../userAvatar/${item['author']
+                .replace(/<\/?p>/g, '')
+                .trim()
+                .toLowerCase()
+                .replace(/\s+/g, '-')}.png`" /> -->
+              <div v-html="item['username']"></div>
+            </div>
+
+            <div class="">
+              <div v-html="item['content']"></div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -258,8 +297,6 @@ const closeService = () => {
   }
 
   .author {
-
-
     p {
       text-align: center;
     }
@@ -289,5 +326,4 @@ const closeService = () => {
       text-wrap: normal;
     }
   }
-}
-</style>
+}</style>

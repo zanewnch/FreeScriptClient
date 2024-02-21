@@ -78,6 +78,12 @@ const router = createRouter({
       name: 'article',
       // @ts-ignore
       component: () => import('../views/ArticleView.vue')
+    },
+    {
+      path:'/account-management',
+      name:'account-management',
+      // @ts-ignore
+      component: () => import('../views/AccountManagementView.vue')
     }
   ]
 })

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-// 完成編輯頁面
-// tailwindcss template
+
+// !tiptap table for show user table
+// !socket.io 
 import Nav from '@/components/HomeView/Nav.vue'
 import { ref, watch, onMounted, onBeforeUnmount, type Ref } from 'vue'
 import StarterKit from '@tiptap/starter-kit'
@@ -8,14 +9,15 @@ import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
 import Heading from '@tiptap/extension-heading'
 import type { AxiosResponse } from 'axios'
-import type Result from '@/utils/Result'
 import request from '@/utils/Request'
 import { BubbleMenu, Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import { useRouter } from 'vue-router'
 
+
 const router = useRouter()
 const title: Ref<Editor | null> = ref(null)
 const content: Ref<Editor | null> = ref(null)
+const isClearParagraph: Ref<boolean> = ref(true);
 
 onMounted((): void => {
   content.value = new Editor({
@@ -35,6 +37,10 @@ onMounted((): void => {
       </p>
     `
   })
+
+  
+
+  
 })
 
 onBeforeUnmount((): void => {
@@ -90,15 +96,27 @@ const sendData = async (): Promise<void> => {
     console.log(e)
   }
 }
+
+const clearDefaultParagraph = ()=>{
+  if(isClearParagraph.value){
+    title.value?.commands.clearContent(true);
+    content.value?.commands.clearContent(true);
+  }
+  
+  isClearParagraph.value = false;
+}
+
+
+
 </script>
 
 <template>
   <div class="md:w-full md:h-screen md:flex md:flex-col md:justify-start items-center">
     <!-- Nav -->
-    <div class="md:w-full">
-      <Nav>
+    <div class="md:w-full ">
+      <Nav class=''>
         <template #publish>
-          <li>
+          <li class='md:mr-32'>
             <button
               @click="sendData"
               type="button"
@@ -112,8 +130,15 @@ const sendData = async (): Promise<void> => {
       </Nav>
     </div>
 
-    <div v-if="title" class="bg-red-400 md:w-4/5">
-      <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="title">
+    <div
+      v-if="title"
+      class=" md:w-4/5"
+    >
+      <bubble-menu
+        class="bubble-menu"
+        :tippy-options="{ duration: 100 }"
+        :editor="title"
+      >
         <button
           @click="title.chain().focus().toggleBold().run()"
           :class="{ 'is-active': title.isActive('bold') }"
@@ -134,7 +159,11 @@ const sendData = async (): Promise<void> => {
         </button>
       </bubble-menu>
 
-      <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="title">
+      <floating-menu
+        class="floating-menu"
+        :tippy-options="{ duration: 100 }"
+        :editor="title"
+      >
         <button
           @click="title.chain().focus().toggleHeading({ level: 1 }).run()"
           :class="{ 'is-active': title.isActive('heading', { level: 1 }) }"
@@ -159,11 +188,19 @@ const sendData = async (): Promise<void> => {
     <editor-content
       v-if="title"
       :editor="title"
-      class="editor md:appearance-none focus:outline-none md:w-4/5"
+      class="editor md:appearance-none focus:outline-none md:w-3/5"
+      @click='clearDefaultParagraph'
     />
 
-    <div v-if="content" class="bg-red-400 md:w-4/5">
-      <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="content">
+    <div
+      v-if="content"
+      class="bg-red-400 md:w-4/5"
+    >
+      <bubble-menu
+        class="bubble-menu"
+        :tippy-options="{ duration: 100 }"
+        :editor="content"
+      >
         <button
           @click="content.chain().focus().toggleBold().run()"
           :class="{ 'is-active': content.isActive('bold') }"
@@ -184,7 +221,11 @@ const sendData = async (): Promise<void> => {
         </button>
       </bubble-menu>
 
-      <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="content">
+      <floating-menu
+        class="floating-menu"
+        :tippy-options="{ duration: 100 }"
+        :editor="content"
+      >
         <button
           @click="content.chain().focus().toggleHeading({ level: 1 }).run()"
           :class="{ 'is-active': content.isActive('heading', { level: 1 }) }"
@@ -206,13 +247,18 @@ const sendData = async (): Promise<void> => {
       </floating-menu>
     </div>
 
-    <editor-content v-if="content" :editor="content" class="editor md:w-4/5" />
+    <editor-content
+      v-if="content"
+      :editor="content"
+      class="editor md:w-3/5"
+      
+    />
   </div>
 </template>
 <style scoped lang="scss">
 @media screen and (min-width: 768px) {
   .tiptap {
-    > * + * {
+    >*+* {
       margin-top: 0.75em;
     }
 

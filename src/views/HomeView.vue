@@ -126,7 +126,7 @@ const closeService = () => {
               <el-icon>
                 <Edit />
               </el-icon>
-              <a href="#" class="text-black hover:underline">Write</a>
+              <a href="/new-article" class="text-black hover:underline">Write</a>
             </li>
           </template>
 
@@ -172,8 +172,8 @@ const closeService = () => {
           </template>
 
           <!-- contact button -->
-          <template #contact>
-            <li><a href="#" class="text-black hover:underline">Contact</a></li>
+          <template #setting>
+            <li><a href="/account-management" class="text-black hover:underline">Setting</a></li>
           </template>
         </Nav>
       </div>

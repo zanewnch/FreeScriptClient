@@ -25,7 +25,7 @@
             <slot name='write'></slot>
             <slot name='login'></slot>
             <slot name='services'></slot>
-            <slot name='contact'></slot>
+            <slot name='setting'></slot>
             <slot name='publish'></slot>
 
 
@@ -57,4 +57,5 @@
       margin-left: 10px;
     }
   }
-}</style>
+}
+</style>
