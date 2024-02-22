@@ -10,8 +10,7 @@
           <div class="website-title text-black text-2xl font-bold h-full  flex justify-center items-center ">
             <a
               href='/'
-              class=''
-              style='color:#4F4F4F;'
+              class='sm:text-blue-500 md:mb-2'
             >Free Script</a>
 
             <slot name='search'></slot>

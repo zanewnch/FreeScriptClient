@@ -2,8 +2,6 @@
 import { ref, computed, onMounted, onUnmounted, type Ref } from 'vue'
 import request from '@/utils/Request'
 
-// 1. insert data to db for test
-
 // 每一次request update data
 const data: Ref<any> = ref(null)
 const showData: Ref<any> = ref(null)
@@ -107,18 +105,27 @@ onUnmounted(() => {
 </script>
 <template>
   <div
-    class="card md:w-4/5 md:h-44 md:flex md:flex-col md:justify-center md:overflow-hidden"
+    class="card md:w-4/5 md:h-44 md:flex md:flex-col md:justify-center md:overflow-hidden sm:mt-2 sm:pb-2"
     v-for="(item, index) in showData"
     :key="index"
+    style='border-bottom: 0.5px #e0e0e0 solid;'
   >
-    <a :href="urlFriendly(item['author'] || '', item['title'] || '')">
-      <div class="author md:flex md:justify-start md:items-center">
-        <el-avatar :src="`../../../userAvatar/${item['author']
-          .replace(/<\/?p>/g, '')
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, '-')}.png`" />
-        <div v-html="item['author']"></div>
+    <a
+      :href="urlFriendly(item['author'] || '', item['title'] || '')"
+      class=""
+    >
+      <div class="author md:flex md:justify-start md:items-center sm:flex ">
+        <el-avatar
+          :src="`../../../userAvatar/${item['author']
+            .replace(/<\/?p>/g, '')
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '-')}.png`"
+          class=""
+        />
+        <div class='sm:flex sm:justify-center sm:items-center sm:ml-2'>
+          <div v-html="item['author']"></div>
+        </div>
       </div>
       <div class="title">
         <div v-html="item['title']"></div>
@@ -130,6 +137,22 @@ onUnmounted(() => {
   </div>
 </template>
 <style scoped lang="scss">
+@media (min-width:100px) {
+  .author {
+    div {
+      text-align: center;
+    }
+  }
+
+  .title {
+    div {
+      font-size: 20px;
+      font-weight: bolder;
+    }
+  }
+}
+
+
 @media (min-width: 768px) {
   .card {
     padding: 10px;

@@ -86,18 +86,15 @@ onMounted(() => {
 
 </script>
 <template>
-  <div
-    class='md:w-full  md:flex md:justify-center md:items-center md:h-screen  '
-    
-  >
+  <div class='md:w-full  md:flex md:justify-center md:items-center md:h-screen  '>
     <div
       class="md:h-screen w-full md:flex md:flex-col md:justify-start md:items-center h-5/6 md:w-2/3 "
       style="border-right:0.5px solid #E0E0E0;"
     >
-    <!-- status bar -->
-      <section class='section-up md:w-full flex justify-center'>
+      <!-- status bar -->
+      <section class='section-up md:w-full md:flex md:justify-center sm:flex sm:justify-center '>
         <div
-          class="status-bar md:flex md:justify-around md:items-center  "
+          class="status-bar md:flex md:justify-around md:items-center   sm:flex sm:justify-center"
           style='width: 80%;'
         >
           <button
@@ -120,7 +117,7 @@ onMounted(() => {
           <div
             v-for="(item, index) in filterData"
             :key="index"
-            class='md:w-20 md:whitespace-nowrap  md:text-center'
+            class='md:w-20 md:whitespace-nowrap  md:text-center sm:ml-1 sm:mr-1'
             :class="{ 'border-b-2': selectedItem === item.data }"
             @click="selectItem(item.data)"
           >{{ item['data'] }}</div>
@@ -150,10 +147,7 @@ onMounted(() => {
 
 
     </div>
-    <div
-      class=" md:flex md:flex-col md:justify-start md:items-center md:w-1/3  md:h-screen"
-      
-    >
+    <div class=" md:flex md:flex-col md:justify-start md:items-center md:w-1/3  md:h-screen sm:hidden">
       <HomeRight></HomeRight>
     </div>
   </div>
@@ -170,10 +164,11 @@ onMounted(() => {
 
   .sticky-right {
     position: sticky;
-    top: 0; /* 或者根据需要设置适当的距离 */
+    top: 0;
+    /* 或者根据需要设置适当的距离 */
   }
 
-  
-  
+
+
 }
 </style>
