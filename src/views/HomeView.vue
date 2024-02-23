@@ -6,19 +6,15 @@ import { Edit, Search } from '@element-plus/icons-vue'
 
 import request from '@/utils/Request'
 import type { Article } from '../interface/ArticleInterface'
-
-const windowWidth = window.innerWidth
+import type { SearchRecommend } from '../interface/SearchRecommendInterface'
 
 // for user input data in search bar
 const searchText: Ref<string> = ref('')
+const isService = ref(false);
+const windowWidth = window.innerWidth;
 
-// the interface of data to show in search bar recommended list
-interface searchRecommend {
-  value: string
-  link: string
-}
 // the array to store the data to show in search bar recommended list
-const showData: Ref<searchRecommend[]> = ref([])
+const showData: Ref<SearchRecommend[]> = ref([])
 
 let timeout: ReturnType<typeof setTimeout>
 const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => {
@@ -28,15 +24,6 @@ const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => 
     }
   })
 
-  // worse case
-  // res.data.data.forEach((item: Article) => {
-  //   showData.value.push({
-  //     value: item['title'],
-  //     link: item['author']
-  //   })
-  // })
-
-  // better case
   showData.value = res.data.data.map((item: Article) => {
     return {
       value: item['title'],
@@ -49,15 +36,13 @@ const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => 
     cb(showData.value)
   }, 3000 * Math.random())
 }
-
-const handleSelect = (item: searchRecommend) => {
+// the function that handle the select event in search bar
+const handleSelect = (item: SearchRecommend) => {
   console.log(item)
   // window.open(item.link)
 }
-onMounted(() => { })
+onMounted(() => {})
 
-//
-const isService = ref(false)
 const toggleServiceDropDown = (event: MouseEvent) => {
   /*
   const changeService = ()=>{
@@ -114,7 +99,7 @@ const handleSearchButton = async () => {
       <div class="md:w-full">
         <Nav>
           <template #search>
-            <div class=" md:w-96 md:flex md:justify-center md:items-center">
+            <div class="md:w-96 md:flex md:justify-center md:items-center">
               <el-autocomplete
                 v-model="searchText"
                 :fetch-suggestions="querySearchAsync"
@@ -139,19 +124,13 @@ const handleSearchButton = async () => {
               <el-icon>
                 <Edit />
               </el-icon>
-              <a
-                href="/new-article"
-                class="text-black hover:underline"
-              >Write</a>
+              <a href="/new-article" class="text-black hover:underline">Write</a>
             </li>
           </template>
 
           <!-- login button -->
           <template #about>
-            <li><a
-                href="login"
-                class="text-black hover:underline"
-              >login</a></li>
+            <li><a href="login" class="text-black hover:underline">login</a></li>
             <li></li>
           </template>
 
@@ -171,22 +150,19 @@ const handleSearchButton = async () => {
                   v-if="isService"
                 >
                   <li class="flex justify-center items-center">
-                    <a
-                      href="/data"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 1</a>
+                    <a href="/data" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >Service 1</a
+                    >
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 2</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >Service 2</a
+                    >
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 3</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      >Service 3</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -195,10 +171,7 @@ const handleSearchButton = async () => {
 
           <!-- contact button -->
           <template #setting>
-            <li><a
-                href="/account-management"
-                class="text-black hover:underline"
-              >Setting</a></li>
+            <li><a href="/account-management" class="text-black hover:underline">Setting</a></li>
           </template>
         </Nav>
       </div>

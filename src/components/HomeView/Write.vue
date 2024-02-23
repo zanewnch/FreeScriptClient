@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
 // !tiptap table for show user table
-// !socket.io 
+// !socket.io
 import Nav from '@/components/HomeView/Nav.vue'
 import { ref, watch, onMounted, onBeforeUnmount, type Ref } from 'vue'
 import StarterKit from '@tiptap/starter-kit'
@@ -13,11 +12,11 @@ import request from '@/utils/Request'
 import { BubbleMenu, Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import { useRouter } from 'vue-router'
 
-
 const router = useRouter()
 const title: Ref<Editor | null> = ref(null)
 const content: Ref<Editor | null> = ref(null)
-const isClearParagraph: Ref<boolean> = ref(true);
+const isClearParagraph: Ref<boolean> = ref(true)
+const isClearContentParagraph: Ref<boolean> = ref(true)
 
 onMounted((): void => {
   content.value = new Editor({
@@ -37,10 +36,6 @@ onMounted((): void => {
       </p>
     `
   })
-
-  
-
-  
 })
 
 onBeforeUnmount((): void => {
@@ -97,162 +92,181 @@ const sendData = async (): Promise<void> => {
   }
 }
 
-const clearDefaultParagraph = ()=>{
-  if(isClearParagraph.value){
-    title.value?.commands.clearContent(true);
-    content.value?.commands.clearContent(true);
+const windowsWidth = window.innerWidth
+
+const clearDefaultParagraph = () => {
+  if (isClearParagraph.value && windowsWidth > 768) {
+    title.value?.commands.clearContent(true)
+    content.value?.commands.clearContent(true)
   }
-  
-  isClearParagraph.value = false;
+  if (isClearParagraph.value && windowsWidth < 768) {
+    title.value?.commands.clearContent(true)
+  }
+
+  isClearParagraph.value = false
 }
 
+const clearDefaultContentParagraph = () => {
+  if (isClearContentParagraph.value && windowsWidth < 768) {
+    content.value?.commands.clearContent(true)
+  }
 
-
+  isClearContentParagraph.value = false
+}
 </script>
 
 <template>
   <div class="md:w-full md:h-screen md:flex md:flex-col md:justify-start items-center">
-    <!-- Nav -->
-    <div class="md:w-full ">
-      <Nav class=''>
-        <template #publish>
-          <li class='md:mr-32'>
-            <button
-              @click="sendData"
-              type="button"
-              data-ripple-light="true"
-              class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-            >
-              Publish
-            </button>
-          </li>
-        </template>
-      </Nav>
+    <!-- nav -->
+    <div class='sm:h-2/5  md:w-full md:h-20'>
+      <!-- Nav -->
+      <div class="md:w-full">
+        <Nav class="">
+          <template #publish>
+            <li class="md:mr-32">
+              <button
+                @click="sendData"
+                type="button"
+                data-ripple-light="true"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+              >
+                Publish
+              </button>
+            </li>
+          </template>
+        </Nav>
+      </div>
     </div>
 
-    <div
-      v-if="title"
-      class=" md:w-4/5"
-    >
-      <bubble-menu
-        class="bubble-menu"
-        :tippy-options="{ duration: 100 }"
+    <!-- main content -->
+    <div class=" sm:h-3/5 sm:flex sm:flex-col sm:items-center sm:justify-start md:w-full ">
+      <div
+        v-if="title"
+        class="md:w-4/5"
+      >
+        <bubble-menu
+          class="bubble-menu"
+          :tippy-options="{ duration: 100 }"
+          :editor="title"
+        >
+          <button
+            @click="title.chain().focus().toggleBold().run()"
+            :class="{ 'is-active': title.isActive('bold') }"
+          >
+            Bold
+          </button>
+          <button
+            @click="title.chain().focus().toggleItalic().run()"
+            :class="{ 'is-active': title.isActive('italic') }"
+          >
+            Italic
+          </button>
+          <button
+            @click="title.chain().focus().toggleStrike().run()"
+            :class="{ 'is-active': title.isActive('strike') }"
+          >
+            Strike
+          </button>
+        </bubble-menu>
+
+        <floating-menu
+          class="floating-menu"
+          :tippy-options="{ duration: 100 }"
+          :editor="title"
+        >
+          <button
+            @click="title.chain().focus().toggleHeading({ level: 1 }).run()"
+            :class="{ 'is-active': title.isActive('heading', { level: 1 }) }"
+          >
+            H1
+          </button>
+          <button
+            @click="title.chain().focus().toggleHeading({ level: 2 }).run()"
+            :class="{ 'is-active': title.isActive('heading', { level: 2 }) }"
+          >
+            H2
+          </button>
+          <button
+            @click="title.chain().focus().toggleBulletList().run()"
+            :class="{ 'is-active': title.isActive('bulletList') }"
+          >
+            Bullet List
+          </button>
+        </floating-menu>
+      </div>
+      <editor-content
+        v-if="title"
         :editor="title"
+        class="editor md:appearance-none focus:outline-none md:w-3/5  sm:w-3/5"
+        @click="clearDefaultParagraph"
+      />
+      <div
+        v-if="content"
+        class="bg-red-400 md:w-4/5"
       >
-        <button
-          @click="title.chain().focus().toggleBold().run()"
-          :class="{ 'is-active': title.isActive('bold') }"
+        <bubble-menu
+          class="bubble-menu"
+          :tippy-options="{ duration: 100 }"
+          :editor="content"
         >
-          Bold
-        </button>
-        <button
-          @click="title.chain().focus().toggleItalic().run()"
-          :class="{ 'is-active': title.isActive('italic') }"
-        >
-          Italic
-        </button>
-        <button
-          @click="title.chain().focus().toggleStrike().run()"
-          :class="{ 'is-active': title.isActive('strike') }"
-        >
-          Strike
-        </button>
-      </bubble-menu>
+          <button
+            @click="content.chain().focus().toggleBold().run()"
+            :class="{ 'is-active': content.isActive('bold') }"
+          >
+            Bold
+          </button>
+          <button
+            @click="content.chain().focus().toggleItalic().run()"
+            :class="{ 'is-active': content.isActive('italic') }"
+          >
+            Italic
+          </button>
+          <button
+            @click="content.chain().focus().toggleStrike().run()"
+            :class="{ 'is-active': content.isActive('strike') }"
+          >
+            Strike
+          </button>
+        </bubble-menu>
 
-      <floating-menu
-        class="floating-menu"
-        :tippy-options="{ duration: 100 }"
-        :editor="title"
-      >
-        <button
-          @click="title.chain().focus().toggleHeading({ level: 1 }).run()"
-          :class="{ 'is-active': title.isActive('heading', { level: 1 }) }"
+        <floating-menu
+          class="floating-menu"
+          :tippy-options="{ duration: 100 }"
+          :editor="content"
         >
-          H1
-        </button>
-        <button
-          @click="title.chain().focus().toggleHeading({ level: 2 }).run()"
-          :class="{ 'is-active': title.isActive('heading', { level: 2 }) }"
-        >
-          H2
-        </button>
-        <button
-          @click="title.chain().focus().toggleBulletList().run()"
-          :class="{ 'is-active': title.isActive('bulletList') }"
-        >
-          Bullet List
-        </button>
-      </floating-menu>
+          <button
+            @click="content.chain().focus().toggleHeading({ level: 1 }).run()"
+            :class="{ 'is-active': content.isActive('heading', { level: 1 }) }"
+          >
+            H1
+          </button>
+          <button
+            @click="content.chain().focus().toggleHeading({ level: 2 }).run()"
+            :class="{ 'is-active': content.isActive('heading', { level: 2 }) }"
+          >
+            H2
+          </button>
+          <button
+            @click="content.chain().focus().toggleBulletList().run()"
+            :class="{ 'is-active': content.isActive('bulletList') }"
+          >
+            Bullet List
+          </button>
+        </floating-menu>
+      </div>
+
+      <editor-content
+        v-if="content"
+        :editor="content"
+        class="editor md:w-3/5 sm:w-3/5"
+        @click="clearDefaultContentParagraph"
+      />
     </div>
 
-    <editor-content
-      v-if="title"
-      :editor="title"
-      class="editor md:appearance-none focus:outline-none md:w-3/5"
-      @click='clearDefaultParagraph'
-    />
 
-    <div
-      v-if="content"
-      class="bg-red-400 md:w-4/5"
-    >
-      <bubble-menu
-        class="bubble-menu"
-        :tippy-options="{ duration: 100 }"
-        :editor="content"
-      >
-        <button
-          @click="content.chain().focus().toggleBold().run()"
-          :class="{ 'is-active': content.isActive('bold') }"
-        >
-          Bold
-        </button>
-        <button
-          @click="content.chain().focus().toggleItalic().run()"
-          :class="{ 'is-active': content.isActive('italic') }"
-        >
-          Italic
-        </button>
-        <button
-          @click="content.chain().focus().toggleStrike().run()"
-          :class="{ 'is-active': content.isActive('strike') }"
-        >
-          Strike
-        </button>
-      </bubble-menu>
 
-      <floating-menu
-        class="floating-menu"
-        :tippy-options="{ duration: 100 }"
-        :editor="content"
-      >
-        <button
-          @click="content.chain().focus().toggleHeading({ level: 1 }).run()"
-          :class="{ 'is-active': content.isActive('heading', { level: 1 }) }"
-        >
-          H1
-        </button>
-        <button
-          @click="content.chain().focus().toggleHeading({ level: 2 }).run()"
-          :class="{ 'is-active': content.isActive('heading', { level: 2 }) }"
-        >
-          H2
-        </button>
-        <button
-          @click="content.chain().focus().toggleBulletList().run()"
-          :class="{ 'is-active': content.isActive('bulletList') }"
-        >
-          Bullet List
-        </button>
-      </floating-menu>
-    </div>
 
-    <editor-content
-      v-if="content"
-      :editor="content"
-      class="editor md:w-3/5"
-      
-    />
+
   </div>
 </template>
 <style scoped lang="scss">
