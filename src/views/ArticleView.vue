@@ -3,7 +3,7 @@ import type { Article } from '@/interface/ArticleInterface'
 import request from '@/utils/Request'
 import { ref, type Ref, onMounted } from 'vue'
 import { Edit, Search } from '@element-plus/icons-vue'
-import Nav from '@/components/HomeView/Nav.vue'
+import HomeNav from '@/components/Nav/HomeNav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 
 const route: RouteLocationNormalizedLoaded = useRoute()
@@ -103,116 +103,7 @@ const closeService = () => {
 </script>
 <template>
   <div class="xl:w-full md:h-screen">
-    <!-- NAV -->
-
-    <div
-      class="md:w-full md:flex md:justify-center md:h-20"
-      style="border-bottom: 0.5px solid #e0e0e0"
-    >
-      <div class="md:w-full">
-        <Nav>
-          <template #search>
-            <div class="">
-              <el-autocomplete
-                v-model="searchText"
-                :fetch-suggestions="querySearchAsync"
-                placeholder=""
-                clearable
-                class="el-input_wrapper md:ml-4 md:w-80 md:rounded-md"
-                @select="handleSelect"
-              />
-              <!-- <button class="border-2 md:w-12 md:ml-4 md:h-8 md:text-sm md:flex md:justify-center md:items-center">
-                  <el-icon>
-                    <Search />
-                  </el-icon>
-                  Search
-                </button> -->
-
-              <el-button
-                type="primary"
-                :icon="Search"
-                class="search-button border-2 md:w-12 md:ml-4"
-                plain
-              ></el-button>
-            </div>
-          </template>
-          <!-- write button -->
-          <template #write>
-            <li class="flex justify-center items-center">
-              <el-icon>
-                <Edit />
-              </el-icon>
-              <a
-                href="/new-article"
-                class="text-black hover:underline"
-              >Write</a>
-            </li>
-          </template>
-
-          <!-- login button -->
-          <template #about>
-            <li><a
-                href="login"
-                class="text-black hover:underline"
-              >login</a></li>
-            <li></li>
-          </template>
-
-          <!-- services -->
-          <template #services>
-            <li>
-              <!-- 下拉式菜单 -->
-              <div class="relative group">
-                <button
-                  class="text-black hover:underline focus:outline-none"
-                  @click="toggleServiceDropDown"
-                >
-                  Services
-                </button>
-                <ul
-                  class="absolute mt-2 space-y-2 bg-white border border-gray-300 rounded-lg py-2"
-                  v-if="isService"
-                >
-                  <li class="flex justify-center items-center">
-                    <a
-                      href="/data"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 1</a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 2</a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Service 3</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </template>
-
-          <!-- contact button -->
-          <template #contact>
-            <li><a
-                href="#"
-                class="text-black hover:underline"
-              >Contact</a></li>
-          </template>
-
-          <template #setting>
-            <li><a
-                href="/account-management"
-                class="text-black hover:underline"
-              >Setting</a></li>
-          </template>
-        </Nav>
-      </div>
-    </div>
+    <HomeNav></HomeNav>
 
     <!-- Main content -->
     <div class="md:w-full md:flex md:flex-col md:justify-center md:items-center ">

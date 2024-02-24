@@ -2,7 +2,7 @@
 import request from '@/utils/Request'
 import { onMounted, ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
-import Nav from '@/components/HomeView/Nav.vue'
+import HomeNav from '@/components/Nav/HomeNav.vue'
 import { Edit, Search } from '@element-plus/icons-vue'
 import type { Article } from '@/interface/ArticleInterface'
 
@@ -134,11 +134,11 @@ onMounted(async () => {
     v-if="isMobile"
   >
     <!-- NAV -->
-    <div
+    <!-- <div
       class="md:w-full md:flex md:justify-center md:h-20"
       style="border-bottom: 0.5px solid #e0e0e0"
-    >
-      <div class="md:w-full">
+    > -->
+      <!-- <div class="md:w-full">
         <Nav>
           <template #search>
             <div class="md:w-96 md:flex md:justify-center md:items-center">
@@ -159,9 +159,9 @@ onMounted(async () => {
                 @click="handleSearchButton"
               ></el-button>
             </div>
-          </template>
+          </template> -->
           <!-- write button -->
-          <template #write>
+          <!-- <template #write>
             <li class="flex justify-center items-center">
               <el-icon>
                 <Edit />
@@ -171,22 +171,22 @@ onMounted(async () => {
                 class="text-black hover:underline"
               >Write</a>
             </li>
-          </template>
+          </template> -->
 
           <!-- login button -->
-          <template #about>
+          <!-- <template #about>
             <li><a
                 href="login"
                 class="text-black hover:underline"
               >login</a></li>
             <li></li>
-          </template>
+          </template> -->
 
           <!-- services -->
-          <template #services>
-            <li>
+          <!-- <template #services>
+            <li> -->
               <!-- 下拉式菜单 -->
-              <div class="relative group">
+              <!-- <div class="relative group">
                 <button
                   class="text-black hover:underline focus:outline-none"
                   @click="toggleServiceDropDown"
@@ -217,19 +217,20 @@ onMounted(async () => {
                   </li>
                 </ul>
               </div>
-            </li>
-          </template>
+            </li> -->
+          <!-- </template> -->
 
           <!-- contact button -->
-          <template #setting>
+          <!-- <template #setting>
             <li><a
                 href="/account-management"
                 class="text-black hover:underline"
               >Setting</a></li>
           </template>
-        </Nav>
-      </div>
-    </div>
+        </Nav> -->
+      <!-- </div> -->
+    <!-- </div> -->
+    <HomeNav></HomeNav>
 
     <!-- main content -->
     <div class=" sm:flex sm:justify-center sm:items-center sm:h-screen">

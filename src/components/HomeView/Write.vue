@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // !tiptap table for show user table
 // !socket.io
-import Nav from '@/components/HomeView/Nav.vue'
+import HomeNav from '../Nav/HomeNav.vue'
 import { ref, watch, onMounted, onBeforeUnmount, type Ref } from 'vue'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
@@ -117,27 +117,21 @@ const clearDefaultContentParagraph = () => {
 
 <template>
   <div class="md:w-full md:h-screen md:flex md:flex-col md:justify-start items-center">
-    <!-- nav -->
-    <div class='sm:h-2/5  md:w-full md:h-20'>
-      <!-- Nav -->
-      <div class="md:w-full">
-        <Nav class="">
-          <template #publish>
-            <li class="md:mr-32">
-              <button
-                @click="sendData"
-                type="button"
-                data-ripple-light="true"
-                class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-              >
-                Publish
-              </button>
-            </li>
-          </template>
-        </Nav>
-      </div>
-    </div>
-
+    
+    <HomeNav>
+      <template #publish>
+        <li class="md:mr-32">
+          <button
+            @click="sendData"
+            type="button"
+            data-ripple-light="true"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+          >
+            Publish
+          </button>
+        </li>
+      </template>
+    </HomeNav>
     <!-- main content -->
     <div class=" sm:h-3/5 sm:flex sm:flex-col sm:items-center sm:justify-start md:w-full ">
       <div
