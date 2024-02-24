@@ -86,6 +86,8 @@ onMounted(() => {
 
 </script>
 <template>
+  <div class="md:w-full md:flex md:justify-center">
+  <div class="md:w-4/5 md:flex md:justify-center">
   <div class='md:w-full  md:flex md:justify-center md:items-center md:h-screen  '>
     <div
       class="md:h-screen w-full md:flex md:flex-col md:justify-start md:items-center h-5/6 md:w-2/3 "
@@ -151,6 +153,8 @@ onMounted(() => {
       <HomeRight></HomeRight>
     </div>
   </div>
+</div>
+</div>
 </template>
 <style scoped lang="scss">
 @media (min-width: 768px) {

@@ -2,6 +2,11 @@
 
 </script>
 <template>
+  <div
+      class="md:w-full md:flex md:justify-center md:h-20"
+      style="border-bottom: 0.5px solid #e0e0e0"
+    >
+  <div class="md:w-full">
   <div class='w-full h-20 '>
     <nav class=" p-4 w-full h-full ">
       <div class="md:w-full mx-auto h-full ">
@@ -38,6 +43,8 @@
     </nav>
 
   </div>
+</div>
+</div>
 </template>
 <style scoped lang='scss'>
 @media(min-width:768px) {
