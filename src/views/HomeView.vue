@@ -12,13 +12,10 @@ import LoginSlot from '@/components/Nav/LoginSlot.vue'
 import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
 import SettingSlot from '@/components/Nav/SettingSlot.vue'
 
-
-
 onMounted(() => {})
 </script>
 
 <template>
-  
   <div class="xl:w-full md:h-screen">
     <!-- Nav -->
     <HomeNav>
