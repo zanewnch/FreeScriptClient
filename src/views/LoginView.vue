@@ -1,9 +1,30 @@
 <script lang="ts" setup>
-import { ref, type Ref, watchEffect } from 'vue';
+import { ref, type Ref, watchEffect } from 'vue'
 import request from '@/utils/Request'
 import { useGlobalStore } from '../stores/GlobalStore'
 import { Result } from '../utils/Result'
 
+// @ts-ignore
+import {useGoogleAccountStore} from '../stores/GoogleAccountStore'
+import {decodeCredential, googleLogout} from 'vue3-google-login'
+
+const googleAccountStore = useGoogleAccountStore()
+
+/* google login */
+const callback = (response:any) => {
+  console.log("Handle the response", response)
+  let user = decodeCredential(response.credential);
+  console.log(user);
+  console.log(response['credential']);
+
+  
+  googleAccountStore.JWTToken = response['credential'];
+  
+}
+
+
+
+/* login form */
 const globalStore = useGlobalStore()
 const username: Ref<string> = ref('')
 const password: Ref<string> = ref('')
@@ -41,7 +62,7 @@ const signIn = async (): Promise<void> => {
       // set isLogin for interceptor send request with token
       globalStore.username = username.value
       globalStore.isLogin = true
-      if (result.data) globalStore.loginToken = result.data;
+      if (result.data) globalStore.loginToken = result.data
     }
   } catch (e) {
     console.log(e)
@@ -49,11 +70,10 @@ const signIn = async (): Promise<void> => {
 }
 
 // for testing, when ref change then print out the data
-watchEffect(()=>{
-  console.log('username:',username.value);
-  console.log('password:',password.value);
+watchEffect(() => {
+  // console.log('username:', username.value)
+  // console.log('password:', password.value)
 })
-
 </script>
 
 <template>
@@ -75,7 +95,7 @@ watchEffect(()=>{
             id="username"
             type="text"
             placeholder="Username"
-            v-model='username'
+            v-model="username"
           />
         </div>
         <!-- Password input field container -->
@@ -90,7 +110,7 @@ watchEffect(()=>{
             id="password"
             type="password"
             placeholder="******************"
-            v-model='password'
+            v-model="password"
           />
           <!-- Password hint text -->
           <p class="text-xs italic">Please choose a password.</p>
@@ -117,6 +137,12 @@ watchEffect(()=>{
           </div>
         </div>
       </form>
+
+      <div class="md:w-full md:flex md:h-24 md:justify-center md:items-center">
+        <GoogleLogin :callback="callback" class="md:flex md:w-2/3 " />
+        
+      </div>
+
       <!-- Copyright text -->
       <p class="text-center text-gray-500 text-xs">&copy;Zane</p>
     </div>

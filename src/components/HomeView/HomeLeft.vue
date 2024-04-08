@@ -76,12 +76,11 @@ const trigger = () => {
   const topHeight = document.body.scrollTop || document.documentElement.scrollTop
   const bottomHeight = viewTotalHeight - topHeight - viewportHeight
 
-  console.log('buttomheight')
-  console.log(bottomHeight)
+  
 
   // If distance from bottom is less than 10 pixels, load new data
   if (bottomHeight < 10) {
-    console.log('need to load')
+    // console.log('need to load')
     load()
   }
 }

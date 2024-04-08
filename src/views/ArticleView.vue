@@ -138,20 +138,20 @@ const closeService = () => {
         >
           <a
             href="/"
-            class=' md:flex md:flex-col md:items-start 
+            class=' md:flex md:flex-col md:items-start  md:h-full md:w-full
             '
           >
-            <div class="md:flex md:justify-start md:items-center  ">
+            <div class="comment-username md:flex md:justify-start md:items-center md:mt-6 ">
               <!-- <el-avatar :src="`../../../userAvatar/${item['author']
                 .replace(/<\/?p>/g, '')
                 .trim()
                 .toLowerCase()
                 .replace(/\s+/g, '-')}.png`" /> -->
-              <div v-html="item['username']"></div>
+              <p v-html="item['username']"></p>
             </div>
 
-            <div class="">
-              <div v-html="item['content']"></div>
+            <div class="comment-content md:mt-4">
+              <p v-html="item['content']"></p>
             </div>
           </a>
         </div>
@@ -215,6 +215,20 @@ const closeService = () => {
       white-space: normal;
       word-break: break-word;
       text-wrap: normal;
+    }
+  }
+
+  .comment-username{
+    p{
+      font-size: 16px;
+      font-weight: bolder;
+      text-align: left;
+    }
+  }
+
+  .comment-content{
+    p{
+      text-align: left;
     }
   }
 }</style>
