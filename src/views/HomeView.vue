@@ -12,6 +12,10 @@ import LoginSlot from '@/components/Nav/LoginSlot.vue'
 import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
 import SettingSlot from '@/components/Nav/SettingSlot.vue'
 
+// global 1. isLogin 2.JWTToken
+// 不能用store value 去判斷,因為用store value 只有當login manipulation 才會assign
+// 而是要直接判斷是否login, 應該從cookie去判斷
+
 onMounted(() => {})
 </script>
 

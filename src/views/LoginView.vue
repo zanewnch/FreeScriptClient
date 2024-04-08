@@ -4,25 +4,8 @@ import request from '@/utils/Request'
 import { useGlobalStore } from '../stores/GlobalStore'
 import { Result } from '../utils/Result'
 
-// @ts-ignore
-import {useGoogleAccountStore} from '../stores/GoogleAccountStore'
-import {decodeCredential, googleLogout} from 'vue3-google-login'
-
-const googleAccountStore = useGoogleAccountStore()
-
-/* google login */
-const callback = (response:any) => {
-  console.log("Handle the response", response)
-  let user = decodeCredential(response.credential);
-  console.log(user);
-  console.log(response['credential']);
-
-  
-  googleAccountStore.JWTToken = response['credential'];
-  
-}
-
-
+import { decodeCredential, googleLogout } from 'vue3-google-login'
+import { useRouter } from 'vue-router'
 
 /* login form */
 const globalStore = useGlobalStore()
@@ -31,7 +14,49 @@ const password: Ref<string> = ref('')
 const isUsernameError: Ref<boolean> = ref(false)
 const isPasswordError: Ref<boolean> = ref(false)
 
-const signIn = async (): Promise<void> => {
+const router = useRouter()
+
+/* google login */
+const googleSignIn = async (response: any) => {
+  // 傳給backend 來確認是否有這個帳號
+  // request 要建立cookie
+
+  let user: any = decodeCredential(response.credential)
+  console.log(user)
+  console.log(response)
+
+  globalStore.JWTToken = response['credential']
+  globalStore.email = user['email']
+  globalStore.displayName = user['given_name']
+  globalStore.photoURL = user['picture']
+  globalStore.providerId = user['aud']
+  globalStore.jti = user['jti']
+
+  console.log(globalStore.JWTToken)
+
+  const result: Result<string> = await request.post(
+    '/user/google-signIn',
+    {
+      JWTToken: globalStore.JWTToken,
+      email: globalStore.email,
+      displayName: globalStore.displayName,
+      photoURL: globalStore.photoURL,
+      providerId: globalStore.providerId,
+      jti: globalStore.jti
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  console.log(result)
+
+  // router.push('/');
+}
+
+// local website login
+const localSignIn = async (): Promise<void> => {
   // check username format
   if (username.value.length === 0) {
     isUsernameError.value = true
@@ -45,7 +70,7 @@ const signIn = async (): Promise<void> => {
   try {
     // send request
     const result: Result<string> = await request.post(
-      '/user/login',
+      '/user/local-signIn',
       {
         username: username.value,
         password: password.value
@@ -74,9 +99,28 @@ watchEffect(() => {
   // console.log('username:', username.value)
   // console.log('password:', password.value)
 })
+
+const testfunction = async () => {
+  try {
+    const res: any = await request.post(
+      '/user/google-signIn',
+      {
+        username: 'dummyUsername'
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <template>
+  <button @click="testfunction">aaa</button>
   <!-- Outer container with flexbox for centering content -->
   <div class="flex items-center justify-center h-screen">
     <!-- Inner container with width restrictions -->
@@ -121,7 +165,7 @@ watchEffect(() => {
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-            @click="signIn"
+            @click="localSignIn"
           >
             Sign In
           </button>
@@ -139,8 +183,7 @@ watchEffect(() => {
       </form>
 
       <div class="md:w-full md:flex md:h-24 md:justify-center md:items-center">
-        <GoogleLogin :callback="callback" class="md:flex md:w-2/3 " />
-        
+        <GoogleLogin :callback="googleSignIn" class="md:flex md:w-2/3" />
       </div>
 
       <!-- Copyright text -->

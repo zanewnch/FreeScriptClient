@@ -4,12 +4,23 @@ export const useGlobalStore = defineStore('global', {
   state: (): {
     username: string
     isLogin: boolean
-    loginToken:string
+    loginToken:string,JWTToken: string
+    email: string
+    displayName: string
+    photoURL: string
+    providerId: string,
+    jti:string
   } => {
     return {
       username: '',
       isLogin: false,
-      loginToken:''
+      loginToken:'',
+      JWTToken: '',
+      email: '',
+      displayName: '',
+      photoURL: '',
+      providerId: '',
+      jti:''
     }
   },
   actions: {
