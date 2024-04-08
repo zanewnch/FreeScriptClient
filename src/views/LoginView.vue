@@ -51,9 +51,9 @@ const googleSignIn = async (response: any) => {
       }
     }
   )
-  console.log(result)
+  globalStore.isLogin = true;
 
-  // router.push('/');
+  router.push('/');
 }
 
 // local website login
@@ -100,30 +100,9 @@ watchEffect(() => {
   // console.log('username:', username.value)
   // console.log('password:', password.value)
 })
-
-const testfunction = async ():Promise<void> => {
-  try {
-    const res: AxiosResponse<any> = await request.post(
-      '/user/test',
-      {
-        'username': 'dummyUsername'
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      }
-    )
-
-    console.log(res.data)
-  } catch (error) {
-    console.log(error);
-  }
-}
 </script>
 
 <template>
-  <button @click="testfunction">aaa</button>
   <!-- Outer container with flexbox for centering content -->
   <div class="flex items-center justify-center h-screen">
     <!-- Inner container with width restrictions -->
