@@ -6,6 +6,7 @@ import { Result } from '../utils/Result'
 
 import { decodeCredential, googleLogout } from 'vue3-google-login'
 import { useRouter } from 'vue-router'
+import type { AxiosResponse } from 'axios'
 
 /* login form */
 const globalStore = useGlobalStore()
@@ -100,21 +101,23 @@ watchEffect(() => {
   // console.log('password:', password.value)
 })
 
-const testfunction = async () => {
+const testfunction = async ():Promise<void> => {
   try {
-    const res: any = await request.post(
-      '/user/google-signIn',
+    const res: AxiosResponse<any> = await request.post(
+      '/user/test',
       {
-        username: 'dummyUsername'
+        'username': 'dummyUsername'
       },
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json; charset=utf-8'
         }
       }
     )
+
+    console.log(res.data)
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }
 </script>

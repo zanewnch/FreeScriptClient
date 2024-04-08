@@ -101,6 +101,8 @@ onUnmounted(() => {
   // Remove scroll event listener when component is unmounted
   window.removeEventListener('scroll', trigger, false)
 })
+
+
 </script>
 <template>
   <div
