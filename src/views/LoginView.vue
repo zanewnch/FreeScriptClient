@@ -33,8 +33,6 @@ const googleSignIn = async (response: any) => {
   globalStore.providerId = user['aud']
   globalStore.jti = user['jti']
 
-  console.log(globalStore.JWTToken)
-
   const result: Result<string> = await request.post(
     '/user/google-signIn',
     {
@@ -51,9 +49,9 @@ const googleSignIn = async (response: any) => {
       }
     }
   )
-  globalStore.isLogin = true;
+  globalStore.googleIsLogin = true
 
-  router.push('/');
+  router.push('/')
 }
 
 // local website login
@@ -84,12 +82,16 @@ const localSignIn = async (): Promise<void> => {
     )
 
     // set isLogin state is true for making interceptor request with token
-    if (result.code === 200) {
-      // set isLogin for interceptor send request with token
-      globalStore.username = username.value
-      globalStore.isLogin = true
-      if (result.data) globalStore.loginToken = result.data
-    }
+    const resJwt = await request.post('/user/local-jwt', {
+      username: username.value,
+      password: password.value
+    })
+
+    globalStore.localJwtToken = resJwt.data.data
+
+    globalStore.localIsLogin = true
+
+    router.push('/')
   } catch (e) {
     console.log(e)
   }

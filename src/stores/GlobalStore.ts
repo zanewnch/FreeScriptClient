@@ -3,24 +3,28 @@ import { defineStore } from 'pinia'
 export const useGlobalStore = defineStore('global', {
   state: (): {
     username: string
-    isLogin: boolean
-    loginToken:string,JWTToken: string
+    localIsLogin: boolean
+    googleIsLogin: boolean
+    localJwtToken:string,JWTToken: string
     email: string
     displayName: string
     photoURL: string
     providerId: string,
-    jti:string
+    jti:string,
+    
   } => {
     return {
       username: '',
-      isLogin: false,
-      loginToken:'',
+      localIsLogin: false,
+      googleIsLogin: false,
+      localJwtToken:'',
       JWTToken: '',
       email: '',
       displayName: '',
       photoURL: '',
       providerId: '',
-      jti:''
+      jti:'',
+      
     }
   },
   actions: {

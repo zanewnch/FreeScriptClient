@@ -16,8 +16,14 @@ const request = axios.create({
 // Request interceptor
 request.interceptors.request.use((config) => {
   // add authorization token to request header
-  if(globalStore.isLogin && globalStore.loginToken !== null){
-    config.headers['Authorization'] = `Bearer ${globalStore.loginToken}`;
+  if(globalStore.localIsLogin || globalStore.googleIsLogin){
+
+    if(globalStore.localIsLogin){
+      config.headers['Authorization'] = `Bearer ${globalStore.localJwtToken}`;
+    }else if(globalStore.googleIsLogin){
+      config.headers['Authorization'] = `Bearer ${globalStore.JWTToken}`;
+    }
+    
   }
 
   return config;
