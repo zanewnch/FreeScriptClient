@@ -1,4 +1,7 @@
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import { ref, type Ref, watchEffect } from 'vue'
 import request from '@/utils/Request'
 import { useGlobalStore } from '../stores/GlobalStore'
@@ -15,7 +18,7 @@ const password: Ref<string> = ref('')
 const isUsernameError: Ref<boolean> = ref(false)
 const isPasswordError: Ref<boolean> = ref(false)
 
-const router = useRouter()
+const router = useRouter();
 
 /* google login */
 const googleSignIn = async (response: any) => {
@@ -49,9 +52,9 @@ const googleSignIn = async (response: any) => {
       }
     }
   )
-  globalStore.googleIsLogin = true
+  globalStore.googleIsLogin = true;
 
-  router.push('/')
+  router.push('/');
 }
 
 // local website login
@@ -114,7 +117,10 @@ watchEffect(() => {
         <!-- Username input field container -->
         <div class="mb-4">
           <!-- Label for username input field -->
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
             Username
           </label>
           <!-- Username input field -->
@@ -129,7 +135,10 @@ watchEffect(() => {
         <!-- Password input field container -->
         <div class="mb-6">
           <!-- Label for password input field -->
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="password"
+          >
             Password
           </label>
           <!-- Password input field -->
@@ -167,7 +176,10 @@ watchEffect(() => {
       </form>
 
       <div class="md:w-full md:flex md:h-24 md:justify-center md:items-center">
-        <GoogleLogin :callback="googleSignIn" class="md:flex md:w-2/3" />
+        <GoogleLogin
+          :callback="googleSignIn"
+          class="md:flex md:w-2/3"
+        />
       </div>
 
       <!-- Copyright text -->
@@ -176,4 +188,7 @@ watchEffect(() => {
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style
+  scoped
+  lang="scss"
+></style>

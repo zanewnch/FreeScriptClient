@@ -13,10 +13,10 @@
         <div class="md:w-full flex justify-between items-center h-full ">
           <!-- 左侧 Logo 或标题 -->
           <div class="website-title text-black text-2xl font-bold h-full  flex justify-center items-center ">
-            <a
-              href='/'
+            <router-link
+              to='/'
               class='sm:text-blue-500 md:mb-2'
-            >Free Script</a>
+            >Free Script</router-link>
 
             <slot name='search'></slot>
           </div>
@@ -27,10 +27,14 @@
             style=''
           >
             <slot name='write'></slot>
-            <slot name='login'></slot>
+            
             <slot name='services'></slot>
             <slot name='setting'></slot>
+
+            <slot name='login'></slot>
             <slot name='publish'></slot>
+
+
 
 
 

@@ -32,10 +32,7 @@ onMounted(() => {})
         <WriteSlot></WriteSlot>
       </template>
 
-      <!-- login button -->
-      <template #login>
-        <LoginSlot></LoginSlot>
-      </template>
+      
 
       <!-- services -->
       <template #services>
@@ -45,6 +42,11 @@ onMounted(() => {})
       <!-- contact button -->
       <template #setting>
         <settingSlot></settingSlot>
+      </template>
+
+      <!-- login button -->
+      <template #login>
+        <LoginSlot></LoginSlot>
       </template>
     </HomeNav>
 

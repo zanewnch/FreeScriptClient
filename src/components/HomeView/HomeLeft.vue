@@ -111,8 +111,8 @@ onUnmounted(() => {
     :key="index"
     style='border-bottom: 0.5px #e0e0e0 solid;'
   >
-    <a
-      :href="urlFriendly(item['author'] || '', item['title'] || '')"
+    <router-link
+      :to="urlFriendly(item['author'] || '', item['title'] || '')"
       class=""
     >
       <div class="author md:flex md:justify-start md:items-center sm:flex ">
@@ -134,7 +134,7 @@ onUnmounted(() => {
       <div class="content">
         <div v-html="item['content']"></div>
       </div>
-    </a>
+    </router-link>
   </div>
 </template>
 <style scoped lang="scss">

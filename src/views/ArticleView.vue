@@ -5,6 +5,11 @@ import { ref, type Ref, onMounted } from 'vue'
 import { Edit, Search } from '@element-plus/icons-vue'
 import HomeNav from '@/components/Nav/HomeNav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
+import { useGlobalStore } from '@/stores/GlobalStore'
+
+const globalStore = useGlobalStore();
+
+
 
 const route: RouteLocationNormalizedLoaded = useRoute()
 const articleAuthor: string | string[] = route.params.author
@@ -26,11 +31,12 @@ const requestData = async () => {
 }
 
 onMounted(async () => {
-  console.log(articleData.value)
-  await requestData()
-  console.log(articleData.value[0]['content'])
-  console.log("comment")
-  console.log(commentData.value)
+  
+  await requestData();
+
+  console.log(globalStore.localIsLogin);
+  console.log(globalStore.googleIsLogin);
+  
 })
 
 // for user input data in search bar

@@ -6,7 +6,7 @@ import { Edit } from '@element-plus/icons-vue'
         <el-icon>
           <Edit />
         </el-icon>
-        <a href="/new-article" class="text-black hover:underline">Write</a>
+        <router-link to="/new-article" class="text-black hover:underline">Write</router-link>
       </li>
 </template>
 <style scoped lang='scss'>

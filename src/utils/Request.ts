@@ -19,9 +19,9 @@ request.interceptors.request.use((config) => {
   if(globalStore.localIsLogin || globalStore.googleIsLogin){
 
     if(globalStore.localIsLogin){
-      config.headers['Authorization'] = `Bearer ${globalStore.localJwtToken}`;
+      config.headers['AuthorizationLocal'] = `Bearer ${globalStore.localJwtToken}`;
     }else if(globalStore.googleIsLogin){
-      config.headers['Authorization'] = `Bearer ${globalStore.JWTToken}`;
+      config.headers['AuthorizationGoogle'] = `Bearer ${globalStore.JWTToken}`;
     }
     
   }
