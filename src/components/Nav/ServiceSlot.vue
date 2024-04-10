@@ -44,8 +44,8 @@ const closeService = () => {
             v-if="isService"
           >
             <li class="flex justify-center items-center">
-              <a href="/data" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >Service 1</a
+              <router-link to="/data" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >Service 1</router-link
               >
             </li>
             <li>
