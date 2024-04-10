@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, type Ref } from 'vue'
 import request from '@/utils/Request'
+// @ts-ignore
+import {urlFriendly} from '@/utils/UrlFriendly'
 
 // 每一次request update data
 const data: Ref<any> = ref(null)
@@ -25,21 +27,7 @@ const requestData = async (pageNum: number, pageSize: number) => {
 // Flag to track if new data needs to be loaded
 let needToLoad = false
 
-const urlFriendly = (author: string, title: string) => {
-  return (
-    author
-      .replace(/<\/?p>/g, '')
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, '-') +
-    '/' +
-    title
-      .replace(/<\/?p>/g, '')
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-  )
-}
+
 
 
 

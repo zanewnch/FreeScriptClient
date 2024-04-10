@@ -1,16 +1,24 @@
 <script setup lang="ts">
-// !the data in HomeRight.vue is still static, need to be dynamic
-const data: {
-  name: string
-  articleTitle: string
-}[] = [
-  { name: 'Emily Johnson', articleTitle: 'Exploring the Ethical Implications of AI in Healthcare' },
-  { name: 'Benjamin Smith', articleTitle: 'The Future of AI: Transforming Industries and Beyond' },
-  {
-    name: 'Olivia Davis',
-    articleTitle: 'Machine Learning Demystified: A Beginners Guide to AI Technologies'
+import request from '@/utils/Request'
+import { ref, onMounted, type Ref } from 'vue'
+import { urlFriendly } from '@/utils/UrlFriendly'
+
+const articles: Ref<any> = ref(null)
+
+const requestData = async () => {
+  try {
+    const res = await request.get('/article/staff-picks')
+
+    articles.value = res.data.data
+    console.log(articles.value)
+  } catch (e) {
+    console.log(e)
   }
-]
+}
+
+onMounted(() => {
+  requestData()
+})
 
 const topicList: {
   topic: string
@@ -72,19 +80,26 @@ const writerList: {
         Staff Picks
       </p>
     </div>
-    <div v-for="(item, index) in data" :key="index" class="card-container">
-      <div class="md:flex md:justify-start md:items-center">
-        <el-icon class="icon">
-          <User />
-        </el-icon>
-        <p class="cart-title md:text-start">{{ item['name'] }}</p>
-      </div>
-      <p class="card-content md:text-start">{{ item['articleTitle'] }}</p>
+    <div v-for="(item, index) in articles" :key="index" class="card-container md:h-24">
+      <router-link :to="urlFriendly(item['author'] || '', item['title'] || '')">
+        <div class="md:flex md:justify-start md:items-center">
+          <el-avatar
+          :src="`../../../userAvatar/${item['author']
+            .replace(/<\/?p>/g, '')
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '-')}.png`"
+          class=" md:w-4 md:h-4 "
+        />
+          <p class="cart-title md:text-start md:ml-1">{{ item['author'] }}</p>
+        </div>
+        <p class="card-content md:text-start">{{ item['title'] }}</p>
+      </router-link>
     </div>
+
     <div class="md:w-full md:flex md:justify-center md:items-center">
-      <a href="/data" class="full-content md:text-start md:font-bold hover:md:text-blue-500"
-        >See the full list</a
-      >
+      <router-link to="/data" class="full-content md:text-start md:font-bold hover:md:text-blue-500 md:mt-24"
+        >See the full list</router-link>
     </div>
   </section>
 
@@ -141,7 +156,7 @@ const writerList: {
         Recent Save
       </p>
     </div>
-    <div v-for="(item, index) in data" :key="index" class="card-container">
+    <div v-for="(item, index) in articles" :key="index" class="card-container">
       <div class="md:flex md:justify-start md:items-center">
         <el-icon class="icon">
           <User />
@@ -188,9 +203,11 @@ const writerList: {
   }
 
   p {
-    overflow: hidden;
-    white-space: nowrap;
+    //overflow: hidden;
+    //white-space: nowrap;
+
     text-overflow: ellipsis;
+    font-weight: bolder;
   }
 }
 </style>
