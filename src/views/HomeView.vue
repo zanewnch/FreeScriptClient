@@ -11,6 +11,8 @@ import WriteSlot from '@/components/Nav/WriteSlot.vue'
 import LoginSlot from '@/components/Nav/LoginSlot.vue'
 import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
 import SettingSlot from '@/components/Nav/SettingSlot.vue'
+// @ts-ignore
+import RegisterSlot from '@/components/Nav/RegisterSlot.vue'
 
 // global 1. isLogin 2.JWTToken
 // 不能用store value 去判斷,因為用store value 只有當login manipulation 才會assign
@@ -32,8 +34,6 @@ onMounted(() => {})
         <WriteSlot></WriteSlot>
       </template>
 
-      
-
       <!-- services -->
       <template #services>
         <ServiceSlot></ServiceSlot>
@@ -48,6 +48,12 @@ onMounted(() => {})
       <template #login>
         <LoginSlot></LoginSlot>
       </template>
+
+      <template #register>
+        <RegisterSlot></RegisterSlot>
+      </template>
+
+      
     </HomeNav>
 
     <!-- main content -->

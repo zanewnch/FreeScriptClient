@@ -32,6 +32,7 @@
             <slot name='setting'></slot>
 
             <slot name='login'></slot>
+            <slot name="register"></slot>
             <slot name='publish'></slot>
 
 

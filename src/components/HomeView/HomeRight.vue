@@ -4,32 +4,36 @@ import { ref, onMounted, type Ref } from 'vue'
 import { urlFriendly } from '@/utils/UrlFriendly'
 
 const articles: Ref<any> = ref(null)
+const tags: Ref<any> = ref(null)
 
-const requestData = async () => {
+// !有一些part太麻煩 就沒寫 用isFinish 先隱藏
+const isFinish = ref(false)
+
+const requestStaffPicks = async () => {
   try {
     const res = await request.get('/article/staff-picks')
 
     articles.value = res.data.data
-    console.log(articles.value)
+  } catch (e) {
+    console.log(e)
+  }
+}
+const requestTags = async () => {
+  try {
+    const res = await request.get('/article/tags')
+    tags.value = res.data.data
+    console.log(tags.value)
   } catch (e) {
     console.log(e)
   }
 }
 
 onMounted(() => {
-  requestData()
+  requestStaffPicks()
+  requestTags()
 })
 
-const topicList: {
-  topic: string
-}[] = [
-  { topic: 'Programming' },
-  { topic: 'Writing' },
-  { topic: 'Cryptocurrency' },
-  { topic: 'Artificial Intelligence' },
-  { topic: 'Machine Learning' },
-  { topic: 'Data Science' }
-]
+
 
 const writerList: {
   name: string
@@ -84,13 +88,13 @@ const writerList: {
       <router-link :to="urlFriendly(item['author'] || '', item['title'] || '')">
         <div class="md:flex md:justify-start md:items-center">
           <el-avatar
-          :src="`../../../userAvatar/${item['author']
-            .replace(/<\/?p>/g, '')
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-')}.png`"
-          class=" md:w-4 md:h-4 "
-        />
+            :src="`../../../userAvatar/${item['author']
+              .replace(/<\/?p>/g, '')
+              .trim()
+              .toLowerCase()
+              .replace(/\s+/g, '-')}.png`"
+            class="md:w-4 md:h-4"
+          />
           <p class="cart-title md:text-start md:ml-1">{{ item['author'] }}</p>
         </div>
         <p class="card-content md:text-start">{{ item['title'] }}</p>
@@ -98,24 +102,28 @@ const writerList: {
     </div>
 
     <div class="md:w-full md:flex md:justify-center md:items-center">
-      <router-link to="/data" class="full-content md:text-start md:font-bold hover:md:text-blue-500 md:mt-24"
-        >See the full list</router-link>
+      <router-link
+        to="/data"
+        class="full-content md:text-start md:font-bold hover:md:text-blue-500 md:mt-24"
+        >See the full list</router-link
+      >
     </div>
   </section>
 
   <section class="section md:w-4/5 md: md:flex md:flex-col md:justify-start items-center">
     <div class="p-5 flex flex-col space-y-4 md:w-4/5">
       <div class="flex flex-col space-y-2">
-        <div>Basic badges</div>
+        <div style="font-weight: bolder">TAGS</div>
         <div class="flex justify-center space-x-4 flex-wrap">
-          <div
+          <router-link 
+            :to="'/article/specific-tags/'+item['_id']"
             style="padding-top: 0.1em; padding-bottom: 0.1rem"
             class="text-xs px-3 bg-gray-200 text-gray-800 rounded-full md:text-wrap md:text-center md:mt-2"
-            v-for="(item, index) in topicList"
+            v-for="(item, index) in tags"
             :key="index"
           >
-            {{ item['topic'] }}
-          </div>
+            {{ item['_id'] }}
+          </router-link>
         </div>
       </div>
     </div>
@@ -123,6 +131,7 @@ const writerList: {
 
   <section
     class="section md:w-4/5 md:h-auto md: md:flex md:flex-col md:justify-center items-center"
+    v-if="isFinish"
   >
     <div class="highlight-top md:w-full md:h-8 md:flex md:justify-center">
       <p
@@ -148,7 +157,10 @@ const writerList: {
     </div>
   </section>
 
-  <section class="section md:w-4/5 md: md:flex md:flex-col md:justify-center items-center md:h-80">
+  <section
+    class="section md:w-4/5 md: md:flex md:flex-col md:justify-center items-center md:h-80"
+    v-if="isFinish"
+  >
     <div class="highlight-top md:w-full md:h-8 md:flex md:justify-center">
       <p
         class="highlight-top-content md:text-start md:text-lg md:text-wrap md:text-black md:text md:font-bold"

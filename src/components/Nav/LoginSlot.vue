@@ -12,7 +12,7 @@ const globalStore = useGlobalStore();
     <router-link
       to="/login"
       class="text-black hover:underline"
-    >login</router-link>
+    >Login</router-link>
   </li>
 
   <li v-else-if='globalStore.localIsLogin'>

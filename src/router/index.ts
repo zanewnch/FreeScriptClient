@@ -74,17 +74,23 @@ const router = createRouter({
       component: () => import('../components/HomeView/Write.vue')
     },
     {
+      path: '/article/specific-tags/:tags',
+      name: 'specific-tags',
+      component: () => import('../views/SpecificTagsView.vue')
+    },
+    {
       path: '/:author/:title',
       name: 'article',
       // @ts-ignore
       component: () => import('../views/ArticleView.vue')
     },
     {
-      path:'/account-management',
-      name:'account-management',
+      path: '/account-management',
+      name: 'account-management',
       // @ts-ignore
       component: () => import('../views/AccountManagementView.vue')
     }
+    
   ]
 })
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 </script>
 <template>
-    <li><a href="/account-management" class="text-black hover:underline">Setting</a></li>
+    <li><router-link to="/account-management" class="text-black hover:underline">Setting</router-link></li>
 </template>
 <style scoped lang="scss"></style>;

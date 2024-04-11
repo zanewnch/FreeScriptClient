@@ -9,7 +9,10 @@ import { Result } from '../utils/Result'
 
 import { decodeCredential, googleLogout } from 'vue3-google-login'
 import { useRouter } from 'vue-router'
-import type { AxiosResponse } from 'axios'
+
+
+// !login 的authentication要確實檢查
+
 
 /* login form */
 const globalStore = useGlobalStore()
