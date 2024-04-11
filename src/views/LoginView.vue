@@ -27,10 +27,9 @@ const router = useRouter();
 const googleSignIn = async (response: any) => {
   // 傳給backend 來確認是否有這個帳號
   // request 要建立cookie
-
-  let user: any = decodeCredential(response.credential)
-  console.log(user)
-  console.log(response)
+  let responseValue = response;
+  let user: any = decodeCredential(responseValue.credential)
+  
 
   globalStore.JWTToken = response['credential']
   globalStore.email = user['email']

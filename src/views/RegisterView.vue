@@ -2,17 +2,58 @@
 import { ref } from 'vue'
 import request from '@/utils/Request'
 import { useRouter } from 'vue-router'
+import { decodeCredential, googleLogout } from 'vue3-google-login'
 
-// !寫register api
 
+
+
+// local register
 const username = ref('')
 const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 
+// google register
+let googleJWTToken = '';
+let googleEmail = '';
+let googleDisplayName = '';
+let googlePhotoURL = '';
+let googleProviderId = '';
+let googleJti = '';
+
 const router = useRouter();
 
-const register = async () => {
+const googleRegister = async (response:any) =>{
+  let responseValue = response;
+  let user: any = decodeCredential(responseValue.credential)
+
+  googleJWTToken = response['credential']
+  googleEmail = user['email']
+  googleDisplayName = user['given_name']
+  googlePhotoURL = user['picture']
+  googleProviderId = user['aud']
+  googleJti = user['jti']
+
+  const res = await request.post('/user',
+    {
+      JWTToken: googleJWTToken,
+      email: googleEmail,
+      displayName: googleDisplayName,
+      photoURL: googlePhotoURL,
+      providerId: googleProviderId,
+      jti: googleJti
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+
+    router.push('/');
+}
+
+const localRegister = async () => {
   const passwordCheck = () => {
     if (password.value !== passwordConfirm.value) {
       window.alert('password not match');
@@ -82,11 +123,12 @@ const register = async () => {
             v-model="passwordConfirm"
           />
         </div>
+        <GoogleLogin :callback="googleRegister" class="flex w-2/3 sm:w-full md:flex md:w-2/3" />
         <div class="flex items-center justify-between">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-            @click="register"
+            @click="localRegister"
           >
             Register
           </button>
