@@ -11,6 +11,7 @@ export const useGlobalStore = defineStore('global', {
     photoURL: string
     providerId: string,
     jti:string,
+    role:string
     
   } => {
     return {
@@ -24,6 +25,7 @@ export const useGlobalStore = defineStore('global', {
       photoURL: '',
       providerId: '',
       jti:'',
+      role:''
       
     }
   },

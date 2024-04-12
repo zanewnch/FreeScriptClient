@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import request from '@/utils/Request'
 import { onMounted, ref, type Ref } from 'vue'
-
+import { useGlobalStore } from '@/stores/GlobalStore';
 import HomeNav from '@/components/Nav/HomeNav.vue'
+import AdministratorView from '@/views/AdministratorView.vue'
 
 const SSRPage = ref(null)
 const isSSRPage = ref(false)
 const getSSRPage = async () => {
   try {
-    const res = await request.get('/account-management')
+    const res = await request.get('/setting')
 
     SSRPage.value = res.data
   } catch (e) {
     console.log(e)
   }
 }
+
+const globalStore = useGlobalStore();
 
 const username = ref('');
 const password = ref('');
@@ -38,7 +41,7 @@ onMounted(async () => {
 
   
   
-  <div class="md:w-full md:h-screen md:flex md:flex-col">
+  <div class="md:w-full md:h-screen md:flex md:flex-col" v-if="globalStore.role !== 'administrator'">
     
     <HomeNav></HomeNav>
     <div class=" md:h-full md:w-full">
@@ -71,6 +74,12 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+  </div>
+
+  <div v-if="globalStore.role == 'administrator'">
+    
+    <AdministratorView></AdministratorView>
+    
   </div>
 </template>
 <style scoped lang="scss"></style>

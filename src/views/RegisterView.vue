@@ -4,7 +4,7 @@ import request from '@/utils/Request'
 import { useRouter } from 'vue-router'
 import { decodeCredential, googleLogout } from 'vue3-google-login'
 
-
+// 要寫重複註冊的檢查
 
 
 // local register
@@ -13,13 +13,7 @@ const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 
-// google register
-let googleJWTToken = '';
-let googleEmail = '';
-let googleDisplayName = '';
-let googlePhotoURL = '';
-let googleProviderId = '';
-let googleJti = '';
+
 
 const router = useRouter();
 
@@ -27,21 +21,16 @@ const googleRegister = async (response:any) =>{
   let responseValue = response;
   let user: any = decodeCredential(responseValue.credential)
 
-  googleJWTToken = response['credential']
-  googleEmail = user['email']
-  googleDisplayName = user['given_name']
-  googlePhotoURL = user['picture']
-  googleProviderId = user['aud']
-  googleJti = user['jti']
+  
 
   const res = await request.post('/user',
     {
-      JWTToken: googleJWTToken,
-      email: googleEmail,
-      displayName: googleDisplayName,
-      photoURL: googlePhotoURL,
-      providerId: googleProviderId,
-      jti: googleJti
+      JWTToken: response['credential'],
+      email: user['email'],
+      displayName: user['given_name'],
+      photoURL: user['picture'],
+      providerId: user['aud'],
+      jti: user['jti']
     },
     {
       headers: {
