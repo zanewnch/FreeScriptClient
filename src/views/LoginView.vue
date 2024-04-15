@@ -50,6 +50,7 @@ const googleSignIn = async (response: any) => {
     }
   )
   globalStore.googleIsLogin = true
+  // 增加權限
   globalStore.role = result.data.data.role
   console.log(globalStore.role)
 
@@ -82,6 +83,7 @@ const localSignIn = async (): Promise<void> => {
         }
       }
     )
+    // 增加權限
     globalStore.role = result.data.data.role
 
     // set isLogin state is true for making interceptor request with token
