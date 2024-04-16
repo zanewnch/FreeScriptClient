@@ -12,8 +12,8 @@ import { useRouter } from 'vue-router'
 
 /* login form */
 const globalStore = useGlobalStore()
-const username: Ref<string> = ref('')
-const password: Ref<string> = ref('')
+
+
 const isUsernameError: Ref<boolean> = ref(false)
 const isPasswordError: Ref<boolean> = ref(false)
 
@@ -51,7 +51,18 @@ const googleSignIn = async (response: any) => {
   )
   globalStore.googleIsLogin = true
   globalStore.role = result.data.data.role
-  console.log(globalStore.role)
+  
+
+  const token = await request.post('/user/set-cookie', {
+    displayName: globalStore.displayName
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  
+
 
   router.push('/')
 }
@@ -59,11 +70,11 @@ const googleSignIn = async (response: any) => {
 // local website login
 const localSignIn = async (): Promise<void> => {
   // check username format
-  if (username.value.length === 0) {
+  if (globalStore.username.length === 0) {
     isUsernameError.value = true
   }
   // check password format
-  if (password.value.length === 0) {
+  if (globalStore.password.length === 0) {
     isPasswordError.value = true
   }
 
@@ -73,8 +84,8 @@ const localSignIn = async (): Promise<void> => {
     const result: Result<any> = await request.post(
       '/user/local-signIn',
       {
-        username: username.value,
-        password: password.value
+        username: globalStore.username,
+        password: globalStore.password
       },
       {
         headers: {
@@ -86,13 +97,22 @@ const localSignIn = async (): Promise<void> => {
 
     // set isLogin state is true for making interceptor request with token
     const resJwt = await request.post('/user/local-jwt', {
-      username: username.value,
-      password: password.value
+      username: globalStore.username,
+      password: globalStore.password
     })
 
     globalStore.localJwtToken = resJwt.data.data
 
     globalStore.localIsLogin = true
+
+
+    const token = await request.post('/user/set-cookie', {
+      username: globalStore.username
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
     router.push('/')
   } catch (e) {
@@ -125,7 +145,7 @@ watchEffect(() => {
             id="username"
             type="text"
             placeholder="Username"
-            v-model="username"
+            v-model="globalStore.username"
           />
         </div>
         <div class="mb-6 sm:mb-4 md:mb-6">
@@ -140,7 +160,7 @@ watchEffect(() => {
             id="password"
             type="password"
             placeholder="******************"
-            v-model="password"
+            v-model="globalStore.password"
           />
           <p class="text-xs italic sm:text-sm md:text-xs md:italic">Please choose a password.</p>
         </div>

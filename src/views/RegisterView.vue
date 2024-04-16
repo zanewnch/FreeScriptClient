@@ -23,7 +23,7 @@ const googleRegister = async (response:any) =>{
 
   
 
-  const res = await request.post('/user',
+  const res = await request.post('/user/register',
     {
       JWTToken: response['credential'],
       email: user['email'],
@@ -39,7 +39,7 @@ const googleRegister = async (response:any) =>{
     }
   )
 
-    router.push('/');
+    router.push('/login');
 }
 
 const localRegister = async () => {
@@ -52,13 +52,13 @@ const localRegister = async () => {
 
   passwordCheck()
 
-  const res = await request.post('/user', {
+  const res = await request.post('/user/register', {
     username: username.value,
     email: email.value,
     password: password.value
   })
 
-  router.push('/');
+  router.push('/login');
 }
 </script>
 
