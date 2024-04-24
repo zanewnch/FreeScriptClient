@@ -26,11 +26,9 @@ request.interceptors.request.use((config) => {
 
   // get the cookie
   const myCookie = cookies.get('myCookie')
-  if(myCookie) {
+  if (myCookie) {
     config.headers['Cookie'] = `my-cookie=${myCookie}`
-  
   }
-
 
   return config
 })
@@ -41,7 +39,20 @@ request.interceptors.response.use(
     return response
   },
   (error) => {
-    return Promise.reject(new Error(error.message))
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log("Catch by axios interceptor of error handling for response data :",error.response.data)
+      console.log("Catch by axios interceptor of error handling for response status :",error.response.status)
+      console.log("Catch by axios interceptor of error handling for response headers :",error.response.headers)
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.log("Catch by axios interceptor of error",error.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log("Catch by axios interceptor of error",'Error', error.message)
+    }
+    return Promise.reject(error)
   }
 )
 
