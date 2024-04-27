@@ -23,7 +23,7 @@ const googleRegister = async (response:any) =>{
 
   
 
-  const res = await request.post('/user/register',
+  const res = await request.post('/user/register-google',
     {
       JWTToken: response['credential'],
       email: user['email'],
@@ -52,7 +52,7 @@ const localRegister = async () => {
 
   passwordCheck()
 
-  const res = await request.post('/user/register', {
+  const res = await request.post('/user/register-local', {
     username: username.value,
     email: email.value,
     password: password.value
