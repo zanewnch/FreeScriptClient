@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { ref, onMounted, type Ref } from 'vue'
 import request from '@/utils/Request'
-import type { SearchRecommend } from '../interface/SearchRecommendInterface'
+import type { SearchRecommend } from '@/interface/SearchRecommendInterface'
 import { Search } from '@element-plus/icons-vue'
+import type { Article } from '@/interface/ArticleInterface';
 
 const searchText: Ref<string> = ref('');
 
@@ -12,7 +13,7 @@ let timeout: ReturnType<typeof setTimeout>
 const showData: Ref<SearchRecommend[]> = ref([]);
 
 const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => {
-  const res = await request.get('/search', {
+  const res = await request.get('/article/search', {
     params: {
       keyword: queryString
     }
@@ -39,8 +40,8 @@ const handleSelect = (item: SearchRecommend) => {
 
 const handleSearchButton = async () => {
   try {
-    if (windowWidth > 768) {
-      const res = await request.get('/search', {
+    if (windowWidth.value > 768) {
+      const res = await request.get('/article/search', {
         params: {
           keyword: searchText.value
         }
