@@ -2,6 +2,7 @@
 import type { Article } from '@/interface/ArticleInterface'
 import request from '@/utils/Request'
 import { ref, type Ref, onMounted } from 'vue'
+// @ts-ignore
 import { Edit, Search } from '@element-plus/icons-vue'
 import HomeNav from '@/components/Nav/HomeNav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'

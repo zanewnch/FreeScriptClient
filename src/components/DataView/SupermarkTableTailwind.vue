@@ -1,7 +1,9 @@
 <!--suppress ALL -->
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import { onMounted, ref } from 'vue'
-import { Search } from '@element-plus/icons-vue'
 import { useSuperMarketSaleStore } from "@/stores/SupermarketSaleStore";
 import { useUserStore } from '@/stores/UserStore';
 
@@ -20,7 +22,7 @@ onMounted(async () => {
 });
 
 
-const test = ():void=>{
+const test = (): void => {
   const data = superMarketSaleStore.requestData?.data;
   console.log(data[0]['id']);
 }
@@ -83,21 +85,26 @@ const options = [
               </tr>
             </thead>
             <tbody class="bg-white">
-              <tr v-for='(item,index) in superMarketSaleStore.requestData?.data'
-              :key='index'
+              <tr
+                v-for='(item, index) in superMarketSaleStore.requestData?.data'
+                :key='index'
               >
-              
-                <td class="border-b border-gray-200 px-4 py-2">{{item['id']}}</td>
-                <td class="border-b border-gray-200 px-4 py-2">{{item['branch']}}</td>
-                <td class="border-b border-gray-200 px-4 py-2">{{item['city']}}</td>
-                <td class="border-b border-gray-200 px-4 py-2">{{item['customer_type']}}</td>
-                <td class="border-b border-gray-200 px-4 py-2">{{item['gender']}}</td>
+
+                <td class="border-b border-gray-200 px-4 py-2">{{ item['id'] }}</td>
+                <td class="border-b border-gray-200 px-4 py-2">{{ item['branch'] }}</td>
+                <td class="border-b border-gray-200 px-4 py-2">{{ item['city'] }}</td>
+                <td class="border-b border-gray-200 px-4 py-2">{{ item['customer_type'] }}</td>
+                <td class="border-b border-gray-200 px-4 py-2">{{ item['gender'] }}</td>
               </tr>
             </tbody>
           </table>
         </section>
       </div>
     </div>
-  </main></template>
+  </main>
+</template>
 
-<style scoped lang="scss"></style>
+<style
+  scoped
+  lang="scss"
+></style>

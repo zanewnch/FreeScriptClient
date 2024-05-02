@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import request from '../utils/Request'
 import type { AxiosResponse } from 'axios'
-import Result from '../utils/Result'
+import {Result} from '../utils/Result'
 import SupermarketSale from '@/model/entity/SupermarketSale'
 
-// TODO for testing, temporarily close the backend interceptor(in interceptor config)
+
 export const useSuperMarketSaleStore = defineStore('superMarketSale', {
   state: (): {
     requestData: Result<SupermarketSale> | null

@@ -16,4 +16,7 @@ export default defineConfig({
   server:{
     host: '0.0.0.0'
   },
+  optimizeDeps: {
+    include: ['@tiptap/vue-3']
+  }
 })

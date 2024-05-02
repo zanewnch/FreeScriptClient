@@ -9,6 +9,7 @@ import Typography from '@tiptap/extension-typography'
 import Heading from '@tiptap/extension-heading'
 import type { AxiosResponse } from 'axios'
 import request from '@/utils/Request'
+// @ts-ignore
 import { BubbleMenu, Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import { useRouter } from 'vue-router'
 

@@ -1,7 +1,7 @@
 <!--suppress ALL -->
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { Search } from '@element-plus/icons-vue'
+
 import { useSuperMarketSaleStore } from "@/stores/SupermarketSaleStore";
 import { useUserStore } from '@/stores/UserStore';
 

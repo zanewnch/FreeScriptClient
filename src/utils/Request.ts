@@ -42,15 +42,24 @@ request.interceptors.response.use(
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log("Catch by axios interceptor of error handling for response data :",error.response.data)
-      console.log("Catch by axios interceptor of error handling for response status :",error.response.status)
-      console.log("Catch by axios interceptor of error handling for response headers :",error.response.headers)
+      console.log(
+        'Catch by axios interceptor of error handling for response data :',
+        error.response.data
+      )
+      console.log(
+        'Catch by axios interceptor of error handling for response status :',
+        error.response.status
+      )
+      console.log(
+        'Catch by axios interceptor of error handling for response headers :',
+        error.response.headers
+      )
     } else if (error.request) {
       // The request was made but no response was received
-      console.log("Catch by axios interceptor of error",error.request)
+      console.log('Catch by axios interceptor of error', error.request)
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log("Catch by axios interceptor of error",'Error', error.message)
+      console.log('Catch by axios interceptor of error', 'Error', error.message)
     }
     return Promise.reject(error)
   }

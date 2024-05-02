@@ -1,4 +1,5 @@
 <script setup lang='ts'>
+// @ts-ignore
 import { Edit } from '@element-plus/icons-vue'
 </script>
 <template>
