@@ -1,11 +1,7 @@
 <script lang="ts" setup>
 import HomeMainContent from '@/components/HomeView/HomeMainContent.vue'
 import HomeNav from '@/components/Nav/HomeNav.vue'
-import { ref, onMounted, type Ref } from 'vue'
-import { Edit, Search } from '@element-plus/icons-vue'
-
-import type { Article } from '../interface/ArticleInterface'
-
+import { onMounted } from 'vue'
 import SearchSlot from '@/components/Nav/SearchSlot.vue'
 import WriteSlot from '@/components/Nav/WriteSlot.vue'
 import LoginSlot from '@/components/Nav/LoginSlot.vue'
@@ -59,7 +55,7 @@ onMounted(() => {
 
       <!-- contact button -->
       <template #setting>
-        <settingSlot></settingSlot>
+        <SettingSlot></SettingSlot>
       </template>
 
       <!-- login button -->
