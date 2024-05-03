@@ -2,12 +2,12 @@
   lang="ts"
   setup
 >
-import HomeMainContent from '@/components/HomeView/HomeMainContent.vue'
-import HomeNav from '@/components/Nav/HomeNav.vue'
+import HomeMainContent from '../components/HomeView/HomeMainContent.vue'
+import HomeNav from '../components/Nav/HomeNav.vue'
 import { onMounted } from 'vue'
 import SearchSlot from '../components/Nav/SearchSlot.vue'
-import WriteSlot from '@/components/Nav/WriteSlot.vue'
-import LoginSlot from '@/components/Nav/LoginSlot.vue'
+import WriteSlot from '../components/Nav/WriteSlot.vue'
+import LoginSlot from '../components/Nav/LoginSlot.vue'
 import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
 import SettingSlot from '@/components/Nav/SettingSlot.vue'
 // @ts-ignore
