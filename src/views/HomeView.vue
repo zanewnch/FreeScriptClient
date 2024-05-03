@@ -1,8 +1,11 @@
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import HomeMainContent from '@/components/HomeView/HomeMainContent.vue'
 import HomeNav from '@/components/Nav/HomeNav.vue'
 import { onMounted } from 'vue'
-import SearchSlot from '@/components/Nav/SearchSlot.vue'
+import SearchSlot from '../components/Nav/SearchSlot.vue'
 import WriteSlot from '@/components/Nav/WriteSlot.vue'
 import LoginSlot from '@/components/Nav/LoginSlot.vue'
 import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
@@ -14,12 +17,19 @@ import { useGlobalStore } from '@/stores/GlobalStore'
 import request from '@/utils/Request';
 
 const globalStore = useGlobalStore();
-const basedOnCookieToSetSignIn = async()=>{
-  const verifyLogin = await request.get('/user/verify-login');
-  if(verifyLogin.data.data){
+const basedOnCookieToSetSignIn = async () => {
+  const verifyLogin = await request.get('/user/verify-login')
+    .then((verifyLogin) => { return verifyLogin; })
+    .catch((error) => {
+      window.alert("You have not login yet.");
+      console.log(error);
+      return;
+    })
+  if (verifyLogin && verifyLogin.data.data) {
     globalStore.localIsLogin = true;
     globalStore.googleIsLogin = true;
   }
+  
 
   const decodeToken = await request.get('/user/decode-login');
   console.log("decode token");
@@ -67,7 +77,7 @@ onMounted(() => {
         <RegisterSlot></RegisterSlot>
       </template>
 
-      
+
     </HomeNav>
 
     <!-- main content -->
@@ -75,4 +85,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style
+  scoped
+  lang="scss"
+></style>

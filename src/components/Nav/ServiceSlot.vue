@@ -44,8 +44,8 @@ const closeService = () => {
             v-if="isService"
           >
             <li class="flex justify-center items-center">
-              <router-link to="/data" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >Service 1</router-link
+              <router-link to="/delete-cookie" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >Delete cookie for test</router-link
               >
             </li>
             <li>

@@ -17,7 +17,7 @@ const globalStore = useGlobalStore()
 const isUsernameError: Ref<boolean> = ref(false)
 const isPasswordError: Ref<boolean> = ref(false)
 
-const router = useRouter()
+const router = useRouter();
 
 /* google login */
 const googleSignIn = async (response: any) => {

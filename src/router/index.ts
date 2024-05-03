@@ -8,6 +8,10 @@ const router = createRouter({
       name: 'home',
       // @ts-ignore
       component: () => import('../views/HomeView.vue')
+    },{
+      path:'/delete-cookie',
+      name:'delete cookie',
+      component: ()=> import('../views/DeleteCookieView.vue')
     },
     // parent component put <router-view> in it
     // and for child router, which component directly use the component.ts(not view.ts)
