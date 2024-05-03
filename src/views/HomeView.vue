@@ -8,20 +8,20 @@ import { onMounted } from 'vue'
 import SearchSlot from '../components/Nav/SearchSlot.vue'
 import WriteSlot from '../components/Nav/WriteSlot.vue'
 import LoginSlot from '../components/Nav/LoginSlot.vue'
-import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
-import SettingSlot from '@/components/Nav/SettingSlot.vue'
+import ServiceSlot from '../components/Nav/ServiceSlot.vue'
+import SettingSlot from '../components/Nav/SettingSlot.vue'
 // @ts-ignore
-import RegisterSlot from '@/components/Nav/RegisterSlot.vue'
+import RegisterSlot from '../components/Nav/RegisterSlot.vue'
 
-import { useGlobalStore } from '@/stores/GlobalStore'
-import request from '@/utils/Request';
+import { useGlobalStore } from '../stores/GlobalStore'
+import request from '../utils/Request';
 
 const globalStore = useGlobalStore();
 const basedOnCookieToSetSignIn = async () => {
   const verifyLogin = await request.get('/user/verify-login')
     .then((verifyLogin) => { return verifyLogin; })
     .catch((error) => {
-      window.alert("You have not login yet.");
+      // window.alert("You have not login yet.");
       console.log(error);
       return;
     })

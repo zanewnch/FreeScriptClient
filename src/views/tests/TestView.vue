@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import request from '@/utils/Request'
+import request from '../../utils/Request'
 
 const requestData = async () => {
   const res = await request.get('/test/test').catch((error) => {

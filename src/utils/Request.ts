@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { useGlobalStore } from '@/stores/GlobalStore'
+import axios, { type AxiosResponse } from 'axios'
+import { useGlobalStore } from '../stores/GlobalStore'
 import cookies from 'js-cookie'
 
 const globalStore = useGlobalStore()
@@ -65,4 +65,4 @@ request.interceptors.response.use(
   }
 )
 
-export default request;
+export default request

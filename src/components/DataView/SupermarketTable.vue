@@ -2,8 +2,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import { useSuperMarketSaleStore } from "@/stores/SupermarketSaleStore";
-import { useUserStore } from '@/stores/UserStore';
+import { useSuperMarketSaleStore } from "../../stores/SupermarketSaleStore";
+import { useUserStore } from '../../stores/UserStore';
 
 
 

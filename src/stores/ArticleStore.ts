@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Comment } from '@/interface/CommentInterface'
+import type { Comment } from '../interface/CommentInterface'
 
 export const useArticleStore = defineStore('article', {
   state: (): {

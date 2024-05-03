@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref, onMounted, type Ref } from 'vue'
-import request from '@/utils/Request'
-import type { SearchRecommend } from '@/interface/SearchRecommendInterface'
+import request from '../../utils/Request'
+import type { SearchRecommend } from '../../interface/SearchRecommendInterface'
 // @ts-ignore
 import { Search } from '@element-plus/icons-vue'
-import type { Article } from '@/interface/ArticleInterface';
+import type { Article } from '../../interface/ArticleInterface';
 
 const searchText: Ref<string> = ref('');
 

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { ref, onMounted, type Ref } from 'vue'
-import request from '@/utils/Request'
-import { urlFriendly } from '@/utils/UrlFriendly'
-import HomeNav from '@/components/Nav/HomeNav.vue'
+import request from '../utils/Request'
+import { urlFriendly } from '../utils/UrlFriendly'
+import HomeNav from '../components/Nav/HomeNav.vue'
 
-import SearchSlot from '@/components/Nav/SearchSlot.vue'
-import WriteSlot from '@/components/Nav/WriteSlot.vue'
-import LoginSlot from '@/components/Nav/LoginSlot.vue'
-import ServiceSlot from '@/components/Nav/ServiceSlot.vue'
-import SettingSlot from '@/components/Nav/SettingSlot.vue'
+import SearchSlot from '../components/Nav/SearchSlot.vue'
+import WriteSlot from '../components/Nav/WriteSlot.vue'
+import LoginSlot from '../components/Nav/LoginSlot.vue'
+import ServiceSlot from '../components/Nav/ServiceSlot.vue'
+import SettingSlot from '../components/Nav/SettingSlot.vue'
 
 // path variable
 const route: RouteLocationNormalizedLoaded = useRoute()

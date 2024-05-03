@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { Article } from '@/interface/ArticleInterface'
-import request from '@/utils/Request'
+import type { Article } from '../interface/ArticleInterface'
+import request from '../utils/Request'
 import { ref, type Ref, onMounted } from 'vue'
 // @ts-ignore
 import { Edit, Search } from '@element-plus/icons-vue'
-import HomeNav from '@/components/Nav/HomeNav.vue'
+import HomeNav from '../components/Nav/HomeNav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
-import { useGlobalStore } from '@/stores/GlobalStore'
+import { useGlobalStore } from '../stores/GlobalStore'
+import type { AxiosResponse } from 'node_modules/axios/index.cjs'
 
 const globalStore = useGlobalStore();
 
@@ -21,7 +22,14 @@ const commentData: Ref<any> = ref(null)
 
 const requestData = async () => {
   try {
-    const res = await request.get(`/article/${articleAuthor}/${articleTitle}`)
+    /* 
+    第一個any表示data字段的類型，即從服務器返回的數據的類型。在這個情況下，它被指定為any，表示它可以是任何類型的數據。
+
+第二個any表示response的其他屬性（如status、headers等）的類型。同樣地，它被指定為any，表示這些屬性可以是任何類型。
+
+因此，AxiosResponse<any, any>是一個泛型類型，表示它的數據可以是任何類型，並且它的其他屬性也可以是任何類型。這種情況下，它提供了最大的靈活性，但也降低了類型安全性。
+    */
+    const res:AxiosResponse<any, any> = await request.get(`/article/${articleAuthor}/${articleTitle}`)
     articleData.value = res.data.data
     commentData.value = res.data.data[0]['comments']
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import request from '@/utils/Request'
+import request from '../../utils/Request'
 import { ref, onMounted, type Ref } from 'vue'
-import { urlFriendly } from '@/utils/UrlFriendly'
+import { urlFriendly } from '../../utils/UrlFriendly'
 
 const articles: Ref<any> = ref(null)
 const tags: Ref<any> = ref(null)

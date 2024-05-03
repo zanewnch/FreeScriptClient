@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import request from '@/utils/Request'
+import request from '../utils/Request'
 import { useRouter } from 'vue-router'
 import { decodeCredential, googleLogout } from 'vue3-google-login'
 

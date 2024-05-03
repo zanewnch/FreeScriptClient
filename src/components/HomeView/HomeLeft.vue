@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, type Ref } from 'vue'
-import request from '@/utils/Request'
-// @ts-ignore
-import {urlFriendly} from '@/utils/UrlFriendly'
+import request from '../../utils/Request'
+
+import {urlFriendly} from '../..//utils/UrlFriendly'
 
 // 每一次request update data
 const data: Ref<any> = ref(null)

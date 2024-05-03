@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { AxiosResponse } from 'axios'
-import {Result} from '@/utils/Result'
-import request from '@/utils/Request'
+import {Result} from '../utils/Result'
+import request from '../utils/Request'
 /*
 login and register
 1. login : username, password

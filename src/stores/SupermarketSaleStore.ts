@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import request from '../utils/Request'
 import type { AxiosResponse } from 'axios'
 import {Result} from '../utils/Result'
-import SupermarketSale from '@/model/entity/SupermarketSale'
+import SupermarketSale from '../model/entity/SupermarketSale'
 
 
 export const useSuperMarketSaleStore = defineStore('superMarketSale', {

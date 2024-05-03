@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import request from '@/utils/Request'
+import request from '../utils/Request'
 import { onMounted, ref, type Ref } from 'vue'
-import { useGlobalStore } from '@/stores/GlobalStore';
-import HomeNav from '@/components/Nav/HomeNav.vue'
-import AdministratorView from '@/views/AdministratorView.vue'
+import { useGlobalStore } from '../stores/GlobalStore';
+import HomeNav from '../components/Nav/HomeNav.vue'
+import AdministratorView from '../views/AdministratorView.vue'
 
 const SSRPage = ref(null)
 const isSSRPage = ref(false)

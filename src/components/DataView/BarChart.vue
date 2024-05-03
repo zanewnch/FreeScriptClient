@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect, watch } from 'vue';
 import * as echarts from 'echarts';
-import { useSuperMarketSaleStore } from '@/stores/SupermarketSaleStore';
+import { useSuperMarketSaleStore } from '../../stores/SupermarketSaleStore';
 // 每月營業額
 const msg = "hello world"
 const supermarketSaleStore = useSuperMarketSaleStore();

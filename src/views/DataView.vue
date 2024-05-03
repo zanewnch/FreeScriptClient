@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // @ts-ignore
-import NavData from '@/components/DataView/NavData.vue';
-import Navigation from '@/components/DataView/NavigationData.vue'
+import NavData from '../components/DataView/NavData.vue';
+import Navigation from '../components/DataView/NavigationData.vue'
 import { ref, type Ref } from 'vue';
 
 

@@ -3,7 +3,7 @@
     lang='ts'
 >
 // @ts-ignore
-import request from '@/utils/Request'
+import request from '../utils/Request'
 import { useRouter } from 'vue-router'
 const router = useRouter();
 
