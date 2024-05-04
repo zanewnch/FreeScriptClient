@@ -9,6 +9,7 @@ import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { useGlobalStore } from '../stores/GlobalStore'
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
 
+
 const globalStore = useGlobalStore();
 
 
@@ -29,7 +30,7 @@ const requestData = async () => {
 
 因此，AxiosResponse<any, any>是一個泛型類型，表示它的數據可以是任何類型，並且它的其他屬性也可以是任何類型。這種情況下，它提供了最大的靈活性，但也降低了類型安全性。
     */
-    const res:AxiosResponse<any, any> = await request.get(`/article/${articleAuthor}/${articleTitle}`)
+    const res:AxiosResponse<any> = await request.get(`/article/${articleAuthor}/${articleTitle}`)
     articleData.value = res.data.data
     commentData.value = res.data.data[0]['comments']
 
