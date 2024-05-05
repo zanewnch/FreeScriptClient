@@ -8,30 +8,28 @@ import { decodeCredential, googleLogout } from 'vue3-google-login'
 import { useRouter } from 'vue-router'
 
 
-// !login 的authentication要確實檢查
 
 /* login form */
-const globalStore = useGlobalStore();
+const globalStore = useGlobalStore()
 
+const isUsernameError: Ref<boolean> = ref(false)
+const isPasswordError: Ref<boolean> = ref(false)
 
-const isUsernameError: Ref<boolean> = ref(false);
-const isPasswordError: Ref<boolean> = ref(false);
-
-const router = useRouter();
+const router = useRouter()
 
 /* google login */
-const googleSignIn = async (response: any) => {
+const googleSignIn = async (response: any):Promise<void> => {
   // 傳給backend 來確認是否有這個帳號
   // request 要建立cookie
-  let responseValue = response;
-  let user: any = decodeCredential(responseValue.credential);
+  let responseValue = response
+  let user: any = decodeCredential(responseValue.credential)
 
-  globalStore.JWTToken = response['credential'];
-  globalStore.email = user['email'];
-  globalStore.displayName = user['given_name'];
-  globalStore.photoURL = user['picture'];
-  globalStore.providerId = user['aud'];
-  globalStore.jti = user['jti'];
+  globalStore.JWTToken = response['credential']
+  globalStore.email = user['email']
+  globalStore.displayName = user['given_name']
+  globalStore.photoURL = user['picture']
+  globalStore.providerId = user['aud']
+  globalStore.jti = user['jti']
 
   const result: Result<any> = await request.post(
     '/user/google-signIn',
@@ -49,34 +47,34 @@ const googleSignIn = async (response: any) => {
       }
     }
   )
-  globalStore.googleIsLogin = true;
+  globalStore.googleIsLogin = true
   // 增加權限
-  globalStore.role = result.data.data.role;
-  
+  globalStore.role = result.data.data.role
 
-  const token = await request.post('/user/set-cookie', {
-    displayName: globalStore.displayName
-  }, {
-    headers: {
-      'Content-Type': 'application/json'
+  const token = await request.post(
+    '/user/set-cookie',
+    {
+      displayName: globalStore.displayName
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
-  })
+  )
 
-  
-
-
-  router.push('/');
+  router.push('/')
 }
 
 // local website login
 const localSignIn = async (): Promise<void> => {
   // check username format
   if (globalStore.username.length === 0) {
-    isUsernameError.value = true;
+    isUsernameError.value = true
   }
   // check password format
   if (globalStore.password.length === 0) {
-    isPasswordError.value = true;
+    isPasswordError.value = true
   }
 
   // request for checking account
@@ -95,28 +93,32 @@ const localSignIn = async (): Promise<void> => {
       }
     )
     // 增加權限
-    globalStore.role = result.data.data.role;
+    globalStore.role = result.data.data.role
 
     // set isLogin state is true for making interceptor request with token
     const resJwt = await request.post('/user/local-jwt', {
       username: globalStore.username,
       password: globalStore.password
-    });
+    })
 
-    globalStore.localJwtToken = resJwt.data.data;
-    globalStore.localIsLogin = true;
+    globalStore.localJwtToken = resJwt.data.data
+    globalStore.localIsLogin = true
 
-    const token = await request.post('/user/set-cookie', {
-      username: globalStore.username
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
+    const token = await request.post(
+      '/user/set-cookie',
+      {
+        username: globalStore.username
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    });
+    )
 
-    router.push('/');
+    router.push('/')
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
 }
 

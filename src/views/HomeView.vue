@@ -1,7 +1,4 @@
-<script
-  lang="ts"
-  setup
->
+<script lang="ts" setup>
 import HomeMainContent from '../components/HomeView/HomeMainContent.vue'
 import HomeNav from '../components/Nav/HomeNav.vue'
 import { onMounted } from 'vue'
@@ -14,35 +11,36 @@ import SettingSlot from '../components/Nav/SettingSlot.vue'
 import RegisterSlot from '../components/Nav/RegisterSlot.vue'
 
 import { useGlobalStore } from '../stores/GlobalStore'
-import request from '../utils/Request';
+import request from '../utils/Request'
+import type { AxiosResponse } from 'node_modules/axios/index.cjs'
+import { Result } from '../utils/Result'
 
-const globalStore = useGlobalStore();
-const basedOnCookieToSetSignIn = async () => {
-  const verifyLogin = await request.get('/user/verify-login')
-    .then((verifyLogin) => { return verifyLogin; })
-    .catch((error) => {
-      // window.alert("You have not login yet.");
-      console.log(error);
-      return;
-    })
-  if (verifyLogin && verifyLogin.data.data) {
-    globalStore.localIsLogin = true;
-    globalStore.googleIsLogin = true;
+const globalStore = useGlobalStore()
+const basedOnCookieToSetSignIn = async (): Promise<void> => {
+  try {
+    const verifyLogin: AxiosResponse<Result<any>> = await request.get('/user/verify-login')
+
+    if (verifyLogin && verifyLogin.data.data) {
+      globalStore.localIsLogin = true
+      globalStore.googleIsLogin = true
+    }
+
+    const decodeToken: AxiosResponse<Result<any>> =
+      await request.get('/user/decode-login')
+
+    if (decodeToken && decodeToken.data.data ) {
+      console.log('decode token')
+      console.log(decodeToken?.data.data['name'])
+      globalStore.username = decodeToken?.data.data['name']
+      globalStore.displayName = decodeToken.data.data['name']
+    }
+  } catch (e) {
+    console.log(e)
   }
-  
-
-  const decodeToken = await request.get('/user/decode-login');
-  console.log("decode token");
-  console.log(decodeToken.data.data['name']);
-  globalStore.username = decodeToken.data.data['name'];
-  globalStore.displayName = decodeToken.data.data['name'];
-
-
-
 }
 
 onMounted(() => {
-  basedOnCookieToSetSignIn();
+  basedOnCookieToSetSignIn()
 })
 </script>
 
@@ -76,8 +74,6 @@ onMounted(() => {
       <template #register>
         <RegisterSlot></RegisterSlot>
       </template>
-
-
     </HomeNav>
 
     <!-- main content -->
@@ -85,7 +81,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style
-  scoped
-  lang="scss"
-></style>
+<style scoped lang="scss"></style>

@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 import request from '../utils/Request'
 import { useRouter } from 'vue-router'
+import { Result } from '../utils/Result'
 import { decodeCredential, googleLogout } from 'vue3-google-login'
-
+import type { AxiosResponse } from 'axios'
 // 要寫重複註冊的檢查
-
 
 // local register
 const username = ref('')
@@ -13,52 +13,57 @@ const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 
+const router = useRouter()
 
+const googleRegister = async (response: any) => {
+  try {
+    let responseValue = response
+    let user: any = decodeCredential(responseValue.credential)
 
-const router = useRouter();
-
-const googleRegister = async (response:any) =>{
-  let responseValue = response;
-  let user: any = decodeCredential(responseValue.credential)
-
-  
-
-  const res = await request.post('/user/register-google',
-    {
-      JWTToken: response['credential'],
-      email: user['email'],
-      displayName: user['given_name'],
-      photoURL: user['picture'],
-      providerId: user['aud'],
-      jti: user['jti']
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json'
+    const res = await request.post(
+      '/user/register-google',
+      {
+        JWTToken: response['credential'],
+        email: user['email'],
+        displayName: user['given_name'],
+        photoURL: user['picture'],
+        providerId: user['aud'],
+        jti: user['jti']
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    }
-  )
+    )
 
-    router.push('/login');
+    router.push('/login')
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 const localRegister = async () => {
   const passwordCheck = () => {
     if (password.value !== passwordConfirm.value) {
-      window.alert('password not match');
-      return;
+      window.alert('password not match')
+      return
     }
   }
 
   passwordCheck()
 
-  const res = await request.post('/user/register-local', {
-    username: username.value,
-    email: email.value,
-    password: password.value
-  })
+  try {
+    const res: AxiosResponse<Result<string | null>> = await request.post('/user/register-local', {
+      username: username.value,
+      email: email.value,
+      password: password.value
+    })
 
-  router.push('/login');
+    router.push('/login')
+  } catch (e) {
+    console.log(e)
+  }
 }
 </script>
 

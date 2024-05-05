@@ -10,12 +10,13 @@ import WriteSlot from '../components/Nav/WriteSlot.vue'
 import LoginSlot from '../components/Nav/LoginSlot.vue'
 import ServiceSlot from '../components/Nav/ServiceSlot.vue'
 import SettingSlot from '../components/Nav/SettingSlot.vue'
+import type { Article } from '@/interface/ArticleInterface'
 
 // path variable
 const route: RouteLocationNormalizedLoaded = useRoute()
 const tag: string | string[] = route.params.tags
 
-const articleData: Ref<any> = ref(null)
+const articleData: Ref<Article[] | null> = ref(null)
 
 const requestArticleData = async (): Promise<void> => {
   try {
@@ -61,18 +62,17 @@ onMounted(() => {
     </template>
   </HomeNav>
 
-  <div
-    class=" md:w-full md:h-full md:flex md:flex-col md:justify-start md:items-center"
-  >
+  <div class="md:w-full md:h-full md:flex md:flex-col md:justify-start md:items-center">
     <div
-      class="card md:w-4/5 md:h-44 md:flex md:flex-col md:justify-center md:overflow-hidden sm:mt-2 sm:pb-2 "
+      class="card md:w-4/5 md:h-44 md:flex md:flex-col md:justify-center md:overflow-hidden sm:mt-2 sm:pb-2"
       v-for="(item, index) in articleData"
       :key="index"
       style="border-bottom: 0.5px #e0e0e0 solid"
     >
-      <router-link :to="'/'+ urlFriendly(item['author'] || '', item['title'] || '')" class="">
+      <router-link :to="'/' + urlFriendly(item['author'] || '', item['title'] || '')" class="">
         <div class="author md:flex md:justify-start md:items-center sm:flex">
           <el-avatar
+            v-if="item['author']"
             :src="`../../../userAvatar/${item['author']
               .replace(/<\/?p>/g, '')
               .trim()
