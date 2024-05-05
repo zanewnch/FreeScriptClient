@@ -8,86 +8,80 @@ import HomeNav from '../components/Nav/HomeNav.vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { useGlobalStore } from '../stores/GlobalStore'
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
-
+import { Result } from '../utils/Result'
 
 const globalStore = useGlobalStore();
 
-
-
-const route: RouteLocationNormalizedLoaded = useRoute()
-const articleAuthor: string | string[] = route.params.author
-const articleTitle: string | string[] = route.params.title
-const articleData: any = ref('a')
-const avatarPath: string = `../../public/userAvatar/${articleAuthor}.png`
-const commentData: Ref<any> = ref(null)
+const route: RouteLocationNormalizedLoaded = useRoute();
+const articleAuthor: string | string[] = route.params.author;
+const articleTitle: string | string[] = route.params.title;
+const articleData: any = ref('a');
+const avatarPath: string = `../../public/userAvatar/${articleAuthor}.png`;
+const commentData: Ref<any> = ref(null);
 
 const requestData = async () => {
   try {
-    /* 
-    第一個any表示data字段的類型，即從服務器返回的數據的類型。在這個情況下，它被指定為any，表示它可以是任何類型的數據。
-
-第二個any表示response的其他屬性（如status、headers等）的類型。同樣地，它被指定為any，表示這些屬性可以是任何類型。
-
-因此，AxiosResponse<any, any>是一個泛型類型，表示它的數據可以是任何類型，並且它的其他屬性也可以是任何類型。這種情況下，它提供了最大的靈活性，但也降低了類型安全性。
-    */
-    const res:AxiosResponse<any> = await request.get(`/article/${articleAuthor}/${articleTitle}`)
-    articleData.value = res.data.data
-    commentData.value = res.data.data[0]['comments']
-
-
+    
+    const res: AxiosResponse<Result<Article[]>> = await request.get(
+      `/article/${articleAuthor}/${articleTitle}`
+    );
+    if (res.data && res.data.data) {
+      articleData.value = res.data.data;
+      commentData.value = res.data.data[0]['comments'];
+    }
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
 onMounted(async () => {
-  
   await requestData();
-
-  console.log(globalStore.localIsLogin);
-  console.log(globalStore.googleIsLogin);
-  
 })
 
 // for user input data in search bar
-const searchText: Ref<string> = ref('')
+const searchText: Ref<string> = ref('');
 
 // the interface of data to show in search bar recommended list
 interface searchRecommend {
   value: string
   link: string
-}
+};
 // the array to store the data to show in search bar recommended list
-const showData: Ref<searchRecommend[]> = ref([])
+const showData: Ref<searchRecommend[]> = ref([]);
 
-let timeout: ReturnType<typeof setTimeout>
+let timeout: ReturnType<typeof setTimeout>;
 const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => {
-  const res = await request.get('/search', {
+  try{
+    const res = await request.get('/search', {
     params: {
       keyword: queryString
     }
-  })
+  });
 
   // better case
   showData.value = res.data.data.map((item: Article) => {
     return {
       value: item['title'],
       link: item['author']
-    }
+    };
   })
 
   clearTimeout(timeout)
   timeout = setTimeout(() => {
     cb(showData.value)
-  }, 3000 * Math.random())
+  }, 3000 * Math.random());
+  }catch(e){
+    console.error(e);
+  }
+  
 }
 
 const handleSelect = (item: searchRecommend) => {
-  console.log(item)
+  console.log(item);
   // window.open(item.link)
 }
 
-const isService = ref(false)
+const isService = ref(false);
 const toggleServiceDropDown = (event: MouseEvent) => {
   /*
     const changeService = ()=>{
@@ -103,18 +97,18 @@ const toggleServiceDropDown = (event: MouseEvent) => {
   /*
     在你的代码中，使用 event.stopPropagation() 是为了防止在点击 "Services" 按钮时立即触发 document 上的点击事件监听器，从而确保点击按钮时只执行打开服务列表的逻辑，而不会立即关闭它。这样你可以点击按钮以外的地方来关闭服务列表。
    */
-  event.stopPropagation()
-  isService.value = !isService.value
+  event.stopPropagation();
+  isService.value = !isService.value;
   // listen whether has click event, if has, then invoke the corresponding function
   if (isService.value) {
-    document.addEventListener('click', closeService, { once: true })
+    document.addEventListener('click', closeService, { once: true });
   } else {
-    document.removeEventListener('click', closeService, false)
+    document.removeEventListener('click', closeService, false);
   }
 }
 
 const closeService = () => {
-  isService.value = false
+  isService.value = false;
 }
 </script>
 <template>
@@ -122,7 +116,7 @@ const closeService = () => {
     <HomeNav></HomeNav>
 
     <!-- Main content -->
-    <div class="md:w-full md:flex md:flex-col md:justify-center md:items-center ">
+    <div class="md:w-full md:flex md:flex-col md:justify-center md:items-center">
       <!-- article content -->
       <div class="md:w-2/5 md:flex md:flex-col">
         <div class="title">
@@ -136,28 +130,20 @@ const closeService = () => {
           <el-avatar :src="avatarPath" />
           <div v-html="articleData[0]['author']"></div>
         </div>
-        <div
-          class="content pb-4"
-          style=''
-        >
+        <div class="content pb-4" style="">
           <div v-html="articleData[0]['content']"></div>
         </div>
       </div>
-      <div class="md:w-2/5 md:flex    md:flex-col   md:justify-center ">
+      <div class="md:w-2/5 md:flex md:flex-col md:justify-center">
         <!-- card content for comment-->
         <div
           class="card md:w-full md:h-44 md:flex md:flex-col md:justify-center md:overflow-hidden md:mt-6"
-          style='border-bottom: #e0e0e0 0.5px solid;
-          box-shadow:1px 1px 3px #e0e0e0;'
+          style="border-bottom: #e0e0e0 0.5px solid; box-shadow: 1px 1px 3px #e0e0e0"
           v-for="(item, index) in commentData"
           :key="index"
         >
-          <a
-            href="/"
-            class=' md:flex md:flex-col md:items-start  md:h-full md:w-full
-            '
-          >
-            <div class="comment-username md:flex md:justify-start md:items-center md:mt-6 ">
+          <a href="/" class="md:flex md:flex-col md:items-start md:h-full md:w-full">
+            <div class="comment-username md:flex md:justify-start md:items-center md:mt-6">
               <!-- <el-avatar :src="`../../../userAvatar/${item['author']
                 .replace(/<\/?p>/g, '')
                 .trim()
@@ -234,17 +220,18 @@ const closeService = () => {
     }
   }
 
-  .comment-username{
-    p{
+  .comment-username {
+    p {
       font-size: 16px;
       font-weight: bolder;
       text-align: left;
     }
   }
 
-  .comment-content{
-    p{
+  .comment-content {
+    p {
       text-align: left;
     }
   }
-}</style>
+}
+</style>

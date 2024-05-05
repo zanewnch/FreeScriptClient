@@ -1,5 +1,6 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 
 module.exports = {
   root: true,
@@ -15,5 +16,11 @@ module.exports = {
   env:{
     jest:true,
     node:true
+  },
+  extends: [
+    "plugin:vue/recommended"
+  ],
+  rules: {
+    "semi": ["error", "always"]
   }
 }

@@ -7,6 +7,7 @@ export interface Article {
     所以，[key: string]: number | null; 的整体含义是：你可以使用任意字符串作为索引来访问对象的属性，这些属性的值可以是 number 类型或 null 类型。
      */
   [key: string]: number | string | Date | object | boolean
+  _id: string
   title: string
   content: string
   author: string
