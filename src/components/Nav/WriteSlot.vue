@@ -1,9 +1,9 @@
 <script setup lang='ts'>
-// @ts-ignore
+
 import { Edit } from '@element-plus/icons-vue'
 </script>
 <template>
-    <li class="flex justify-center items-center">
+    <li class="md:flex md:justify-center md:items-center">
         <el-icon>
           <Edit />
         </el-icon>

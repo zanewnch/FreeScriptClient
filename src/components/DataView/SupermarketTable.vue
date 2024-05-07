@@ -2,52 +2,46 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import { useSuperMarketSaleStore } from "../../stores/SupermarketSaleStore";
-import { useUserStore } from '../../stores/UserStore';
+import { useSuperMarketSaleStore } from '../../stores/SupermarketSaleStore'
+import { useUserStore } from '../../stores/UserStore'
 
-
-
-
-
-const superMarketSaleStore = useSuperMarketSaleStore();
+const superMarketSaleStore = useSuperMarketSaleStore()
 
 onMounted(() => {
-  superMarketSaleStore.pageNum = 1;
-  superMarketSaleStore.pageSize = 10;
-  superMarketSaleStore.getByPage();
-  superMarketSaleStore.getTotalDataAmount();
-  superMarketSaleStore.getBranchList();
-  superMarketSaleStore.getCityList();
-  superMarketSaleStore.getCustomerTypeList();
-});
+  superMarketSaleStore.pageNum = 1
+  superMarketSaleStore.pageSize = 10
+  superMarketSaleStore.getByPage()
+  superMarketSaleStore.getTotalDataAmount()
+  superMarketSaleStore.getBranchList()
+  superMarketSaleStore.getCityList()
+  superMarketSaleStore.getCustomerTypeList()
+})
 
 const handleClick = () => {
-  console.log('click');
+  console.log('click')
 }
-
-
 
 const options = [
   {
     value: 'Option1',
-    label: 'Option1',
+    label: 'Option1'
   },
   {
     value: 'Option2',
-    label: 'Option2',
+    label: 'Option2'
   },
   {
     value: 'Option3',
-    label: 'Option3',
+    label: 'Option3'
   },
   {
     value: 'Option4',
-    label: 'Option4',
+    label: 'Option4'
   },
   {
     value: 'Option5',
-    label: 'Option5',
-  },
+    label: 'Option5'
+  }
 ]
 </script>
 
@@ -55,30 +49,22 @@ const options = [
   <div class="container">
     <div class="content">
       <el-row class="elRowUp">
-
         <el-col
           :span="24"
           class="elColUp"
-          style='display: flex;justify-content: center;align-items: center;'
+          style="display: flex; justify-content: center; align-items: center"
         >
-
           <el-form
             :inline="true"
             size="default"
             label-position="top"
             class="demo-form-inline"
-            style='text-align: center;'
+            style="text-align: center"
           >
-
-
             <el-form-item>
               <div>
                 <p>Branch</p>
-                <el-select
-                  v-model="superMarketSaleStore.branch"
-                  clearable
-                  placeholder=""
-                >
+                <el-select v-model="superMarketSaleStore.branch" clearable placeholder="">
                   <el-option
                     v-for="(branch, index) in superMarketSaleStore.branchList?.data"
                     :key="index"
@@ -91,13 +77,8 @@ const options = [
 
             <el-form-item>
               <div>
-
                 <p>City</p>
-                <el-select
-                  v-model="superMarketSaleStore.city"
-                  clearable
-                  placeholder=""
-                >
+                <el-select v-model="superMarketSaleStore.city" clearable placeholder="">
                   <el-option
                     v-for="(city, index) in superMarketSaleStore.cityList?.data"
                     :key="index"
@@ -111,13 +92,7 @@ const options = [
             <el-form-item>
               <div>
                 <p>Customer Type</p>
-                <el-select
-                  v-model="superMarketSaleStore.customerType"
-                  clearable
-                  placeholder=""
-                >
-
-
+                <el-select v-model="superMarketSaleStore.customerType" clearable placeholder="">
                   <el-option
                     v-for="(customerType, index) in superMarketSaleStore.customerTypeList?.data"
                     :key="index"
@@ -127,7 +102,6 @@ const options = [
                 </el-select>
               </div>
             </el-form-item>
-
 
             <el-form-item>
               <div>
@@ -139,136 +113,69 @@ const options = [
                   clearable
                 />
               </div>
-
-
-
             </el-form-item>
 
-            <el-form-item style='display:flex;justify-content;align-items:center;'>
+            <el-form-item style="display:flex;justify-content:center;align-items:center;">
               <el-button
                 type="info"
-                @click="superMarketSaleStore.get({
-                  branch: superMarketSaleStore.branch,
-                  city: superMarketSaleStore.city,
-                  customerType: superMarketSaleStore.customerType
-                })"
-              >Search</el-button>
+                @click="
+                  superMarketSaleStore.get({
+                    branch: superMarketSaleStore.branch,
+                    city: superMarketSaleStore.city,
+                    customerType: superMarketSaleStore.customerType
+                  })
+                "
+                >Search</el-button
+              >
             </el-form-item>
-
           </el-form>
-
-
         </el-col>
-
       </el-row>
 
       <el-row class="elRowDown">
-        <el-col
-          :span="24"
-          class="elColDown"
-        >
-
+        <el-col :span="24" class="elColDown">
           <el-table
             :data="superMarketSaleStore.requestData?.data"
             class="table"
             :header-cell-style="{
               'background-color': '#6C6C6C',
-              'color': '#fff',
+              color: '#fff',
               'font-size': '16px',
               'font-weight': 'bold',
-              'text-align': 'center',
-
+              'text-align': 'center'
             }"
             :cell-style="{
               'font-size': '16px',
               'font-weight': 'bold',
-              'color': '#000000',
+              color: '#000000',
               'text-align': 'center'
             }"
           >
-            <el-table-column
-              fixed
-              prop="id"
-              label="id"
-              width="180"
-            />
+            <el-table-column fixed prop="id" label="id" width="180" />
 
-            <el-table-column
-              prop="branch"
-              label="branch"
-              width="180"
-            />
+            <el-table-column prop="branch" label="branch" width="180" />
 
-            <el-table-column
-              prop="city"
-              label="city"
-              width="180"
-            />
+            <el-table-column prop="city" label="city" width="180" />
 
-            <el-table-column
-              prop="customer_type"
-              label="customerType"
-              width="180"
-            />
-            <el-table-column
-              prop="gender"
-              label="gender"
-              width="180"
-            />
-            <el-table-column
-              prop="product_line"
-              label="productLine"
-              width="180"
-            />
+            <el-table-column prop="customer_type" label="customerType" width="180" />
+            <el-table-column prop="gender" label="gender" width="180" />
+            <el-table-column prop="product_line" label="productLine" width="180" />
 
-            <el-table-column
-              prop="unit_price"
-              label="unitPrice"
-              width="180"
-            />
+            <el-table-column prop="unit_price" label="unitPrice" width="180" />
 
+            <el-table-column prop="quantity" label="quantity" width="180" />
 
-            <el-table-column
-              prop="quantity"
-              label="quantity"
-              width="180"
-            />
+            <el-table-column prop="tax_5_percent" label="tax5Percent" width="180" />
 
-            <el-table-column
-              prop="tax_5_percent"
-              label="tax5Percent"
-              width="180"
-            />
+            <el-table-column prop="total" label="total" width="180" />
 
-            <el-table-column
-              prop="total"
-              label="total"
-              width="180"
-            />
+            <el-table-column prop="date" label="date" width="250" />
 
-            <el-table-column
-              prop="date"
-              label="date"
-              width="250"
-            />
+            <el-table-column prop="time" label="time" width="180" />
 
-            <el-table-column
-              prop="time"
-              label="time"
-              width="180"
-            />
+            <el-table-column prop="payment" label="payment" width="180" />
 
-            <el-table-column
-              prop="payment"
-              label="payment"
-              width="180"
-            />
-
-            <el-table-column
-              prop="cogs"
-              label="cogs"
-              width="180"
-            />
+            <el-table-column prop="cogs" label="cogs" width="180" />
 
             <el-table-column
               prop="gross_margin_percentage"
@@ -276,48 +183,20 @@ const options = [
               width="180"
             />
 
-            <el-table-column
-              prop="gross_income"
-              label="grossIncome"
-              width="180"
-            />
+            <el-table-column prop="gross_income" label="grossIncome" width="180" />
 
-            <el-table-column
-              prop="rating"
-              label="rating"
-              width="180"
-            />
+            <el-table-column prop="rating" label="rating" width="180" />
 
-
-            <el-table-column
-              fixed="right"
-              label="Operations"
-              width="120"
-            >
+            <el-table-column fixed="right" label="Operations" width="120">
               <template #default>
-                <el-button
-                  link
-                  type="primary"
-                  size="small"
-                  @click="handleClick"
-                >Detail</el-button>
-                <el-button
-                  link
-                  type="primary"
-                  size="small"
-                >Edit</el-button>
+                <el-button link type="primary" size="small" @click="handleClick">Detail</el-button>
+                <el-button link type="primary" size="small">Edit</el-button>
               </template>
             </el-table-column>
-
           </el-table>
-
         </el-col>
 
-        <el-col
-          :span="24"
-          class='elColButtom'
-        >
-
+        <el-col :span="24" class="elColButtom">
           <el-pagination
             v-model:current-page="superMarketSaleStore.pageNum"
             v-model:page-size="superMarketSaleStore.pageSize"
@@ -330,9 +209,7 @@ const options = [
             @current-change="superMarketSaleStore.getByPage()"
             @size-change="superMarketSaleStore.getByPage()"
           />
-
         </el-col>
-
       </el-row>
     </div>
   </div>
@@ -343,7 +220,6 @@ const options = [
   display: flex;
   justify-content: center;
   align-items: center;
-
 
   height: 100vh;
 
@@ -357,7 +233,6 @@ const options = [
     /* 設置陰影，偏移（X和Y軸偏移）、模糊度和顏色 */
     border-radius: 10px;
     margin: 50px;
-
 
     .elRowUp {
       padding-top: 5vh;
@@ -388,9 +263,7 @@ const options = [
     }
 
     .elRowDown {
-
       padding-top: 5vh;
-
 
       .elColDown {
         :deep(.table) {

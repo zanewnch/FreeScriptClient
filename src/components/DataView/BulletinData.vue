@@ -1,82 +1,26 @@
 <script setup lang='ts'>
+
+
+import type { AxiosResponse } from 'node_modules/axios/index.cjs';
+import request from '../../utils/Request';
+import { ref, onMounted } from 'vue';
+
+const bulletinData = ref<string|null>(null);
+
+const getBulletinData = async () => {
+    const res:AxiosResponse<string|null> = await request.get('/supermarket/bulletin');
+
+    bulletinData.value = res.data;
+    
+}
+
+onMounted(() => {
+    getBulletinData();
+})
 </script>
 <template>
-    <div class='container'>
-        <div class='contentLeft'>
-            <div class='contentLeftHeader'>
-                <span>Bulletin</span>
-
-            </div>
-            <div class='contentLeftMain'>
-                <span>We are excited to announce a new update for our ERP system that will bring
-                    enhanced functionality and
-                    efficiency to your daily operations. With this latest release, we have focused on streamlining processes
-                    and
-                    providing you with valuable insights to further optimize your business operations.
-                    <br>
-                    Some key highlights of this update include:
-
-                    Improved reporting and analytics capabilities, allowing you to make data-driven decisions with ease.
-                    Enhanced inventory management tools, helping you maintain optimal stock levels and reduce carrying
-                    costs.
-                    <br>
-                    An intuitive user interface redesign for a more user-friendly experience.
-                    Performance optimizations to ensure a faster and smoother user experience.
-                    We believe these enhancements will empower you to take your business operations to the next level.
-                    <br>
-                    To learn
-                    more about the new features and how they can benefit your department, please attend our upcoming
-                    training
-                    sessions, or reach out to our support team for personalized assistance.</span>
-            </div>
-        </div>
-    </div>
+    <div v-html="bulletinData"></div>
 </template>
 <style lang='scss' scoped>
-.container {
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .contentLeft {
-        height: 90%;
-        width: 80%;
-
-        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
-        /* 水平偏移，垂直偏移，模糊度，阴影颜色 */
-
-
-
-
-
-
-        .contentLeftHeader {
-            border-bottom: 0.1px solid #666;
-            height: 10%;
-            font-size: larger;
-            font-weight: bold;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-
-
-
-        }
-
-        .contentLeftMain {
-            height: 80%;
-
-            margin-top: 10px;
-            overflow: auto;
-
-            margin-left: 5%;
-            margin-right: 5%;
-
-            line-height: 1.5;
-
-        }
-    }
-}
 </style>

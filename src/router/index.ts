@@ -8,10 +8,11 @@ const router = createRouter({
       name: 'home',
       // @ts-ignore
       component: () => import('../views/HomeView.vue')
-    },{
-      path:'/delete-cookie',
-      name:'delete cookie',
-      component: ()=> import('../views/DeleteCookieView.vue')
+    },
+    {
+      path: '/delete-cookie',
+      name: 'delete cookie',
+      component: () => import('../views/DeleteCookieView.vue')
     },
     // parent component put <router-view> in it
     // and for child router, which component directly use the component.ts(not view.ts)
@@ -24,8 +25,13 @@ const router = createRouter({
         {
           path: 'supermarket',
           name: 'supermarket',
+          component: () => import('../components/DataView/SupermarketTable.vue') 
+        },
+        {
+          path: 'aaa',
+          name: 'aaa',
           // @ts-ignore
-          component: () => import('../components/DataView/SupermarketTable.vue') // 子路由组件
+          component: () => import('../components/DataView/SuperTest.vue')
         },
         {
           path: 'user',
@@ -84,7 +90,7 @@ const router = createRouter({
     },
     {
       path: '/:author/:title',
-      name: 'article',
+      name: 'article-select',
       // @ts-ignore
       component: () => import('../views/ArticleView.vue')
     },
@@ -94,7 +100,6 @@ const router = createRouter({
       // @ts-ignore
       component: () => import('../views/SettingView.vue')
     }
-    
   ]
 })
 

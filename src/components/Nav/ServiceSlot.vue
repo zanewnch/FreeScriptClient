@@ -48,16 +48,12 @@ const closeService = () => {
                 >Delete cookie for test</router-link
               >
             </li>
-            <li>
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >Service 2</a
+            <li class="flex justify-center items-center">
+              <router-link to="/data/supermarket" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >Data table</router-link
               >
             </li>
-            <li>
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >Service 3</a
-              >
-            </li>
+            
           </ul>
         </div>
       </li>

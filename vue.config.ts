@@ -1,9 +1,9 @@
 module.exports = {
-    configureWebpack: {
-      resolve: {
-        alias: {
-          '@': undefined
-        }
-      }
-    }
+    // configureWebpack: {
+    //   resolve: {
+    //     alias: {
+    //       '@': undefined
+    //     }
+    //   }
+    // }
   }
