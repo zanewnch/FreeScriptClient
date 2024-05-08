@@ -4,8 +4,13 @@ import HomeLeft from './HomeLeft.vue'
 import HomeRight from './HomeRight.vue'
 // @ts-ignore
 import request from '../../utils/request'
+import { useGlobalStore } from '../../stores/GlobalStore'
+
+const globalStore = useGlobalStore()
 
 const tags: Ref<any> = ref(null)
+
+
 
 const requestTags = async () => {
   try {
@@ -23,70 +28,78 @@ const requestTags = async () => {
   }
 }
 
-const data: {
-  data: string
-  status: boolean
-}[] = [
-  {
-    data: 'For you',
-    status: true
-  },
-  { data: 'Following', status: true },
-  { data: 'UX', status: false }
-]
+const selectItem = async (item: string) => {
+  console.log(item)
+  globalStore.tagForConditionalShow = item
 
-const refData: Ref<
-  {
-    data: string
-    status: boolean
-  }[]
-> = ref(data)
+  const requestTagsData = async (): Promise<void> => {
+    const res = await request.get('/article/specific-tags-articles', {
+      params: {
+        tags: globalStore.tagForConditionalShow
+      }
+    })
+    globalStore.specificTagsData = await res.data.data
+  }
 
-const selectedItem = ref(refData.value[0]['data'])
-
-const selectItem = (item: any) => {
-  selectedItem.value = item
+  await requestTagsData()
 }
 
-// const isLeft: ComputedRef<boolean> = computed(() => {
-//   if(tags.value){
-//     return tags.value.length > 0 && tags.value[0] && tags.value[0]['status'] === false
-//   }
-  
-// })
+const isLeft: ComputedRef<boolean> = computed(() => {
+  if (tags.value) {
+    if (tags.value[0]['status']) {
+      return false
+    } else {
+      return true
+    }
+  } else {
+    return false
+  }
+})
 
-// const isRight: ComputedRef<boolean> = computed(() => {
-//   // if successful find false value, return true
+const isRight: ComputedRef<boolean> = computed(() => {
+  if (tags.value) {
+    if (tags.value[tags.value.length - 1]['status']) {
+      return false
+    } else {
+      return true
+    }
+  } else {
+    return false
+  }
+})
+// !showLeft and showRight 這兩個function有bug  需要改
+const showLeft = (): void => {
+  let indexFalse = tags.value.findIndex((element: any) => !element['status'])
+  if (indexFalse !== -1 && indexFalse < tags.value.length - 1) {
+    indexFalse = indexFalse + 1
+  }
 
-//   return tags.value[tags.value.length - 1]['status'] !== true
-// })
+  let indexTrue = tags.value.findIndex((element: any) => element['status'])
+  if (indexTrue !== -1 && indexTrue > 0) {
+    indexTrue = indexTrue - 1
+  }
 
-// const showLeft = (): void => {
-//   // find first false value, and turn it into false
-//   const indexFalse = tags.value.findIndex((element: any) => !element['status'])
-//   console.log(indexFalse)
+  if (indexTrue !== -1) {
+    tags.value[indexTrue]['status'] = true
+  }
+  if (indexFalse !== -1) {
+    tags.value[indexFalse]['status'] = false
+  }
+}
+const showRight = (): void => {
+  const indexTrue = tags.value.findIndex((element: any) => element['status'])
 
-//   // find last true value, and turn it into true
-//   const indexArray = tags.value.slice().reverse()
-//   const indexTrue = indexArray.findIndex((element: any) => element['status'])
-//   const indexResult = tags.value.length - indexTrue - 1
+  const indexFalse = tags.value.findIndex((element: any) => !element['status'])
 
-//   tags.value[indexFalse]['status'] = true
-//   console.log('the status value')
-//   console.log(tags.value[indexFalse]['status'])
-//   console.log(tags.value)
-//   tags.value[indexResult]['status'] = false
-// }
-// const showRight = (): void => {
-//   const indexTrue = tags.value.findIndex((element:any) => element['status'])
+  if (indexTrue !== -1) {
+    tags.value[indexTrue]['status'] = false
+  }
+  if (indexFalse !== -1) {
+    tags.value[indexFalse]['status'] = true
+  }
+}
 
-//   const indexFalse = tags.value.findIndex((element:any) => !element['status'])
-
-//   tags.value[indexTrue]['status'] = false
-//   tags.value[indexFalse]['status'] = true
-// }
-
-
+const selectedItem: Ref<any> = ref('')
 
 onMounted(async () => {
   await requestTags()
@@ -101,7 +114,7 @@ onMounted(async () => {
           style="border-right: 0.5px solid #e0e0e0"
         >
           <!-- status bar -->
-          <!-- <section class="section-up md:w-full md:flex md:justify-center sm:flex sm:justify-center">
+          <section class="section-up md:w-full md:flex md:justify-center sm:flex sm:justify-center">
             <div
               class="status-bar md:flex md:justify-around md:items-center sm:flex sm:justify-center"
               style="width: 80%"
@@ -122,7 +135,7 @@ onMounted(async () => {
                     :key="index"
                     class="md:w-20 md:whitespace-wrap md:text-center sm:ml-1 sm:mr-1"
                     :class="{ 'border-b-2': selectedItem === item.data }"
-                    @click="selectItem(item.data)"
+                    @click="selectItem(item['_id'])"
                     v-if="item.status"
                   >
                     <div
@@ -146,7 +159,7 @@ onMounted(async () => {
                 </el-icon>
               </button>
             </div>
-          </section> -->
+          </section>
           <section
             class="section-below md:w-full md:flex md:flex-col md:justify-center md:items-center"
           >

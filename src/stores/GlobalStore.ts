@@ -14,7 +14,9 @@ export const useGlobalStore = defineStore('global', {
     providerId: string
     jti: string
     role: string
-    loginToken: string
+    loginToken: string,
+    tagForConditionalShow:string
+    specificTagsData:any
   } => {
     return {
       username: '',
@@ -29,7 +31,9 @@ export const useGlobalStore = defineStore('global', {
       providerId: '',
       jti: '',
       role: '',
-      loginToken: ''
+      loginToken: '',
+      tagForConditionalShow:'',
+      specificTagsData:null
     }
   },
   actions: {

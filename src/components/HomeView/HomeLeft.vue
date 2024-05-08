@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, type Ref } from 'vue'
+import { ref, onMounted, onUnmounted, type Ref, watch } from 'vue'
 import request from '../../utils/Request'
-
+import { useGlobalStore } from '../../stores/GlobalStore'
 import { urlFriendly } from '../..//utils/UrlFriendly'
 
-// 用filter的概念就好
-
+const globalStore = useGlobalStore()
 
 // 每一次request update data
 const data: Ref<any> = ref(null)
@@ -75,13 +74,37 @@ const infiniteScrollTrigger = () => {
   triggerForLoad()
 }
 
+/* 
+这里，watch 函数监视的是 globalStore.tagForConditionalShow 的值。每当 globalStore.tagForConditionalShow 的值发生变化时，就会执行传递给 watch 的第二个参数的函数。
+
+这个函数接收一个参数 newVal，这个参数的值就是 globalStore.tagForConditionalShow 的新值。
+
+在这个函数中，首先检查 newVal 是否不等于空字符串。如果 newVal 不等于空字符串，那么就执行以下操作：
+
+将 globalStore.specificTagsData 的值赋给 showData.value。这可能是为了在界面上显示 globalStore.specificTagsData 的值。
+
+使用 window.removeEventListener 方法移除 scroll 事件的监听器。这个监听器的处理函数是 infiniteScrollTrigger。这可能是为了暂时停止无限滚动的功能。
+
+总的来说，这段代码的作用是：当 globalStore.tagForConditionalShow 的值发生变化，并且新值不是空字符串时，更新 showData.value 的值，并暂时停止无限滚动的功能。
+*/
+watch(
+  () => globalStore.tagForConditionalShow,
+  (newVal) => {
+    if (newVal !== '') {
+      showData.value = globalStore.specificTagsData
+
+      // 先暫時關掉無限滾動
+      window.removeEventListener('scroll', infiniteScrollTrigger, false)
+    }
+  }
+)
+
 onMounted(async () => {
   // Add scroll event listener when component is mounted
   window.addEventListener('scroll', infiniteScrollTrigger, false)
 
   // fetch first data to show
   await requestData(pageNum.value, pageSize.value)
-  
 })
 
 onUnmounted(() => {
