@@ -7,8 +7,11 @@ import { Edit } from '@element-plus/icons-vue'
         <el-icon>
           <Edit />
         </el-icon>
-        <router-link to="/new-article" class="text-black hover:underline">Write</router-link>
+        <router-link to="/new-article" class="router-link-hover text-black hover:underline">Write</router-link>
       </li>
 </template>
 <style scoped lang='scss'>
-</style>;
+.router-link-hover:hover {
+  color: #60a5fa;
+}
+</style>

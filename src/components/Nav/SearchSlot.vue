@@ -4,30 +4,30 @@ import request from '../../utils/Request'
 import type { SearchRecommend } from '../../interface/SearchRecommendInterface'
 // @ts-ignore
 import { Search } from '@element-plus/icons-vue'
-import type { Article } from '../../interface/ArticleInterface';
+import type { Article } from '../../interface/ArticleInterface'
 
-const searchText: Ref<string> = ref('');
+const searchText: Ref<string> = ref('')
 
-const windowWidth:Ref<number> = ref(window.innerWidth);
+const windowWidth: Ref<number> = ref(window.innerWidth)
 let timeout: ReturnType<typeof setTimeout>
 // the array to store the data to show in search bar recommended list
-const showData: Ref<SearchRecommend[]> = ref([]);
+const showData: Ref<SearchRecommend[]> = ref([])
 
 const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => {
   const res = await request.get('/article/search', {
     params: {
       keyword: queryString
     }
-  });
+  })
 
   showData.value = res.data.data.map((item: Article) => {
     return {
       value: item['title'],
       link: item['author']
     }
-  });
+  })
 
-  clearTimeout(timeout);
+  clearTimeout(timeout)
   timeout = setTimeout(() => {
     cb(showData.value)
   }, 3000 * Math.random())
@@ -75,4 +75,6 @@ const handleSearchButton = async () => {
     ></el-button>
   </div>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>

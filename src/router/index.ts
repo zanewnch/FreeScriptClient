@@ -25,13 +25,7 @@ const router = createRouter({
         {
           path: 'supermarket',
           name: 'supermarket',
-          component: () => import('../components/DataView/SupermarketTable.vue') 
-        },
-        {
-          path: 'aaa',
-          name: 'aaa',
-          // @ts-ignore
-          component: () => import('../components/DataView/SuperTest.vue')
+          component: () => import('../components/DataView/SupermarketTable.vue')
         },
         {
           path: 'user',

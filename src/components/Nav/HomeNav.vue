@@ -56,5 +56,9 @@
       margin-left: 10px;
     }
   }
+
+  .router-link-hover:hover {
+    color: #3b82f6;
+  }
 }
 </style>

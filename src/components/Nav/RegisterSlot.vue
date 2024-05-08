@@ -8,11 +8,15 @@ const globalStore = useGlobalStore()
   <li>
     <router-link
       to="/register"
-      class="text-black hover:underline"
+      class="router-link-hover text-black hover:underline"
       v-if="!globalStore.localIsLogin && !globalStore.googleIsLogin"
       >Register</router-link
     >
   </li>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.router-link-hover:hover {
+  color: #60a5fa;
+}
+</style>

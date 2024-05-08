@@ -11,7 +11,7 @@ const globalStore = useGlobalStore();
   <li v-if="!globalStore.localIsLogin && !globalStore.googleIsLogin">
     <router-link
       to="/login"
-      class="text-black hover:underline"
+      class="router-link-hover text-black hover:underline"
     >Login</router-link>
   </li>
 
@@ -37,4 +37,8 @@ const globalStore = useGlobalStore();
 <style
   scoped
   lang="scss"
-></style>
+>
+.router-link-hover:hover {
+  color: #60a5fa;
+}
+</style>

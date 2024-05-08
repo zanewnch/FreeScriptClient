@@ -4,7 +4,7 @@ import Navcolumn from '../components/DataView/NavColumn.vue'
 </script>
 
 <template>
-  <div class="md:w-full md:h-screen md:flex bg-red-200">
+  <div class="md:w-full md:h-screen md:flex ">
     <div class="w-1/6 ">
       <Navcolumn></Navcolumn>
     </div>
