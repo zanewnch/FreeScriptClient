@@ -24,6 +24,7 @@
                 style=""
               >
                 <slot name="write"></slot>
+                <slot name="administrator"></slot>
 
                 <slot name="services"></slot>
                 <slot name="setting"></slot>

@@ -92,7 +92,13 @@ const router = createRouter({
       path: '/setting',
       name: 'setting',
       // @ts-ignore
-      component: () => import('../views/SettingView.vue')
+      component: () => import('../views/SettingView.vue'),
+      
+    },
+    {
+      path: '/setting/administrator',
+      name: 'administrator',
+      component: () => import('../views/AdministratorView.vue')
     }
   ]
 })

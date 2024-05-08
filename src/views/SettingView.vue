@@ -3,6 +3,8 @@ import request from '../utils/Request'
 import { onMounted, ref, type Ref } from 'vue'
 import { useGlobalStore } from '../stores/GlobalStore'
 import HomeNav from '../components/Nav/HomeNav.vue'
+// @ts-ignore
+import AdministratorSlot from '../components/Nav/AdministratorSlot.vue'
 import AdministratorView from '../views/AdministratorView.vue'
 import type { Result } from '../utils/Result'
 import type { User } from '../interface/UserInterface'
@@ -14,7 +16,7 @@ const SSRPage = ref(null)
 const isSSRPage = ref(false)
 const getSSRPage = async () => {
   try {
-    const res = await request.get('/setting')
+    const res = await request.get('/article/setting')
 
     SSRPage.value = res.data
   } catch (e) {
@@ -47,11 +49,12 @@ onMounted(async () => {
 <template>
   <div v-html="SSRPage" v-if="isSSRPage"></div>
 
-  <div
-    class="md:w-full md:h-screen md:flex md:flex-col"
-    v-if="globalStore.role !== 'administrator'"
-  >
-    <HomeNav></HomeNav>
+  <div class="md:w-full md:h-screen md:flex md:flex-col">
+    <HomeNav>
+      <template #administrator>
+        <AdministratorSlot></AdministratorSlot>
+      </template>
+    </HomeNav>
     <div class="md:h-full md:w-full">
       <div class="flex items-center justify-center h-screen sm:h-screen md:flex md:h-screen">
         <div class="w-full max-w-xs sm:w-3/4 sm:max-w-md md:w-full md:max-w-xs">
@@ -113,10 +116,6 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-  </div>
-
-  <div v-if="globalStore.role == 'administrator'">
-    <AdministratorView></AdministratorView>
   </div>
 </template>
 <style scoped lang="scss"></style>
