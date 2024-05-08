@@ -22,7 +22,7 @@ const requestTags = async () => {
   try {
     const res = await request.get('/article/tags')
     tags.value = res.data.data
-    console.log(tags.value)
+    
   } catch (e) {
     console.log(e)
   }

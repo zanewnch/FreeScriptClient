@@ -2,6 +2,26 @@
 import { ref, onMounted, type Ref, computed, type ComputedRef } from 'vue'
 import HomeLeft from './HomeLeft.vue'
 import HomeRight from './HomeRight.vue'
+// @ts-ignore
+import request from '../../utils/request'
+
+const tags: Ref<any> = ref(null)
+
+const requestTags = async () => {
+  try {
+    const res = await request.get('/article/tags')
+    tags.value = res.data.data
+    console.log(tags.value)
+
+    tags.value.forEach((element: any) => {
+      element['status'] = false
+    })
+    tags.value[0]['status'] = true
+    tags.value[1]['status'] = true
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 const data: {
   data: string
@@ -28,51 +48,49 @@ const selectItem = (item: any) => {
   selectedItem.value = item
 }
 
-const isLeft: ComputedRef<boolean> = computed(() => {
-  return refData.value.length > 0 && refData.value[0]['status'] === false
+// const isLeft: ComputedRef<boolean> = computed(() => {
+//   if(tags.value){
+//     return tags.value.length > 0 && tags.value[0] && tags.value[0]['status'] === false
+//   }
+  
+// })
+
+// const isRight: ComputedRef<boolean> = computed(() => {
+//   // if successful find false value, return true
+
+//   return tags.value[tags.value.length - 1]['status'] !== true
+// })
+
+// const showLeft = (): void => {
+//   // find first false value, and turn it into false
+//   const indexFalse = tags.value.findIndex((element: any) => !element['status'])
+//   console.log(indexFalse)
+
+//   // find last true value, and turn it into true
+//   const indexArray = tags.value.slice().reverse()
+//   const indexTrue = indexArray.findIndex((element: any) => element['status'])
+//   const indexResult = tags.value.length - indexTrue - 1
+
+//   tags.value[indexFalse]['status'] = true
+//   console.log('the status value')
+//   console.log(tags.value[indexFalse]['status'])
+//   console.log(tags.value)
+//   tags.value[indexResult]['status'] = false
+// }
+// const showRight = (): void => {
+//   const indexTrue = tags.value.findIndex((element:any) => element['status'])
+
+//   const indexFalse = tags.value.findIndex((element:any) => !element['status'])
+
+//   tags.value[indexTrue]['status'] = false
+//   tags.value[indexFalse]['status'] = true
+// }
+
+
+
+onMounted(async () => {
+  await requestTags()
 })
-
-const isRight: ComputedRef<boolean> = computed(() => {
-  // if successful find false value, return true
-
-  return refData.value[refData.value.length - 1]['status'] !== true
-})
-
-const showLeft = (): void => {
-  // find first false value, and turn it into false
-  const indexFalse = refData.value.findIndex((element) => !element['status'])
-  console.log(indexFalse)
-
-  // find last true value, and turn it into true
-  const indexArray = refData.value.slice().reverse()
-  const indexTrue = indexArray.findIndex((element) => element['status'])
-  const indexResult = refData.value.length - indexTrue - 1
-
-  refData.value[indexFalse]['status'] = true
-  console.log('the status value')
-  console.log(refData.value[indexFalse]['status'])
-  console.log(refData.value)
-  refData.value[indexResult]['status'] = false
-}
-const showRight = (): void => {
-  const indexTrue = refData.value.findIndex((element) => element['status'])
-
-  const indexFalse = refData.value.findIndex((element) => !element['status'])
-
-  refData.value[indexTrue]['status'] = false
-  refData.value[indexFalse]['status'] = true
-}
-
-const filterData: ComputedRef<
-  {
-    data: string
-    status: boolean
-  }[]
-> = computed(() => {
-  return refData.value.filter((element) => element['status'])
-})
-
-onMounted(() => {})
 </script>
 <template>
   <div class="md:w-full md:flex md:justify-center">
@@ -83,7 +101,7 @@ onMounted(() => {})
           style="border-right: 0.5px solid #e0e0e0"
         >
           <!-- status bar -->
-          <section class="section-up md:w-full md:flex md:justify-center sm:flex sm:justify-center">
+          <!-- <section class="section-up md:w-full md:flex md:justify-center sm:flex sm:justify-center">
             <div
               class="status-bar md:flex md:justify-around md:items-center sm:flex sm:justify-center"
               style="width: 80%"
@@ -98,14 +116,24 @@ onMounted(() => {})
                   <ArrowLeft />
                 </el-icon>
               </button>
-              <div
-                v-for="(item, index) in filterData"
-                :key="index"
-                class="md:w-20 md:whitespace-nowrap md:text-center sm:ml-1 sm:mr-1"
-                :class="{ 'border-b-2': selectedItem === item.data }"
-                @click="selectItem(item.data)"
-              >
-                {{ item['data'] }}
+              <div class="flex flex-wrap">
+                <template v-for="(item, index) in tags">
+                  <div
+                    :key="index"
+                    class="md:w-20 md:whitespace-wrap md:text-center sm:ml-1 sm:mr-1"
+                    :class="{ 'border-b-2': selectedItem === item.data }"
+                    @click="selectItem(item.data)"
+                    v-if="item.status"
+                  >
+                    <div
+                      class="md:w-full md:h-full md:text-center md:flex md:justify-center md:items-center"
+                    >
+                      <div class="" style="font-size: 14px">
+                        {{ item['_id'] }}
+                      </div>
+                    </div>
+                  </div>
+                </template>
               </div>
               <button @click="showRight" v-if="isRight" class="md:w-6">
                 <el-icon>
@@ -118,7 +146,7 @@ onMounted(() => {})
                 </el-icon>
               </button>
             </div>
-          </section>
+          </section> -->
           <section
             class="section-below md:w-full md:flex md:flex-col md:justify-center md:items-center"
           >

@@ -2,7 +2,10 @@
 import { ref, onMounted, onUnmounted, type Ref } from 'vue'
 import request from '../../utils/Request'
 
-import {urlFriendly} from '../..//utils/UrlFriendly'
+import { urlFriendly } from '../..//utils/UrlFriendly'
+
+// 用filter的概念就好
+
 
 // 每一次request update data
 const data: Ref<any> = ref(null)
@@ -18,7 +21,7 @@ const requestData = async (pageNum: number, pageSize: number) => {
       }
     })
     data.value = res.data.data
-    
+    showData.value = data.value
   } catch (e) {
     console.log(e)
   }
@@ -26,10 +29,6 @@ const requestData = async (pageNum: number, pageSize: number) => {
 
 // Flag to track if new data needs to be loaded
 let needToLoad = false
-
-
-
-
 
 // Function to trigger data loading when user scrolls to bottom
 const infiniteScrollTrigger = () => {
@@ -82,8 +81,7 @@ onMounted(async () => {
 
   // fetch first data to show
   await requestData(pageNum.value, pageSize.value)
-
-  showData.value = data.value
+  
 })
 
 onUnmounted(() => {
