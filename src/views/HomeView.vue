@@ -9,7 +9,9 @@ import ServiceSlot from '../components/Nav/ServiceSlot.vue'
 import SettingSlot from '../components/Nav/SettingSlot.vue'
 // @ts-ignore
 import RegisterSlot from '../components/Nav/RegisterSlot.vue'
-
+// @ts-ignore
+import LogoutSlot from '../components/Nav/LogoutSlot.vue'
+// @ts-ignore
 import { useGlobalStore } from '../stores/GlobalStore'
 import request from '../utils/Request'
 // @ts-ignore
@@ -73,6 +75,10 @@ onMounted(() => {
 
       <template #register>
         <RegisterSlot></RegisterSlot>
+      </template>
+
+      <template #logout>
+        <LogoutSlot></LogoutSlot>
       </template>
     </HomeNav>
 

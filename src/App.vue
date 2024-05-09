@@ -1,22 +1,15 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <!-- google font: palyfair serif -->
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
     rel="stylesheet"
-  >
+  />
 
-  <div class='w-full h-full'>
+  <div class="w-full h-full">
     <router-view />
   </div>
 </template>

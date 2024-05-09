@@ -5,11 +5,8 @@ const globalStore = useGlobalStore()
 </script>
 
 <template>
-  <li>
-    <router-link
-      to="/register"
-      class="router-link-hover text-black hover:underline"
-      v-if="!globalStore.localIsLogin && !globalStore.googleIsLogin"
+  <li v-if="!globalStore.localIsLogin && !globalStore.googleIsLogin">
+    <router-link to="/register" class="router-link-hover text-black hover:underline"
       >Register</router-link
     >
   </li>

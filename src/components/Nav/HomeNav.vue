@@ -32,6 +32,7 @@
                 <slot name="login"></slot>
                 <slot name="register"></slot>
                 <slot name="publish"></slot>
+                <slot name="logout"></slot>
               </ul>
             </div>
           </div>

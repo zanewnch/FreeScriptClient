@@ -1,18 +1,18 @@
 <script setup lang="ts">
 // @ts-ignore
-import type { AxiosResponse } from 'node_modules/axios/index.cjs';
-import request from '../utils/Request';
-import { useRouter } from 'vue-router';
-import type { Result } from '../utils/Result';
-const router = useRouter();
+import type { AxiosResponse } from 'node_modules/axios/index.cjs'
+import request from '../utils/Request'
+import { useRouter } from 'vue-router'
+import type { Result } from '../utils/Result'
+const router = useRouter()
 
 const handleClick = async () => {
   try {
-    const res:AxiosResponse<Result<null>> = await request.get('/user/delete-cookie');
+    const res: AxiosResponse<Result<null>> = await request.get('/user/delete-cookie')
 
-    router.push('/');
+    router.push('/')
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
 }
 </script>
