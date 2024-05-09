@@ -12,6 +12,7 @@ import RegisterSlot from '../components/Nav/RegisterSlot.vue'
 
 import { useGlobalStore } from '../stores/GlobalStore'
 import request from '../utils/Request'
+// @ts-ignore
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
 import { Result } from '../utils/Result'
 

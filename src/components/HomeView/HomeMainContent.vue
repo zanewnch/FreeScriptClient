@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, type Ref, computed, type ComputedRef } from 'vue'
+import { ref, onMounted, type Ref, computed, type ComputedRef, watch } from 'vue'
 import HomeLeft from './HomeLeft.vue'
 import HomeRight from './HomeRight.vue'
 // @ts-ignore
 import request from '../../utils/request'
 import { useGlobalStore } from '../../stores/GlobalStore'
+import { tr } from 'element-plus/es/locale'
 
 const globalStore = useGlobalStore()
 
 const tags: Ref<any> = ref(null)
-
-
 
 const requestTags = async () => {
   try {
@@ -67,35 +66,28 @@ const isRight: ComputedRef<boolean> = computed(() => {
     return false
   }
 })
-// !showLeft and showRight 這兩個function有bug  需要改
+
+
 const showLeft = (): void => {
-  let indexFalse = tags.value.findIndex((element: any) => !element['status'])
-  if (indexFalse !== -1 && indexFalse < tags.value.length - 1) {
-    indexFalse = indexFalse + 1
-  }
+  const firstTrueIndex = tags.value.findIndex((element: any) => element['status'] === true)
+  const secondTrueIndex = tags.value.findIndex(
+    (item: any, index: any) => item.status === true && index > firstTrueIndex
+  )
 
-  let indexTrue = tags.value.findIndex((element: any) => element['status'])
-  if (indexTrue !== -1 && indexTrue > 0) {
-    indexTrue = indexTrue - 1
-  }
-
-  if (indexTrue !== -1) {
-    tags.value[indexTrue]['status'] = true
-  }
-  if (indexFalse !== -1) {
-    tags.value[indexFalse]['status'] = false
+  if (firstTrueIndex > 0) {
+    tags.value[firstTrueIndex - 1].status = true
+    tags.value[secondTrueIndex].status = false
   }
 }
 const showRight = (): void => {
-  const indexTrue = tags.value.findIndex((element: any) => element['status'])
+  const firstTrueIndex = tags.value.findIndex((element: any) => element['status'] === true)
+  const secondTrueIndex = tags.value.findIndex(
+    (item: any, index: any) => item.status === true && index > firstTrueIndex
+  )
 
-  const indexFalse = tags.value.findIndex((element: any) => !element['status'])
-
-  if (indexTrue !== -1) {
-    tags.value[indexTrue]['status'] = false
-  }
-  if (indexFalse !== -1) {
-    tags.value[indexFalse]['status'] = true
+  if (secondTrueIndex < tags.value.length - 1) {
+    tags.value[secondTrueIndex + 1].status = true
+    tags.value[firstTrueIndex].status = false
   }
 }
 
