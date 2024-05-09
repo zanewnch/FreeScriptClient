@@ -15,7 +15,6 @@ const requestTags = async () => {
   try {
     const res = await request.get('/article/tags')
     tags.value = res.data.data
-    console.log(tags.value)
 
     tags.value.forEach((element: any) => {
       element['status'] = false
@@ -66,7 +65,6 @@ const isRight: ComputedRef<boolean> = computed(() => {
     return false
   }
 })
-
 
 const showLeft = (): void => {
   const firstTrueIndex = tags.value.findIndex((element: any) => element['status'] === true)

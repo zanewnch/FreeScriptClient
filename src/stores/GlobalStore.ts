@@ -16,7 +16,8 @@ export const useGlobalStore = defineStore('global', {
     role: string
     loginToken: string,
     tagForConditionalShow:string
-    specificTagsData:any
+    specificTagsData:any,
+    test:string
   } => {
     return {
       username: '',
@@ -33,7 +34,8 @@ export const useGlobalStore = defineStore('global', {
       role: '',
       loginToken: '',
       tagForConditionalShow:'',
-      specificTagsData:null
+      specificTagsData:null,
+      test:''
     }
   },
   actions: {

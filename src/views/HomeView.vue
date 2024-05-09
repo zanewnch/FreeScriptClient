@@ -26,17 +26,16 @@ const basedOnCookieToSetSignIn = async (): Promise<void> => {
       globalStore.googleIsLogin = true
     }
 
-    const decodeToken: AxiosResponse<Result<any>> =
-      await request.get('/user/decode-login')
+    const decodeToken: AxiosResponse<Result<any>> = await request.get('/user/decode-login')
 
-    if (decodeToken && decodeToken.data.data ) {
-      console.log('decode token')
-      console.log(decodeToken?.data.data['name'])
+    if (decodeToken && decodeToken.data.data) {
       globalStore.username = decodeToken?.data.data['name']
       globalStore.displayName = decodeToken.data.data['name']
     }
   } catch (e) {
     console.log(e)
+
+    window.alert('You are not login yet. Please login first.')
   }
 }
 
