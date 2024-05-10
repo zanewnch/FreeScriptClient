@@ -2,7 +2,8 @@
 import { ref, type Ref } from 'vue'
 </script>
 <template>
-  <nav class=" md:w-full md:h-full">
+  <nav class=" md:w-full md:h-full"
+  style="border-right: 0.5px solid #e0e0e0">
     <!-- 上側 logo and slogan -->
     <div class="md:flex md:justify-center md:items-center md:flex-col">
       <router-link to="/" class="sm:text-blue-500 md:text-blue-500 md:mb-2 md:mt-4 md:text-xl"

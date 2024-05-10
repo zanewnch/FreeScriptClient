@@ -101,13 +101,13 @@ const writerList: {
       </router-link>
     </div>
 
-    <div class="md:w-full md:flex md:justify-center md:items-center">
+    <!-- <div class="md:w-full md:flex md:justify-center md:items-center">
       <router-link
         to="/data"
         class="full-content md:text-start md:font-bold hover:md:text-blue-500 md:mt-24"
         >See the full list</router-link
       >
-    </div>
+    </div> -->
   </section>
 
   <section class="section md:w-4/5 md: md:flex md:flex-col md:justify-start items-center">
