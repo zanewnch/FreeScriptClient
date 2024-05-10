@@ -38,8 +38,25 @@ const googleRegister = async (response: any) => {
     )
 
     router.push('/login')
-  } catch (e) {
+  } catch (e:any) {
+    /* 
+    在 TypeScript 中，catch 语句的错误变量 e 的类型必须是 any 或 unknown。这是因为在运行时，可以抛出任何类型的值作为错误，不仅仅是 Error 对象。因此，TypeScript 强制要求 catch 语句的错误变量的类型必须是 any 或 unknown，以确保代码能够处理任何类型的错误。
+    */
     console.log(e)
+    if (e.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(e.response.status)
+      if (e.response.status === 409) {
+        window.alert('username or email already exist')
+      }
+    } else if (e.request) {
+      // The request was made but no response was received
+      console.log(e.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', e.message)
+    }
   }
 }
 
@@ -61,8 +78,22 @@ const localRegister = async () => {
     })
 
     router.push('/login')
-  } catch (e) {
+  } catch (e: any) {
     console.log(e)
+    if (e.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(e.response.status)
+      if (e.response.status === 409) {
+        window.alert('username or email already exist')
+      }
+    } else if (e.request) {
+      // The request was made but no response was received
+      console.log(e.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', e.message)
+    }
   }
 }
 </script>

@@ -5,6 +5,10 @@ import type { SearchRecommend } from '../../interface/SearchRecommendInterface'
 // @ts-ignore
 import { Search } from '@element-plus/icons-vue'
 import type { Article } from '../../interface/ArticleInterface'
+import { urlFriendly } from '../../utils/UrlFriendly'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const searchText: Ref<string> = ref('')
 
@@ -35,8 +39,13 @@ const querySearchAsync = async (queryString: string, cb: (arg: any) => void) => 
 
 // the function that handle the select event in search bar
 const handleSelect = (item: SearchRecommend) => {
-  console.log(item)
   // window.open(item.link)
+
+  if (item && item.link && item.value) {
+    router.push({
+      path: `/${urlFriendly(item.link, item.value)}`
+    })
+  }
 }
 
 const handleSearchButton = async () => {
@@ -75,6 +84,4 @@ const handleSearchButton = async () => {
     ></el-button>
   </div>
 </template>
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
