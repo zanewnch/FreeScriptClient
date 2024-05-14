@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import request from '../../utils/Request'
+
 
 </script>
 

@@ -23,15 +23,14 @@ const router = createRouter({
       component: () => import('../views/DataView.vue'),
       children: [
         {
+          path: 'supermarket-test',
+          name: 'supermarket-test',
+          component: () => import('../components/DataView/SupermarketTest.vue')
+        },
+        {
           path: 'supermarket',
           name: 'supermarket',
           component: () => import('../components/DataView/SupermarketTable.vue')
-        },
-        {
-          path: 'user',
-          name: 'user',
-          // @ts-ignore
-          component: () => import('../components/DataView/UserTable.vue') // 子路由组件
         },
         {
           path: 'bulletin',
@@ -92,8 +91,7 @@ const router = createRouter({
       path: '/setting',
       name: 'setting',
       // @ts-ignore
-      component: () => import('../views/SettingView.vue'),
-      
+      component: () => import('../views/SettingView.vue')
     },
     {
       path: '/setting/administrator',

@@ -17,6 +17,7 @@ import request from '../utils/Request'
 // @ts-ignore
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
 import { Result } from '../utils/Result'
+import Swal from 'sweetalert2'
 
 const globalStore = useGlobalStore()
 const basedOnCookieToSetSignIn = async (): Promise<void> => {
@@ -37,7 +38,15 @@ const basedOnCookieToSetSignIn = async (): Promise<void> => {
   } catch (e) {
     console.log(e)
 
-    window.alert('You are not login yet. Please login first.')
+    // window.alert('You are not login yet. Please login first.')
+
+    // swwralert2 config
+    Swal.fire({
+      title: 'Error!',
+      text: 'You are not login yet. Please login first.',
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
   }
 }
 

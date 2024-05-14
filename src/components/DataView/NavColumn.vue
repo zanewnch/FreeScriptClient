@@ -16,7 +16,7 @@ import { ref, type Ref } from 'vue'
       <ul class="md:space-y-4 ">
         <li class="md:flex md:justify-center md:items-center">
           <router-link to="/data/supermarket" class="router-link-hover text-black hover:underline"
-            >Supermarket Table</router-link
+            >Article Table</router-link
           >
         </li>
         <li class="md:flex md:justify-center md:items-center">
@@ -31,6 +31,10 @@ import { ref, type Ref } from 'vue'
         </li>
         <li class="md:flex md:justify-center md:items-center">
           <router-link to="/data/bulletin" class="router-link-hover text-black hover:underline">Bulletin</router-link>
+        </li>
+
+        <li class="md:flex md:justify-center md:items-center">
+          <router-link to="/data/supermarket-test" class="router-link-hover text-black hover:underline">test</router-link>
         </li>
       </ul>
     </div>

@@ -1,53 +1,148 @@
-<!--suppress ALL -->
-<script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+<script setup lang="ts">
+import { onMounted, ref, type Ref, watch } from 'vue'
+import request from '../../utils/Request'
+import { da, pa } from 'element-plus/es/locale/index.mjs'
 
-import { useSuperMarketSaleStore } from '../../stores/SupermarketSaleStore'
-import { useUserStore } from '../../stores/UserStore'
+const pageNum: Ref<number> = ref(1)
+const pageSize: Ref<number> = ref(10)
+const likeAmount: Ref<number | null> = ref(null)
+const startDateData: Ref<Date> = ref(new Date())
+const endDateData: Ref<Date> = ref(new Date())
+const viewsAmount: Ref<number | null> = ref(null)
+const ArticleData = ref(null)
 
-const superMarketSaleStore = useSuperMarketSaleStore()
+const likeList = [100, 1000, 5000]
+const viewsList = [3000, 6000, 9000]
 
-onMounted(() => {
-  superMarketSaleStore.pageNum = 1
-  superMarketSaleStore.pageSize = 10
-  superMarketSaleStore.getByPage()
-  superMarketSaleStore.getTotalDataAmount()
-  superMarketSaleStore.getBranchList()
-  superMarketSaleStore.getCityList()
-  superMarketSaleStore.getCustomerTypeList()
-})
+// function formatDate(date: Date): string {
+//   const year = date.getFullYear()
+//   const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-based
+//   const day = String(date.getDate()).padStart(2, '0')
+//   const hours = String(date.getHours()).padStart(2, '0')
+//   const minutes = String(date.getMinutes()).padStart(2, '0')
+//   const seconds = String(date.getSeconds()).padStart(2, '0')
+
+//   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+// }
+
+function formatDate(date: Date): Date {
+  const year = date.getFullYear()
+  const month = date.getMonth() // Months are 0-based
+  const day = date.getDate()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+  const seconds = date.getSeconds()
+
+  return new Date(year, month, day, hours, minutes, seconds)
+}
+
+const defaultTime = new Date(2000, 1, 1, 0, 0, 0)
+
+const filterViewsArticle = async () => {
+  const res = await request.get('/content/filter-views', {
+    params: {
+      views: 5000,
+      pageNum: pageNum.value,
+      pageSize: pageSize.value
+    }
+  })
+  console.log(res.data)
+}
+
+const filterLikeArticle = async () => {
+  const res = await request.get('/content/filter-like', {
+    params: {
+      like: 5000,
+      pageNum: pageNum.value,
+      pageSize: pageSize.value
+    }
+  })
+  console.log(res.data)
+}
+
+const requestTagsList = async () => {
+  const res = await request.get('/content/tags-list')
+  console.log(res.data)
+}
+const totalDataAmount = ref(null)
+const requestTotalDataAmount = async () => {
+  const res = await request.get('/content/total-amount')
+  totalDataAmount.value = res.data.data
+  console.log(res.data)
+}
+
+const requestArticleData = async () => {
+  const res = await request.get('/content', {
+    params: {
+      pageNum: pageNum.value,
+      pageSize: pageSize.value
+    }
+  })
+  ArticleData.value = res.data.data
+}
 
 const handleClick = () => {
   console.log('click')
 }
 
-const options = [
-  {
-    value: 'Option1',
-    label: 'Option1'
-  },
-  {
-    value: 'Option2',
-    label: 'Option2'
-  },
-  {
-    value: 'Option3',
-    label: 'Option3'
-  },
-  {
-    value: 'Option4',
-    label: 'Option4'
-  },
-  {
-    value: 'Option5',
-    label: 'Option5'
-  }
-]
-</script>
+const isSameTime = (date1: Date, date2: Date) => {
+  const diffInMilliseconds = Math.abs(date2.getTime() - date1.getTime())
+  const diffInMinutes = diffInMilliseconds / (1000 * 60)
 
+  if (diffInMinutes < 1) {
+    return true
+  } else {
+    return false
+  }
+}
+
+const requestSearch = async () => {
+  try {
+    pageNum.value = 1
+    pageSize.value = 10
+
+    if (isSameTime(startDateData.value, new Date() || isSameTime(endDateData.value, new Date()))) {
+      const res = await request.get('/content/comprehensive-search', {
+        params: {
+          like: likeAmount.value,
+          views: viewsAmount.value,
+
+          pageNum: pageNum.value,
+          pageSize: pageSize.value
+        }
+      })
+
+      ArticleData.value = res.data.data
+      console.log(res.data.data)
+    } else {
+      const res = await request.get('/content/comprehensive-search', {
+        params: {
+          like: likeAmount.value,
+          views: viewsAmount.value,
+          startDate: formatDate(startDateData.value),
+          endDate: formatDate(endDateData.value),
+          pageNum: pageNum.value,
+          pageSize: pageSize.value
+        }
+      })
+      ArticleData.value = res.data.data
+      console.log(res.data.data)
+    }
+
+    
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+onMounted(() => {
+  requestArticleData()
+  requestTotalDataAmount()
+})
+</script>
 <template>
   <div class="md:w-full md:h-full md:flex md:flex-col md:justify-start md:items-center">
-    <!-- el-from -->
+    <!-- el-form -->
     <div class="md:h-20 md:mt-4">
       <el-form
         :inline="true"
@@ -57,14 +152,14 @@ const options = [
         style="text-align: center"
       >
         <el-form-item>
-          <div class="">
-            <p>Branch</p>
-            <el-select v-model="superMarketSaleStore.branch" clearable placeholder="">
+          <div>
+            <p>Like</p>
+            <el-select v-model="likeAmount" clearable placeholder="">
               <el-option
-                v-for="(branch, index) in superMarketSaleStore.branchList?.data"
+                v-for="(item, index) in likeList"
                 :key="index"
-                :label="branch.branch"
-                :value="branch.branch"
+                :label="item"
+                :value="item"
               />
             </el-select>
           </div>
@@ -72,13 +167,13 @@ const options = [
 
         <el-form-item>
           <div>
-            <p>City</p>
-            <el-select v-model="superMarketSaleStore.city" clearable placeholder="">
+            <p>Views</p>
+            <el-select v-model="viewsAmount" clearable placeholder="">
               <el-option
-                v-for="(city, index) in superMarketSaleStore.cityList?.data"
+                v-for="(item, index) in viewsList"
                 :key="index"
-                :label="city.city"
-                :value="city.city"
+                :label="item"
+                :value="item"
               />
             </el-select>
           </div>
@@ -86,41 +181,33 @@ const options = [
 
         <el-form-item>
           <div>
-            <p>Customer Type</p>
-            <el-select v-model="superMarketSaleStore.customerType" clearable placeholder="">
-              <el-option
-                v-for="(customerType, index) in superMarketSaleStore.customerTypeList?.data"
-                :key="index"
-                :label="customerType.customer_type"
-                :value="customerType.customer_type"
-              />
-            </el-select>
-          </div>
-        </el-form-item>
-
-        <el-form-item>
-          <div>
-            <p>Date</p>
+            <p>Start Month</p>
             <el-date-picker
-              v-model="superMarketSaleStore.date"
-              type="date"
-              placeholder=""
-              clearable
+              v-model="startDateData"
+              type="month"
+              placeholder="Pick a month"
+              :default-value="defaultTime"
+            />
+          </div>
+        </el-form-item>
+
+        <el-form-item>
+          <div>
+            <p>End Month</p>
+            <el-date-picker
+              v-model="endDateData"
+              type="month"
+              placeholder="Pick a month"
+              :default-value="defaultTime"
             />
           </div>
         </el-form-item>
 
         <el-form-item class="">
-          <div class="md:w-full md:h-full md:flex md:justify-center md:items-end md:mt-6">
+          <div class="md:w-full md:h-full md:flex md:justify-center md:items-end md:mt-8">
             <button
-              @click="
-                superMarketSaleStore.get({
-                  branch: superMarketSaleStore.branch,
-                  city: superMarketSaleStore.city,
-                  customerType: superMarketSaleStore.customerType
-                })
-              "
-              class="sm:text-blue-500 md:text-blue-500"
+              @click.prevent="requestSearch()"
+              class="sm:text-blue-500 md:text-blue-500 md:w-12 md:text-center"
               style="border: 1px solid"
             >
               Search
@@ -129,13 +216,14 @@ const options = [
         </el-form-item>
       </el-form>
     </div>
+
     <!-- el-table -->
     <div class="md:overflow-auto md:w-4/5 md:flex md:mt-4">
       <el-table
         style="width: 100%"
         max-height="350"
         scrollbar-always-on:true
-        :data="superMarketSaleStore.requestData?.data"
+        :data="ArticleData"
         class="table"
         :header-cell-style="{
           'background-color': '#6C6C6C',
@@ -152,34 +240,19 @@ const options = [
         }"
       >
         <el-table-column fixed prop="id" label="id" width="100" />
+        <el-table-column prop="author" label="author" width="180" />
+        <el-table-column prop="title" label="title" width="180" />
+        <el-table-column prop="content" label="content" width="180" />
+        <el-table-column prop="views" label="views" width="180" />
+        <el-table-column prop="like" label="like" width="180" />
+        <el-table-column prop="tags" label="tags" width="180" />
 
-        <el-table-column prop="branch" label="branch" width="180" />
-
-        <el-table-column prop="city" label="city" width="180" />
-
-        <el-table-column prop="customer_type" label="customerType" width="180" />
-        <el-table-column prop="gender" label="gender" width="180" />
-        <el-table-column prop="product_line" label="productLine" width="180" />
-
-        <el-table-column prop="unit_price" label="unitPrice" width="180" />
-
-        <el-table-column prop="quantity" label="quantity" width="180" />
-
-        <el-table-column prop="tax_5_percent" label="tax5Percent" width="180" />
-
-        <el-table-column prop="total" label="total" width="180" />
-
-        <el-table-column prop="date" label="date" width="250" />
-
-        <el-table-column prop="time" label="time" width="180" />
-
-        <el-table-column prop="payment" label="payment" width="180" />
-
-        <el-table-column prop="cogs" label="cogs" width="180" />
-
-        <el-table-column prop="gross_margin_percentage" label="grossMarginPercentage" width="180" />
-
-        <el-table-column prop="rating" label="rating" width="180" />
+        <el-table-column prop="status" label="status" width="180" />
+        <el-table-column prop="summary" label="summary" width="180" />
+        <el-table-column prop="comments" label="comments" width="180" />
+        <el-table-column prop="createdDate" label="createdDate" width="180" />
+        <el-table-column prop="publishedDate" label="publishedDate" width="180" />
+        <el-table-column prop="updatedDate" label="updatedDate" width="180" />
 
         <el-table-column fixed="right" label="Operations" width="120">
           <template #default>
@@ -193,87 +266,18 @@ const options = [
     <!-- el-pagination -->
     <div class="md:w-5/6 md:mt-4">
       <el-pagination
-        v-model:current-page="superMarketSaleStore.pageNum"
-        v-model:page-size="superMarketSaleStore.pageSize"
+        v-model:current-page="pageNum"
+        v-model:page-size="pageSize"
         :page-sizes="[5, 20, 30, 40]"
         :small="false"
         :disabled="false"
         :background="false"
         layout="total, sizes, prev, pager, next, -> , jumper"
-        :total="superMarketSaleStore.totalDataAmount?.data"
-        @current-change="superMarketSaleStore.getByPage()"
-        @size-change="superMarketSaleStore.getByPage()"
+        :total="totalDataAmount"
+        @current-change="requestArticleData()"
+        @size-change="requestArticleData()"
       />
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@media (min-width: 768px) {
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    height: 100vh;
-  
-    .content {
-      width: 95%;
-      height: 90%;
-  
-      border: solid 1px;
-      border-color: rgba(0, 0, 0, 0);
-      box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
-      /* 設置陰影，偏移（X和Y軸偏移）、模糊度和顏色 */
-      border-radius: 10px;
-      margin: 50px;
-  
-      .elRowUp {
-        padding-top: 5vh;
-  
-        .elColUp {
-          display: flex;
-          align-items: center;
-          justify-content: left;
-  
-          .column {
-            display: flex;
-            align-items: center;
-            margin-right: 70px;
-  
-            .searchTitle {
-              margin-right: 5px;
-            }
-  
-            .card {
-              width: 150px;
-  
-              .input {
-                color: red;
-              }
-            }
-          }
-        }
-      }
-  
-      .elRowDown {
-        padding-top: 5vh;
-  
-        .elColDown {
-          :deep(.table) {
-            width: 100%;
-            height: 500px;
-          }
-        }
-  
-        .elColButtom {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-      }
-    }
-  }
-  
-}
-</style>
+<style scoped lang="scss"></style>
