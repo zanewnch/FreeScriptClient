@@ -15,17 +15,17 @@ import { ref, type Ref } from 'vue'
     <div class="md:mt-4">
       <ul class="md:space-y-4 ">
         <li class="md:flex md:justify-center md:items-center">
-          <router-link to="/data/supermarket" class="router-link-hover text-black hover:underline"
+          <router-link to="/data/article-table" class="router-link-hover text-black hover:underline"
             >Article Table</router-link
           >
         </li>
         <li class="md:flex md:justify-center md:items-center">
-          <router-link to="/data/barChart" class="router-link-hover text-black hover:underline"
+          <router-link to="/data/bar-chart" class="router-link-hover text-black hover:underline"
             >Bar Chart</router-link
           >
         </li>
         <li class="md:flex md:justify-center md:items-center">
-          <router-link to="/data/lineChart" class="router-link-hover text-black hover:underline"
+          <router-link to="/data/line-chart" class="router-link-hover text-black hover:underline"
             >Line Chart</router-link
           >
         </li>
@@ -33,9 +33,9 @@ import { ref, type Ref } from 'vue'
           <router-link to="/data/bulletin" class="router-link-hover text-black hover:underline">Bulletin</router-link>
         </li>
 
-        <li class="md:flex md:justify-center md:items-center">
+        <!-- <li class="md:flex md:justify-center md:items-center">
           <router-link to="/data/supermarket-test" class="router-link-hover text-black hover:underline">test</router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>
