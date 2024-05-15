@@ -1,145 +1,84 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
-import * as echarts from 'echarts';
-import { useSuperMarketSaleStore } from '../../stores/SupermarketSaleStore';
-import gsap from 'gsap';
+import * as echarts from 'echarts'
+import { ref, onMounted, watchEffect, watch, type Ref } from 'vue'
+import request from '../../utils/Request'
 
-const supermarketSaleStore = useSuperMarketSaleStore();
-const chartInstance = ref<echarts.ECharts | null>(null);
-// const descriptionWords = [
-// "This", "chart", "displays", "the", "total", "sales", "amount", "for", "each", "month", "from",
-//     "January", "2019", "to", "March", "2019", ".",
-//     "It", "is", "evident", "that", "the", "total", "sales", "amount", "is", "declining", "progressively",
-//     "from", "one", "month", "to", "the", "next", "."
-// // ];
+interface LineChartData {
+  month: string
+  total_views: string
+}
 
-onMounted(async () => {
+const chartInstance = ref<echarts.ECharts | null>(null)
+const lineChartData: Ref<LineChartData[]> = ref([])
+const monthList: Ref<string[]> = ref([])
+const totalViewsList: Ref<number[]> = ref([])
 
-    supermarketSaleStore.getLineChart();
-    // 初始化圖表，但不設置任何選項
-    const chartElement = document.getElementById('main');
-    if (chartElement) {
-        chartInstance.value = echarts.init(chartElement);
-        console.log("chartElement be init:");
-        console.log(chartElement);
+const requestLineChartData = async () => {
+  try {
+    const res = await request.get('/content/line-chart')
+    lineChartData.value = res.data.data
+    for (let i = 0; i < lineChartData.value.length; i++) {
+      monthList.value.push(lineChartData.value[i]['month'])
+      totalViewsList.value.push(Number(lineChartData.value[i]['total_views']))
     }
 
-
-
-    // 使用 gsap 动画库创建逐字逐字淡入效果
-    // descriptionWords.forEach((word, index) => {
-    //     const wordWithSpace = word + (index === descriptionWords.length - 1 ? '' : ' ');
-    //     gsap.fromTo(
-    //         `.animate-text:nth-child(${index + 1})`,
-    //         { autoAlpha: 0 },
-    //         {
-    //             autoAlpha: 1, duration: 1, delay: index * 0.1, onComplete: () => {
-    //                 // 在句号后添加换行
-    //                 if (wordWithSpace.includes('.')) {
-    //                     const brElement = document.createElement('br');
-    //                     document.querySelector(`.animate-text:nth-child(${index + 1})`)?.appendChild(brElement);
-    //                 }
-    //             }
-    //         }
-    //     );
-    // });
-});
-
-
-
-
-
-watch(() => supermarketSaleStore.lineChartData, (newData) => {
-    if (!newData || newData.data.length === 0) return;
-
-    const list: object[] = newData.data;
-    const monthList: string[] = list.map((item: { [x: string]: any; }) => item["month"]);
-    const totalAmountList: number[] = list.map((item: { [x: string]: any; }) => parseFloat(item["total_amount"]));
-
-    console.log(monthList);
-    console.log(totalAmountList);
-
-    const chartData = {
-        xAxis: {
-            type: "category",
-            data: monthList
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                data: totalAmountList,
-                type: 'line'
-            }
-        ]
-    };
-
+    const chartConfig = {
+      xAxis: {
+        type: 'category',
+        data: monthList.value,
+        name: 'Month'
+      },
+      yAxis: {
+        name: 'Total Views'
+      },
+      series: [
+        {
+          name: 'Total Views',
+          type: 'line',
+          data: totalViewsList.value,
+          showBackground: true,
+          backgroundStyle: {
+            color: 'rgba(220, 220, 220, 0.8)'
+          },
+          itemStyle: {
+            barBorderRadius: 5,
+            borderWidth: 1,
+            borderType: 'solid',
+            borderColor: '#73c0de',
+            shadowColor: '#5470c6',
+            shadowBlur: 3
+          }
+        }
+      ]
+    }
     if (chartInstance.value) {
-        console.log("chartInstance.value");
-        console.log(chartInstance.value);
-        chartInstance.value.setOption(chartData);
-    };
-}, {
-    deep: true
+      chartInstance.value.setOption(chartConfig)
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+onMounted(() => {
+  requestLineChartData()
+
+  const chartElement = document.getElementById('main')
+  if (chartElement) {
+    chartInstance.value = echarts.init(chartElement)
+  }
 })
-
-
 </script>
-
 <template>
-    <div class='container flex justify-center items-center'>
-        <el-row class='elRow w-full h-full'>
-            <el-col
-                :span='24'
-                class='elCol flex items-end justify-center  w-full'
-                style='height:80%'
-            >
-                <div
-                    id="main"
-                    style='width: 100%; 
-                    height: 600px;margin-top: 0%;
-                    box-shadow: 3px 0px 15px rgba(0, 0, 0, 0.15)' 
-                ></div>
-            </el-col>
-            <el-col
-                :span='24'
-                class='elColDown flex justify-center items-start'
-                style='margin-top: 2rem;'
-            >
-                <span>This chart displays the total sales amount for each month from January 2019 to March 2019.
-                    <br>
-                    It evident that the total sales amount is declining progressively from one month to the next.
-                </span>
-
-                <!-- 第二版本 -->
-                <!-- <span
-                    class="animate-text"
-                    v-for="(word, index) in descriptionWords"
-                    :key="index"
-                ><span v-if="word !== ' '">{{ word }}</span>
-                    <span v-else>&nbsp;</span>
-                    在句号后添加换行 -->
-                <!-- <br v-if="word === '2019.' || word === 'next.'" /> -->
-                <!-- </span> -->
-
-                <!-- 第三版本 -->
-                <!-- <span class="description">
-                    <template v-for="(word, index) in descriptionWords"
-                    :key="index">
-                        <span
-                            class="animate-text"
-                            
-                        >{{ word }}</span>
-                        <span v-if="index < descriptionWords.length - 1">&nbsp;</span>
-                        <br v-if="word === '.'" />
-                    </template>
-                </span> -->
-            </el-col>
-        </el-row>
-    </div>
+  <div class="md:w-full md:h-full md:flex md:justify-center md:items-center">
+    <div
+      id="main"
+      style="
+        width: 100%;
+        height: 600px;
+        margin-top: -3%;
+        box-shadow: 3px 0px 15px rgba(0, 0, 0, 0.15);
+      "
+    ></div>
+  </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>
+<style lang="scss" scoped></style>
