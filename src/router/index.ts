@@ -28,9 +28,9 @@ const router = createRouter({
           component: () => import('../components/DataView/SupermarketTest.vue')
         },
         {
-          path: 'supermarket',
-          name: 'supermarket',
-          component: () => import('../components/DataView/SupermarketTable.vue')
+          path: 'article-table',
+          name: 'article-table',
+          component: () => import('../components/DataView/ArticleTable.vue')
         },
         {
           path: 'bulletin',
@@ -39,14 +39,14 @@ const router = createRouter({
           component: () => import('../components/DataView/BulletinData.vue')
         },
         {
-          path: 'barChart',
-          name: 'barChart',
+          path: 'bar-chart',
+          name: 'bar-chart',
           // @ts-ignore
           component: () => import('../components/DataView/BarChart.vue')
         },
         {
-          path: 'lineChart',
-          name: 'lineChart',
+          path: 'line-chart',
+          name: 'line-chart',
           // @ts-ignore
           component: () => import('../components/DataView/LineChart.vue')
         }

@@ -49,7 +49,7 @@ const closeService = () => {
               >
             </li>
             <li class="flex justify-center items-center">
-              <router-link to="/data/supermarket" class="router-link-hover block px-4 py-2 text-gray-800 hover:bg-gray-200"
+              <router-link to="/data/article-table" class="router-link-hover block px-4 py-2 text-gray-800 hover:bg-gray-200"
                 >Data table</router-link
               >
             </li>

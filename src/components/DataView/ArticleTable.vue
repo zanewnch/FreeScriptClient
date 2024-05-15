@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref, watch } from 'vue'
 import request from '../../utils/Request'
-import { da, pa } from 'element-plus/es/locale/index.mjs'
+import type { TableInstance } from 'element-plus'
 
+const tableLayout = ref<TableInstance['tableLayout']>('fixed')
 const pageNum: Ref<number> = ref(1)
 const pageSize: Ref<number> = ref(10)
 const likeAmount: Ref<number | null> = ref(null)
@@ -14,16 +15,7 @@ const ArticleData = ref(null)
 const likeList = [100, 1000, 5000]
 const viewsList = [3000, 6000, 9000]
 
-// function formatDate(date: Date): string {
-//   const year = date.getFullYear()
-//   const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-based
-//   const day = String(date.getDate()).padStart(2, '0')
-//   const hours = String(date.getHours()).padStart(2, '0')
-//   const minutes = String(date.getMinutes()).padStart(2, '0')
-//   const seconds = String(date.getSeconds()).padStart(2, '0')
-
-//   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-// }
+const isNormal: Ref<boolean> = ref(true)
 
 function formatDate(date: Date): Date {
   const year = date.getFullYear()
@@ -85,6 +77,19 @@ const handleClick = () => {
   console.log('click')
 }
 
+const refreshData = async()=>{
+  pageNum.value = 1
+  pageSize.value = 10
+
+  const res = await request.get('/content', {
+    params: {
+      pageNum: pageNum.value,
+      pageSize: pageSize.value
+    }
+  })
+  ArticleData.value = res.data.data
+}
+
 const isSameTime = (date1: Date, date2: Date) => {
   const diffInMilliseconds = Math.abs(date2.getTime() - date1.getTime())
   const diffInMinutes = diffInMilliseconds / (1000 * 60)
@@ -113,7 +118,8 @@ const requestSearch = async () => {
       })
 
       ArticleData.value = res.data.data
-      console.log(res.data.data)
+      // el-pagination 要改成綜合查詢的分頁
+      isNormal.value = false
     } else {
       const res = await request.get('/content/comprehensive-search', {
         params: {
@@ -126,10 +132,9 @@ const requestSearch = async () => {
         }
       })
       ArticleData.value = res.data.data
-      console.log(res.data.data)
+      // el-pagination 要改成綜合查詢的分頁
+      isNormal.value = false
     }
-
-    
   } catch (e) {
     console.log(e)
   }
@@ -204,7 +209,14 @@ onMounted(() => {
         </el-form-item>
 
         <el-form-item class="">
-          <div class="md:w-full md:h-full md:flex md:justify-center md:items-end md:mt-8">
+          <div class="md:w-full md:h-full md:flex md:justify-center md:flex-col md:items-end">
+            <button
+              @click.prevent="refreshData()"
+              class="sm:text-gray-500 md:text-gray-500 md:w-12 md:text-center md:mb-2"
+              style="border: 1px solid"
+            >
+              Refresh
+            </button>
             <button
               @click.prevent="requestSearch()"
               class="sm:text-blue-500 md:text-blue-500 md:w-12 md:text-center"
@@ -220,6 +232,7 @@ onMounted(() => {
     <!-- el-table -->
     <div class="md:overflow-auto md:w-4/5 md:flex md:mt-4">
       <el-table
+        :table-layout="tableLayout"
         style="width: 100%"
         max-height="350"
         scrollbar-always-on:true
@@ -242,14 +255,18 @@ onMounted(() => {
         <el-table-column fixed prop="id" label="id" width="100" />
         <el-table-column prop="author" label="author" width="180" />
         <el-table-column prop="title" label="title" width="180" />
-        <el-table-column prop="content" label="content" width="180" />
+        <el-table-column prop="content" show-overflow-tooltip="true" label="content" width="180" />
         <el-table-column prop="views" label="views" width="180" />
         <el-table-column prop="like" label="like" width="180" />
-        <el-table-column prop="tags" label="tags" width="180" />
-
+        <el-table-column prop="tag" label="tag" width="180" />
         <el-table-column prop="status" label="status" width="180" />
         <el-table-column prop="summary" label="summary" width="180" />
-        <el-table-column prop="comments" label="comments" width="180" />
+        <el-table-column
+          prop="comments"
+          label="comments"
+          show-overflow-tooltip="true"
+          width="180"
+        />
         <el-table-column prop="createdDate" label="createdDate" width="180" />
         <el-table-column prop="publishedDate" label="publishedDate" width="180" />
         <el-table-column prop="updatedDate" label="updatedDate" width="180" />
@@ -263,8 +280,8 @@ onMounted(() => {
       </el-table>
     </div>
 
-    <!-- el-pagination -->
-    <div class="md:w-5/6 md:mt-4">
+    <!-- el-pagination normal -->
+    <div class="md:w-5/6 md:mt-4" v-if="isNormal">
       <el-pagination
         v-model:current-page="pageNum"
         v-model:page-size="pageSize"
@@ -276,6 +293,22 @@ onMounted(() => {
         :total="totalDataAmount"
         @current-change="requestArticleData()"
         @size-change="requestArticleData()"
+      />
+    </div>
+
+    <!-- el-pagination comprehensive-search -->
+    <div class="md:w-5/6 md:mt-4" v-if="!isNormal">
+      <el-pagination
+        v-model:current-page="pageNum"
+        v-model:page-size="pageSize"
+        :page-sizes="[5, 20, 30, 40]"
+        :small="false"
+        :disabled="false"
+        :background="false"
+        layout="total, sizes, prev, pager, next, -> , jumper"
+        :total="totalDataAmount"
+        @current-change="requestSearch()"
+        @size-change="requestSearch()"
       />
     </div>
   </div>
