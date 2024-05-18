@@ -17,12 +17,12 @@
         </div>
         <div class="md:mt-4">
           <div class="chinese-name">王君豪</div>
-          <div class="english-name md:mt-4">Zane Wang</div>
+          <div class="english-name md:mt-1">Zane Wang</div>
         </div>
 
-        <div class="blank md:mt-6 md:w-4/5"></div>
+        <div class="blank md:mt-2 md:w-4/5"></div>
 
-        <div class="md:mt-20 md:flex md:justify-center md:items-center md:flex-col md:w-4/5">
+        <div class="md:mt-2 md:flex md:justify-center md:items-center md:flex-col md:w-4/5">
           <ul>
             <li class="text title chinese-font">學歷</li>
             <li class="text content chinese-font">學士:</li>
@@ -43,7 +43,8 @@
           </ul>
         </div>
 
-        <div class="md:mt-20 md:flex md:justify-center md:items-center md:flex-col md:w-4/5">
+        <!-- 聯絡資訊 -->
+        <div class="md:mt-2 md:flex md:justify-center md:items-center md:flex-col md:w-4/5">
           <ul class="md:w-full">
             <li class="text title chinese-font">聯絡資訊</li>
             <li class="text content chinese-font md:mt-2"><strong>E-mail :</strong></li>
@@ -78,12 +79,140 @@
             </li>
           </ul>
         </div>
+        <!-- 自我介紹 -->
+        <div class="md:mt-2 md:flex md:justify-center md:items-center md:flex-col md:w-4/5">
+          <ul class="md:w-full">
+            <li class="text title chinese-font">自我介紹</li>
+            <li
+              class="text content chinese-font md:mt-2"
+              style="word-wrap: break-word; word-break: break-all"
+            >
+              我是畢業於國立中山大學企業管理學系的王君豪
+              Zane，我從應屆考上輔仁後，透過重考至中山戲劇系，再轉系至企管系的過程中，表現出我是一個為了達成目標可以努力不懈，也具備跨領域的學習能力的人。<br />在企管系期間，除了參與多次商業競賽之外，自從接觸過程式設計之後，就透過自學的方式學習過R,python,javascript,typescript,java等語言，表現出我對於程式語言的熱忱與足夠的自學能力。
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- right -->
       <div class="right-container md:w-4/5 md:flex md:flex-col">
         <!-- experience -->
-        <div class="md:mt-4 md:flex md:justify-center md:items-center" style="">
+        <div class="md:mt-6 md:flex md:justify-center md:items-center">
+          <div class="md:w-11/12">
+            <div class="md:flex md:justify-left md:w-11/12">
+              <div class="text chinese-font md:w-full" style="font-size: 24px; color: black">
+                相關技能
+              </div>
+            </div>
+            <hr class="md:mt-2" style="border-top: 1px solid black" />
+          </div>
+        </div>
+        <!-- experience content -->
+        <div class="md:w-full md:h-auto md:flex md:justify-center md:items-center md:mt-2" style="">
+          <div class="md:w-11/12 md:flex md:justify-center md:items-start">
+            <!-- row -->
+            <div class="md:w-1/3 ">
+              <div class="chinese-font md:text-center" style="font-size: 16px; line-height: 24px;">Front-end</div>
+
+              <div class="md:w-full md:p-4">
+                <div class="chinese-font" style="font-size: 12px; font-weight: 600">
+                  <ul class="">
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>基本技能:</strong> 熟悉 HTML、CSS、JavaScript，主要使用 TypeScript
+                      進行開發。
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>模板引擎:</strong> 使用過 PUG, EJS。
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>CSS 預處理器:</strong> 使用過 SCSS。
+                    </li>
+
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>UI 框架與庫:</strong>
+                      <ul>
+                        <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                          熟悉使用 Tailwind CSS, 使用過 Bootstrap 和 Vue Element Plus。
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>前端框架:</strong>
+                      <ul>
+                        <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                          主要使用 Vue 完成 side-project。
+                        </li>
+                        <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                          基本了解 React and Next.js，並接觸過 Redux 和 State Hook 的基礎概念。
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- row -->
+            <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start">
+              <div class="chinese-font md:text-center md:w-full" style="font-size: 16px; line-height: 24px;">
+                Back-end
+              </div>
+
+              <div class="md:w-full md:p-4">
+                <div class="chinese-font" style="font-size: 12px">
+                  <ul class="" style="font-weight: 600">
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>基本技能:</strong>
+                      熟悉python, javascript, typescript,
+                      java等語法的基礎概念，主要使用Typescript進行開發。
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>資料庫:</strong> 使用過 MySQL 和 MongoDB，熟悉 SQL 和 NoSQL
+                      的資料格式。
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>後端框架:</strong>
+                      <ul>
+                        <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                          Python-Django
+                        </li>
+                        <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                          Java-Spring Boot with MyBatis and JWT
+                        </li>
+                        <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                          主要使用 TypeScript-Express.js with MVC and OOP model
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- row -->
+            <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start">
+              <div class="chinese-font md:text-center md:w-full" style="font-size: 16px;; line-height: 24px;">
+                Others
+              </div>
+              <div class="md:w-full md:p-4">
+                <div class="chinese-font" style="font-size: 12px; font-weight: 600">
+                  <ul class="">
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>R: </strong>使用過 R 進行大數據分析專題，<br />使用過的工具包括 dplyr 和 ggplot2。
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>python: </strong>使用過 Python 進行爬蟲和大數據分析專題，<br />使用過的工具包括 Selenium<br />BeautifulSoup<br />Pandas
+                      <br />和 Scikit-learn。
+                    </li>
+                    <li class="chinese-font" style="font-weight: 600; font-size: 12px; line-height: 20px;">
+                      <strong>TOEIC: </strong>805分
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- experience -->
+        <div class="md:flex md:justify-center md:items-center md:mt-2" style="">
           <div class="md:w-11/12">
             <div class="md:flex md:justify-left md:w-11/12">
               <div class="text chinese-font md:w-full" style="font-size: 24px; color: black">
@@ -96,27 +225,44 @@
         </div>
         <!-- experience content -->
         <div
-          class="md:w-full md:h-auto md:flex md:justify-center md:flex-col md:items-center md:mt-2"
+          class="md:w-full md:h-auto md:flex md:justify-center md:flex-col md:items-center md:mt-2 "
         >
           <!-- row -->
           <div class="md:w-11/12 md:mt-2">
             <!--  line travel, shopee 商業競賽 -->
-            <div class="chinese-font" style="font-size: 16px">
+            <div class="chinese-font" style="font-size: 16px; line-height: 24px">
               智在家鄉, Line Travel, Shopee Ultimate case challenge
             </div>
-            <div class="chinese-font md:mt-1" style="font-size: 12px; font-weight: 600">
+            <div
+              class="chinese-font md:mt-1"
+              style="font-size: 12px; font-weight: 600; line-height: 20px"
+            >
               擔任職位：企劃發想、報告設計與呈現
               <br />
               <ul class="">
-                <div class="chinese-font" style="font-size: 12px; font-weight: 600">內容 :</div>
-                <li class="chinese-font" style="font-size: 12px; font-weight: 600">
+                <div
+                  class="chinese-font"
+                  style="font-size: 12px; font-weight: 600; line-height: 18px;"
+                >
+                  內容 :
+                </div>
+                <li
+                  class="chinese-font"
+                  style="font-size: 12px; line-height: 18px; font-weight: 600; line-height: 20px;"
+                >
                   智在家鄉提案為地方創生主題，
                 </li>
-                <li class="chinese-font" style="font-size: 12px; font-weight: 600">
+                <li
+                  class="chinese-font"
+                  style="font-size: 12px; font-weight: 600; line-height: 20px;"
+                >
                   line travel的商業提案則是針對Line新推出的line
                   travel設計出相關商業模式與使用者體驗，
                 </li>
-                <li class="chinese-font" style="font-size: 12px; font-weight: 600">
+                <li
+                  class="chinese-font"
+                  style="font-size: 12px; font-weight: 600; line-height: 20px"
+                >
                   shopee Ultimate case
                   challenge提案則是針對shopee新推出的live直播做使用者體驗與商業模式設計。
                 </li>
@@ -127,27 +273,16 @@
               收穫：(1) 培養基礎提案能力 (2) 跨領域團隊協作 (3) 實際瞭解商業模式與情境分析
             </div>
           </div>
+
           <!-- row -->
           <div class="md:w-11/12 md:mt-2">
-            <div class="chinese-font" style="font-size: 16px">
-              經營校內街訪節目- 缺know channel 自媒體頻道
-            </div>
-            <div class="chinese-font md:mt-2" style="font-size: 12px; font-weight: 600">
-              擔任職位：粉專管理、企劃發想、街訪主持人
-              <br />
-              內容：負責文案撰寫、校內街訪主持、商業合作影片拍攝
-              <br />
-              成就：平均貼文觸及人數為300人，商業合作影片觸及8000人，最高觸及的貼文達到10萬人。
-              <br />
-              收穫： (1) 瞭解媒體平台基礎的後台管理，流量分析 (2) 實際主持與企劃腳本發想
-            </div>
-          </div>
-          <!-- row -->
-          <div class="md:w-11/12 md:mt-2">
-            <div class="chinese-font" style="font-size: 16px">
+            <div class="chinese-font" style="font-size: 16px; line-height: 24px">
               畢業專題 - Amazon 全球開店 商家媒合
             </div>
-            <div class="chinese-font md:mt-1" style="font-size: 12px; font-weight: 600">
+            <div
+              class="chinese-font md:mt-1"
+              style="font-size: 12px; font-weight: 600; line-height: 20px"
+            >
               擔任職位：企劃發想、Ａmazon helium 10 操作與分析、報告呈現
               <br />
               內容：針對台商上架至Amazon北美區的商品做行銷分析，包括消費者行為、通路、痛點、頁面設計、產品特色與形象塑造；以及Amazon電商平台操作、後台數據分析。<br />
@@ -159,10 +294,13 @@
           </div>
           <!-- row -->
           <div class="md:w-11/12 md:mt-2">
-            <div class="chinese-font" style="font-size: 16px">
+            <div class="chinese-font" style="font-size: 16px; line-height: 24px">
               資管碩 R程式語言、機率統計與商業實務 - 期末報告 優等
             </div>
-            <div class="chinese-font md:mt-1" style="font-size: 12px; font-weight: 600">
+            <div
+              class="chinese-font md:mt-1"
+              style="font-size: 12px; font-weight: 600; line-height: 20px"
+            >
               擔任職位：程式碼撰寫、分析設計、報表呈現
               <br />
               內容：針對資料集設計適當的分類標準，並使用基礎機器學習進行RFM顧客管理
@@ -175,8 +313,13 @@
           </div>
           <!-- row -->
           <div class="md:w-11/12 md:mt-2">
-            <div class="chinese-font" style="font-size: 16px">創騰策略顧問股份有限公司 - 實習</div>
-            <div class="chinese-font md:mt-1" style="font-size: 12px; font-weight: 600">
+            <div class="chinese-font" style="font-size: 16px; line-height: 24px">
+              創騰策略顧問股份有限公司 - 實習
+            </div>
+            <div
+              class="chinese-font md:mt-1"
+              style="font-size: 12px; font-weight: 600; line-height: 20px"
+            >
               入職時間: 2023/06~2023/12
               <br />
               擔任職位：策略顧問 - 實習
@@ -185,113 +328,6 @@
               產出產業與市場分析報告，競品分析，可行性分析，對外提供綜合性的商業營運建議，並協助相關產業的政府補助申請。
               <br />
               收穫：(1) 產出完整的商業企劃提案 (2) 與客戶meeting協商對洽，了解客戶需求
-            </div>
-          </div>
-        </div>
-        <!-- experience -->
-        <div class="md:mt-2 md:flex md:justify-center md:items-center">
-          <div class="md:w-11/12">
-            <div class="md:flex md:justify-left md:w-11/12">
-              <div class="text chinese-font md:w-full" style="font-size: 24px; color: black">
-                相關技能
-              </div>
-            </div>
-            <hr class="md:mt-2" style="border-top: 1px solid black" />
-          </div>
-        </div>
-        <!-- experience content -->
-        <div class="md:w-full md:h-auto md:flex md:justify-center md:items-center md:mt-2" style="">
-          <!-- row -->
-          <div class="md:w-1/3">
-            <div class="chinese-font md:text-center" style="font-size: 16px">Front-end</div>
-
-            <div class="md:w-full md:p-4">
-              <div class="chinese-font" style="font-size: 12px; font-weight: 600">
-                <ul class="">
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>基本技能:</strong> 熟悉 HTML、CSS、JavaScript，主要使用 TypeScript
-                    進行開發。
-                  </li>
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>模板引擎:</strong> 使用過 PUG, EJS。
-                  </li>
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>CSS 預處理器:</strong> 使用過 SCSS。
-                  </li>
-
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>UI 框架與庫:</strong>
-                    <ul>
-                      <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        熟悉使用 Tailwind CSS, 使用過 Bootstrap 和 Vue Element Plus。
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>前端框架:</strong>
-                    <ul>
-                      <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        主要使用 Vue 完成 side-project。
-                      </li>
-                      <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        基本了解 React and Next.js，並接觸過 Redux 和 State Hook 的基礎概念。
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!-- row -->
-          <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start">
-            <div class="chinese-font md:text-center md:w-full" style="font-size: 16px">
-              Back-end
-            </div>
-
-            <div class="md:w-full md:p-4">
-              <div class="chinese-font" style="font-size: 12px">
-                <ul class="" style="font-weight: 600">
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>基本技能:</strong>
-                    熟悉python, javascript, typescript,
-                    java等語法的基礎概念，主要使用Typescript進行開發。
-                  </li>
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>資料庫:</strong> 使用過 MySQL 和 MongoDB，熟悉 SQL 和 NoSQL 的資料格式。
-                  </li>
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>後端框架:</strong>
-                    <ul>
-                      <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        Python-Django
-                      </li>
-                      <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        Java-Spring Boot with MyBatis and JWT
-                      </li>
-                      <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        主要使用 TypeScript-Express.js with MVC and OOP model
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!-- row -->
-          <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start">
-            <div class="chinese-font md:text-center md:w-full" style="font-size: 16px">Others</div>
-            <div class="md:w-full md:p-4">
-              <div class="chinese-font" style="font-size: 12px; font-weight: 600">
-                <ul class="">
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    使用過 R 進行大數據分析專題，<br />使用過的工具包括 dplyr 和 ggplot2。
-                  </li>
-                  <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    使用過 Python 進行爬蟲和大數據分析專題，<br />使用過的工具包括 Selenium<br />BeautifulSoup<br />Pandas
-                    <br />和 Scikit-learn。
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
