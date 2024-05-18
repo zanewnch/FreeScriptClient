@@ -231,7 +231,7 @@
           <div class="md:w-11/12 md:mt-2">
             <!--  line travel, shopee 商業競賽 -->
             <div class="chinese-font" style="font-size: 16px; line-height: 24px">
-              智在家鄉, Line Travel, Shopee Ultimate case challenge
+              智在家鄉, Line Travel, Shopee Ultimate case challenge 商業競賽
             </div>
             <div
               class="chinese-font md:mt-1"

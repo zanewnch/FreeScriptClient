@@ -6,7 +6,7 @@ import * as ElementPlusIconsVue from "/node_modules/.vite/deps/@element-plus_ico
 import App from "/src/App.vue";
 import router from "/src/router/index.ts";
 import vue3GoogleLogin from "/node_modules/.vite/deps/vue3-google-login.js?v=e3b2c6b7";
-import "/src/style.css?t=1716069591403";
+import "/src/style.css?t=1716069770857";
 const pinia = createPinia();
 const app = createApp(App);
 const CLIENT_ID = "868894515836-rp3a9n3ngpn1089i76c50vkjr8dr630p.apps.googleusercontent.com";
