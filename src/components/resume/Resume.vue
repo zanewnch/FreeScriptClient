@@ -83,16 +83,15 @@
       <!-- right -->
       <div class="right-container md:w-4/5 md:flex md:flex-col">
         <!-- experience -->
-        <div class="md:mt-4 md:flex md:justify-center md:items-center">
+        <div class="md:mt-4 md:flex md:justify-center md:items-center" style="">
           <div class="md:w-11/12">
             <div class="md:flex md:justify-left md:w-11/12">
               <div class="text chinese-font md:w-full" style="font-size: 24px; color: black">
                 學習經歷
               </div>
             </div>
-            <div class="md:w-full md:flex md:justify-start md:mt-2">
-              <div class="md:bg-black md:w-11/12" style="height: 1px"></div>
-            </div>
+
+            <hr class="md:mt-2" style="border-top: 1px solid black" />
           </div>
         </div>
         <!-- experience content -->
@@ -197,15 +196,13 @@
                 相關技能
               </div>
             </div>
-            <div class="md:w-full md:flex md:justify-start md:mt-2">
-              <div class="md:bg-black md:w-11/12" style="height: 1px"></div>
-            </div>
+            <hr class="md:mt-2" style="border-top: 1px solid black" />
           </div>
         </div>
         <!-- experience content -->
         <div class="md:w-full md:h-auto md:flex md:justify-center md:items-center md:mt-2" style="">
           <!-- row -->
-          <div class="md:w-1/3 ">
+          <div class="md:w-1/3">
             <div class="chinese-font md:text-center" style="font-size: 16px">Front-end</div>
 
             <div class="md:w-full md:p-4">
@@ -237,7 +234,7 @@
                         主要使用 Vue 完成 side-project。
                       </li>
                       <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                        基本了解 React，並接觸過 Redux 和 State Hook 的基礎概念。
+                        基本了解 React and Next.js，並接觸過 Redux 和 State Hook 的基礎概念。
                       </li>
                     </ul>
                   </li>
@@ -246,7 +243,7 @@
             </div>
           </div>
           <!-- row -->
-          <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start ">
+          <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start">
             <div class="chinese-font md:text-center md:w-full" style="font-size: 16px">
               Back-end
             </div>
@@ -255,8 +252,9 @@
               <div class="chinese-font" style="font-size: 12px">
                 <ul class="" style="font-weight: 600">
                   <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    <strong>基本技能:</strong> 
-                    熟悉python, javascript, typescript, java等語法的基礎概念，主要使用Typescript進行開發。
+                    <strong>基本技能:</strong>
+                    熟悉python, javascript, typescript,
+                    java等語法的基礎概念，主要使用Typescript進行開發。
                   </li>
                   <li class="chinese-font" style="font-weight: 600; font-size: 12px">
                     <strong>資料庫:</strong> 使用過 MySQL 和 MongoDB，熟悉 SQL 和 NoSQL 的資料格式。
@@ -280,7 +278,7 @@
             </div>
           </div>
           <!-- row -->
-          <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start ">
+          <div class="md:w-1/3 md:h-full md:flex md:flex-col md:items-start">
             <div class="chinese-font md:text-center md:w-full" style="font-size: 16px">Others</div>
             <div class="md:w-full md:p-4">
               <div class="chinese-font" style="font-size: 12px; font-weight: 600">
@@ -289,8 +287,8 @@
                     使用過 R 進行大數據分析專題，<br />使用過的工具包括 dplyr 和 ggplot2。
                   </li>
                   <li class="chinese-font" style="font-weight: 600; font-size: 12px">
-                    使用過 Python 進行爬蟲和大數據分析專題，<br />使用過的工具包括
-                    Selenium<br>BeautifulSoup<br>Pandas <br />和 Scikit-learn。
+                    使用過 Python 進行爬蟲和大數據分析專題，<br />使用過的工具包括 Selenium<br />BeautifulSoup<br />Pandas
+                    <br />和 Scikit-learn。
                   </li>
                 </ul>
               </div>
@@ -361,9 +359,6 @@
 
   .left-container {
     background-color: #051f39;
-  }
-  .right-container {
-    background-color: #ffffff;
   }
 
   .blank {
