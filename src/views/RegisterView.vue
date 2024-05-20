@@ -101,7 +101,9 @@ const localRegister = async () => {
 <template>
   <div class="flex items-center justify-center h-screen">
     <div class="w-full max-w-md">
-      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      @submit.prevent="localRegister"
+      >
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
             Username
@@ -134,6 +136,7 @@ const localRegister = async () => {
             type="password"
             placeholder="Password"
             v-model="password"
+            @keydown.enter="localRegister"
           />
         </div>
         <div class="mb-4">
