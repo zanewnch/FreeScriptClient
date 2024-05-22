@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import * as echarts from 'echarts';
-import { useSuperMarketSaleStore } from '../../stores/SupermarketSaleStore';
+import { useSuperMarketSaleStore } from '../stores/SupermarketSaleStore';
 import gsap from 'gsap';
 
 const supermarketSaleStore = useSuperMarketSaleStore();

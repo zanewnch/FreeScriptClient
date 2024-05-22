@@ -7,8 +7,6 @@ import { Result } from '../utils/Result'
 import { decodeCredential, googleLogout } from 'vue3-google-login'
 import { useRouter } from 'vue-router'
 
-
-
 /* login form */
 const globalStore = useGlobalStore()
 
@@ -18,7 +16,7 @@ const isPasswordError: Ref<boolean> = ref(false)
 const router = useRouter()
 
 /* google login */
-const googleSignIn = async (response: any):Promise<void> => {
+const googleSignIn = async (response: any): Promise<void> => {
   // 傳給backend 來確認是否有這個帳號
   // request 要建立cookie
   let responseValue = response
@@ -132,8 +130,13 @@ watchEffect(() => {
 <template>
   <div class="flex items-center justify-center h-screen sm:h-screen md:flex md:h-screen">
     <div class="w-full max-w-xs sm:w-3/4 sm:max-w-md md:w-full md:max-w-xs">
+      <!-- 在 <form> 元素上添加 @submit.prevent="localSignIn" 事件，这样当用户在任何输入框中按下 Enter 键时，会触发 localSignIn 方法，并阻止默认的表单提交行为。
+      为了确保在单独输入框中按下 Enter 键也能触发登录，还在 username 和 password 的 input 元素上分别添加了 @keydown.enter="localSignIn" 事件监听器。
+      这样，无论是按下登录按钮还是在输入框中按 Enter 键，都会触发 localSignIn 方法。
+      -->
       <form
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 sm:px-4 sm:pt-4 sm:pb-4 sm:mb-2 md:bg-white md:shadow-md md:rounded md:px-8 md:pt-6 md:pb-8 md:mb-4"
+        @submit.prevent="localSignIn"
       >
         <div class="mb-4 sm:mb-2 md:mb-4">
           <label
@@ -163,6 +166,7 @@ watchEffect(() => {
             type="password"
             placeholder="******************"
             v-model="globalStore.password"
+            @keydown.enter="localSignIn"
           />
           <p class="text-xs italic sm:text-sm md:text-xs md:italic">Please choose a password.</p>
         </div>
