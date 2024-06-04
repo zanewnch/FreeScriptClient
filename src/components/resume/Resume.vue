@@ -97,7 +97,7 @@
       <!-- right -->
       <div class="right-container md:w-4/5 md:flex md:flex-col">
         <!-- experience -->
-        <div class="md:mt-6 md:flex md:justify-center md:items-center">
+        <div class="md:mt-2 md:flex md:justify-center md:items-center ">
           <div class="md:w-11/12">
             <div class="md:flex md:justify-left md:w-11/12">
               <div class="text chinese-font md:w-full" style="font-size: 24px; color: black">
@@ -272,10 +272,10 @@
           </div>
         </div>
         <!-- experience -->
-        <div class="md:flex md:justify-center md:items-center md:mt-16" style="">
+        <div class="md:flex md:justify-center md:items-center " style="">
           <div class="md:w-11/12">
             <div class="md:flex md:justify-left md:w-11/12">
-              <div class="text chinese-font md:w-full" style="font-size: 24px; color: black">
+              <div class="text chinese-font md:w-full  " style="font-size: 24px; color: black">
                 學習經歷
               </div>
             </div>
@@ -288,7 +288,7 @@
           class="md:w-full md:h-auto md:flex md:justify-center md:flex-col md:items-center md:mt-2"
         >
           <!-- row -->
-          <div class="md:w-11/12 md:mt-2">
+          <div class="md:w-11/12">
             <!--  line travel, shopee 商業競賽 -->
             <div class="chinese-font" style="font-size: 16px; line-height: 24px">
               智在家鄉, Line Travel, Shopee Ultimate case challenge 商業競賽
@@ -359,6 +359,23 @@
               產出產業與市場分析報告，競品分析，可行性分析，對外提供綜合性的商業營運建議，並協助相關產業的政府補助申請。
               <br />
               收穫：(1) 產出完整的商業企劃提案 (2) 與客戶meeting協商對洽，了解客戶需求
+            </div>
+          </div>
+
+          <!-- row -->
+          <div class="md:w-11/12 md:mt-2">
+            <div class="chinese-font" style="font-size: 16px; line-height: 24px">
+              Side-project: FreeScript
+            </div>
+            <div
+              class="chinese-font md:mt-1"
+              style="font-size: 12px; font-weight: 600; line-height: 20px;color:black;"
+            >
+            專案名稱: FreeScript <br>Github link:https://github.com/zanewnch/FreeScriptServer  <br>
+            <strong>專案簡介:</strong> 以medium網站為靈感而自行design的side project<br>
+            技術內容: <br>
+            <strong>Front-end:</strong> 主要使用Vue3 with pinia store and ts, UI相關使用 tailwind and vue-element-plus，RWD-design。<br>
+            <strong>Back-end:</strong> 主要使用express.js with ts, 並使用類似MVC and OOP model進行設計；資料庫同時使用MYSQL and MongoDB。
             </div>
           </div>
         </div>

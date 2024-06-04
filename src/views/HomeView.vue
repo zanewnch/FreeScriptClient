@@ -45,7 +45,7 @@ const basedOnCookieToSetSignIn = async (): Promise<void> => {
       title: 'Error!',
       text: 'You are not login yet. Please login first.',
       icon: 'error',
-      confirmButtonText: 'Cool'
+      confirmButtonText: 'Close'
     })
   }
 }
