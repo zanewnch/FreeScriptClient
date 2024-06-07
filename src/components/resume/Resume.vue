@@ -351,7 +351,7 @@
               class="chinese-font md:mt-1"
               style="font-size: 12px; font-weight: 600; line-height: 20px"
             >
-              入職時間: 2023/06~2023/12
+              入職時間: 2023/2~2023/8
               <br />
               擔任職位：策略顧問 - 實習
               <br />
